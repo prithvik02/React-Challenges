@@ -7,10 +7,12 @@ interface TaskCardProps {
   taskId?: string | number
 }
 
-export default function TaskCard(_props: TaskCardProps) {
+export default function TaskCard(props: TaskCardProps) {
   return (
     <article id="task-card">
-      <p>Implement: display title, description, and priority from props</p>
+      <h2>{props.title}</h2>
+      <p>{props.description}</p>
+      <p>Priority: {props.priority}</p>
     </article>
   )
 }
