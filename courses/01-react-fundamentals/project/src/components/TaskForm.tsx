@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { FormEvent } from 'react'
 import type { Task } from './TaskList'
 
 interface TaskFormProps {
@@ -11,7 +12,7 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
   const [priority, setPriority] = useState('Medium')
   const [error, setError] = useState('')
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (!title.trim()) {
@@ -20,7 +21,7 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
     }
 
     const newTask: Task = {
-      id: `${Date.now()}-${Math.random()}`,
+      id: Date.now(),
       title: title.trim(),
       description: description.trim(),
       priority,
@@ -63,13 +64,17 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
           value={priority}
           onChange={(event) => setPriority(event.target.value)}
         >
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
           <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
         </select>
       </div>
 
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p id="task-form-error" role="alert">
+          {error}
+        </p>
+      )}
 
       <button type="submit">Add Task</button>
     </form>
