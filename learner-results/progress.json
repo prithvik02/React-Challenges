@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-08-08T09:14:43.428Z",
+  "lastUpdated": "2026-08-08T09:30:46.039Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
     "overallScore": 29.9,
-    "completionPercentage": 5.7,
+    "completionPercentage": 7.5,
     "badgeLevel": "none",
     "totalChallenges": 53,
-    "completedChallenges": 3
+    "completedChallenges": 4
   },
   "courses": {
     "01-react-fundamentals": {
       "courseId": "01-react-fundamentals",
       "courseName": "React Fundamentals",
       "averageScore": 90.7,
-      "completionPercentage": 13,
+      "completionPercentage": 17.4,
       "badgeLevel": "none",
       "totalChallenges": 23,
-      "completedChallenges": 3,
+      "completedChallenges": 4,
       "challenges": {
         "01-static-task-display": {
           "challengeId": "01-static-task-display",
@@ -55,6 +55,21 @@
           "passed": true,
           "score": 90.7,
           "lastRun": "2026-08-08T09:14:27.907Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        },
+        "04-task-completion-toggle": {
+          "challengeId": "04-task-completion-toggle",
+          "challengeName": "Task Completion Toggle",
+          "passed": true,
+          "score": 90.7,
+          "lastRun": "2026-08-08T09:30:31.354Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,

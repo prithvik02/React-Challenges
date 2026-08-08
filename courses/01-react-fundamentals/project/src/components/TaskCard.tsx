@@ -3,16 +3,47 @@ interface TaskCardProps {
   description: string
   priority: string
   completed?: boolean
-  onToggle?: (id: string | number) => void
-  taskId?: string | number
+  onToggle?: () => void
 }
 
-export default function TaskCard(props: TaskCardProps) {
+export default function TaskCard({
+  title,
+  description,
+  priority,
+  completed = false,
+  onToggle,
+}: TaskCardProps) {
   return (
-    <article id="task-card">
-      <h2>{props.title}</h2>
-      <p>{props.description}</p>
-      <p>Priority: {props.priority}</p>
+    <article
+      id="task-card"
+      data-completed={completed ? 'true' : 'false'}
+    >
+      {onToggle && (
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={onToggle}
+          aria-label={`Complete ${title}`}
+        />
+      )}
+
+      <h2
+        style={{
+          textDecoration: completed ? 'line-through' : 'none',
+        }}
+      >
+        {title}
+      </h2>
+
+      <p
+        style={{
+          textDecoration: completed ? 'line-through' : 'none',
+        }}
+      >
+        {description}
+      </p>
+
+      <p>Priority: {priority}</p>
     </article>
   )
 }

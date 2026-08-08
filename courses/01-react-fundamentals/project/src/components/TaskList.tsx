@@ -14,6 +14,7 @@ export interface Task {
 interface TaskListProps {
   tasks?: Task[]
   countText?: string
+  onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
   linkToTaskDetail?: boolean
 }
@@ -21,8 +22,10 @@ interface TaskListProps {
 export default function TaskList({
   tasks = [],
   countText,
+  onToggle,
 }: TaskListProps) {
-  const count = countText || `${tasks.length} Tasks`
+  const completedCount = tasks.filter((task) => task.completed).length
+  const count = countText || `${completedCount} of ${tasks.length} completed`
 
   return (
     <section id="task-list">
@@ -34,6 +37,8 @@ export default function TaskList({
           title={task.title}
           description={task.description}
           priority={task.priority}
+          completed={task.completed}
+          onToggle={onToggle ? () => onToggle(task.id) : undefined}
         />
       ))}
     </section>
