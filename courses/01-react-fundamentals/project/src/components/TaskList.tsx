@@ -14,31 +14,28 @@ export interface Task {
 interface TaskListProps {
   tasks?: Task[]
   countText?: string
-  onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
   linkToTaskDetail?: boolean
 }
 
-export default function TaskList(_props: TaskListProps) {
+export default function TaskList({
+  tasks = [],
+  countText,
+}: TaskListProps) {
+  const count = countText || `${tasks.length} Tasks`
+
   return (
     <section id="task-list">
-      <TaskCard
-        title="Task One"
-        description="First hardcoded task"
-        priority="High"
-      />
+      <div id="task-count">{count}</div>
 
-      <TaskCard
-        title="Task Two"
-        description="Second hardcoded task"
-        priority="Medium"
-      />
-
-      <TaskCard
-        title="Task Three"
-        description="Third hardcoded task"
-        priority="Low"
-      />
+      {tasks.map((task) => (
+        <TaskCard
+          key={task.id}
+          title={task.title}
+          description={task.description}
+          priority={task.priority}
+        />
+      ))}
     </section>
   )
 }
