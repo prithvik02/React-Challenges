@@ -1,46 +1,38 @@
-import TaskCard from './TaskCard'
+import TaskCard from "./TaskCard"
 
-export interface Task {
+type Task = {
   id: string | number
   title: string
-  description: string
-  priority: string
   completed: boolean
-  category?: string
-  tags?: string[]
-  dueDate?: string | number
 }
 
-interface TaskListProps {
-  tasks?: Task[]
+type TaskListProps = {
+  tasks: Task[]
   countText?: string
   onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
-  linkToTaskDetail?: boolean
 }
 
 export default function TaskList({
-  tasks = [],
+  tasks,
   countText,
   onToggle,
+  onDelete
 }: TaskListProps) {
-  const completedCount = tasks.filter((task) => task.completed).length
-  const count = countText || `${completedCount} of ${tasks.length} completed`
-
   return (
-    <section id="task-list">
-      <div id="task-count">{count}</div>
+    <div id="task-list">
+      <div id="task-count">{countText}</div>
 
-      {tasks.map((task) => (
+      {tasks.map(task => (
         <TaskCard
           key={task.id}
+          id={task.id}
           title={task.title}
-          description={task.description}
-          priority={task.priority}
           completed={task.completed}
-          onToggle={onToggle ? () => onToggle(task.id) : undefined}
+          onToggle={onToggle}
+          onDelete={onDelete}
         />
       ))}
-    </section>
+    </div>
   )
 }

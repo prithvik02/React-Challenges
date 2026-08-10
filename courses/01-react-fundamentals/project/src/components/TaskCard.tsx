@@ -1,49 +1,45 @@
-interface TaskCardProps {
+type TaskCardProps = {
+  id: string | number
   title: string
-  description: string
-  priority: string
-  completed?: boolean
-  onToggle?: () => void
+  completed: boolean
+  onToggle?: (id: string | number) => void
+  onDelete?: (id: string | number) => void
 }
 
 export default function TaskCard({
+  id,
   title,
-  description,
-  priority,
-  completed = false,
+  completed,
   onToggle,
+  onDelete
 }: TaskCardProps) {
   return (
-    <article
-      id="task-card"
-      data-completed={completed ? 'true' : 'false'}
-    >
-      {onToggle && (
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={onToggle}
-          aria-label={`Complete ${title}`}
-        />
-      )}
+    <div id="task-card">
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={() => onToggle?.(id)}
+      />
 
-      <h2
+      <span
         style={{
-          textDecoration: completed ? 'line-through' : 'none',
+          textDecoration: completed ? "line-through" : "none"
         }}
       >
         {title}
-      </h2>
+      </span>
 
-      <p
-        style={{
-          textDecoration: completed ? 'line-through' : 'none',
-        }}
-      >
-        {description}
-      </p>
-
-      <p>Priority: {priority}</p>
-    </article>
+      {onDelete && (
+        <button
+          onClick={() => {
+            if (window.confirm("Are you sure?")) {
+              onDelete(id)
+            }
+          }}
+        >
+          Delete
+        </button>
+      )}
+    </div>
   )
 }

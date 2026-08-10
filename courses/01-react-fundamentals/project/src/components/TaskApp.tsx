@@ -1,37 +1,20 @@
-import type { Dispatch, SetStateAction } from 'react'
-import type { Task } from './TaskList'
-import TaskList from './TaskList'
-import TaskForm from './TaskForm'
+import TaskList from "./TaskList"
 
-interface TaskAppProps {
-  tasks?: Task[]
-  setTasks?: Dispatch<SetStateAction<Task[]>>
-  dispatch?: (action: { type: string; payload?: unknown }) => void
-  showForm?: boolean
-  countFormat?: string
-  showFilterBar?: boolean
-  showStatsPanel?: boolean
-  onDelete?: (id: string | number) => void
-  linkToTaskDetail?: boolean
+type Task = {
+  id: string | number
+  title: string
+  completed: boolean
 }
 
-export default function TaskApp({
-  tasks = [],
-  setTasks,
-  showForm = false,
-  countFormat = 'tasks',
-}: TaskAppProps) {
-  const handleAddTask = (task: Task) => {
-    if (!setTasks) return
+type TaskAppProps = {
+  tasks: Task[]
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>
+}
 
-    setTasks((previousTasks) => [...previousTasks, task])
-  }
-
+export default function TaskApp({ tasks, setTasks }: TaskAppProps) {
   const handleToggle = (id: string | number) => {
-    if (!setTasks) return
-
-    setTasks((previousTasks) =>
-      previousTasks.map((task) =>
+    setTasks(prev =>
+      prev.map(task =>
         task.id === id
           ? { ...task, completed: !task.completed }
           : task
@@ -39,19 +22,17 @@ export default function TaskApp({
     )
   }
 
-  const countText =
-    countFormat === 'completed'
-      ? `${tasks.filter((task) => task.completed).length} of ${tasks.length} completed`
-      : `${tasks.length} Tasks`
+  const handleDelete = (id: string | number) => {
+    setTasks(prev => prev.filter(task => task.id !== id))
+  }
 
   return (
     <div>
-      {showForm && <TaskForm onAddTask={handleAddTask} />}
-
       <TaskList
         tasks={tasks}
-        countText={countText}
+        countText={`${tasks.length} tasks`}
         onToggle={handleToggle}
+        onDelete={handleDelete}
       />
     </div>
   )
