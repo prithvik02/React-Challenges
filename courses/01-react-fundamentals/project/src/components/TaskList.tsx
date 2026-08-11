@@ -3,7 +3,7 @@ import TaskCard from './TaskCard'
 export type Task = {
   id: string | number
   title: string
-  description?: string
+  description: string
   priority: string
   completed: boolean
   category?: string
@@ -12,7 +12,7 @@ export type Task = {
 }
 
 type TaskListProps = {
-  tasks: Task[]
+  tasks?: Task[]
   countText?: string
   onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
@@ -22,39 +22,81 @@ type TaskListProps = {
       title: string
       description: string
       priority: string
-      category?: string
-      tags?: string[]
+      category: string
+      tags: string[]
       dueDate?: string
     }
   ) => void
   editingId?: string | number | null
-  linkToTaskDetail?: boolean
 }
 
+const defaultTasks: Task[] = [
+  {
+    id: 1,
+    title: 'Task One',
+    description: 'First task',
+    priority: 'High',
+    completed: false,
+    category: 'General',
+    tags: [],
+  },
+  {
+    id: 2,
+    title: 'Task Two',
+    description: 'Second task',
+    priority: 'Medium',
+    completed: false,
+    category: 'General',
+    tags: [],
+  },
+  {
+    id: 3,
+    title: 'Task Three',
+    description: 'Third task',
+    priority: 'Low',
+    completed: false,
+    category: 'General',
+    tags: [],
+  },
+]
+
 export default function TaskList({
-  tasks,
+  tasks = defaultTasks,
   countText,
   onToggle,
   onDelete,
   onUpdateTask,
   editingId,
 }: TaskListProps) {
+  const completedCount = tasks.filter(
+    task => task.completed
+  ).length
+
   return (
-    <div id="task-list">
+    <section id="task-list">
       <div id="task-count">
-        {countText || `${tasks.length} Tasks`}
+        {countText ??
+          `${completedCount} of ${tasks.length} completed`}
       </div>
 
       {tasks.map(task => (
         <TaskCard
           key={task.id}
+          id={task.id}
           task={task}
+          title={task.title}
+          description={task.description}
+          priority={task.priority}
+          completed={task.completed}
+          category={task.category ?? 'General'}
+          tags={task.tags ?? []}
+          dueDate={task.dueDate}
           onToggle={onToggle}
           onDelete={onDelete}
           onUpdateTask={onUpdateTask}
           editingId={editingId}
         />
       ))}
-    </div>
+    </section>
   )
 }

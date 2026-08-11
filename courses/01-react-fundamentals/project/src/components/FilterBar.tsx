@@ -1,9 +1,12 @@
-type Filter =
+import FormInput from './FormInput'
+import Button from './Button'
+
+type FilterValue =
   | 'all'
   | 'active'
   | 'completed'
 
-type SortOrder =
+type SortValue =
   | 'recent'
   | 'priority-high'
   | 'priority-low'
@@ -11,19 +14,17 @@ type SortOrder =
   | 'due-date'
 
 type FilterBarProps = {
-  filter: Filter
-  onFilterChange: (
-    filter: Filter
+  filter?: FilterValue
+  onFilterChange?: (
+    filter: FilterValue
   ) => void
 
-  sortOrder?: SortOrder
-
+  sortOrder?: SortValue
   onSortChange?: (
-    sort: SortOrder
+    sort: SortValue
   ) => void
 
   search?: string
-
   onSearchChange?: (
     value: string
   ) => void
@@ -31,7 +32,6 @@ type FilterBarProps = {
   onClearSearch?: () => void
 
   category?: string
-
   onCategoryChange?: (
     value: string
   ) => void
@@ -40,15 +40,15 @@ type FilterBarProps = {
 }
 
 export default function FilterBar({
-  filter,
-  onFilterChange,
+  filter = 'all',
+  onFilterChange = () => {},
   sortOrder = 'recent',
-  onSortChange,
+  onSortChange = () => {},
   search = '',
-  onSearchChange,
-  onClearSearch,
+  onSearchChange = () => {},
+  onClearSearch = () => {},
   category = 'all',
-  onCategoryChange,
+  onCategoryChange = () => {},
   categories = [],
 }: FilterBarProps) {
   return (
@@ -60,8 +60,6 @@ export default function FilterBar({
         }
         data-active={
           filter === 'all'
-            ? 'true'
-            : 'false'
         }
       >
         All
@@ -74,8 +72,6 @@ export default function FilterBar({
         }
         data-active={
           filter === 'active'
-            ? 'true'
-            : 'false'
         }
       >
         Active
@@ -88,42 +84,18 @@ export default function FilterBar({
         }
         data-active={
           filter === 'completed'
-            ? 'true'
-            : 'false'
         }
       >
         Completed
       </button>
 
-      <select
-        id="category-filter"
-        value={category}
-        onChange={event =>
-          onCategoryChange?.(
-            event.target.value
-          )
-        }
-      >
-        <option value="all">
-          All categories
-        </option>
-
-        {categories.map(item => (
-          <option
-            key={item}
-            value={item}
-          >
-            {item}
-          </option>
-        ))}
-      </select>
-
-      <input
+      <FormInput
+        label="Search"
         id="search-input"
         type="text"
         value={search}
         onChange={event =>
-          onSearchChange?.(
+          onSearchChange(
             event.target.value
           )
         }
@@ -131,21 +103,25 @@ export default function FilterBar({
       />
 
       {search.length > 0 && (
-        <button
+        <Button
           id="clear-search"
-          type="button"
           onClick={onClearSearch}
+          variant="secondary"
         >
           Clear search
-        </button>
+        </Button>
       )}
+
+      <label htmlFor="sort-order">
+        Sort
+      </label>
 
       <select
         id="sort-order"
         value={sortOrder}
         onChange={event =>
-          onSortChange?.(
-            event.target.value as SortOrder
+          onSortChange(
+            event.target.value as SortValue
           )
         }
       >
@@ -168,6 +144,35 @@ export default function FilterBar({
         <option value="due-date">
           Due Date (Soonest First)
         </option>
+      </select>
+
+      <label htmlFor="category-filter">
+        Category
+      </label>
+
+      <select
+        id="category-filter"
+        value={category}
+        onChange={event =>
+          onCategoryChange(
+            event.target.value
+          )
+        }
+      >
+        <option value="all">
+          All categories
+        </option>
+
+        {categories.map(
+          item => (
+            <option
+              key={item}
+              value={item}
+            >
+              {item}
+            </option>
+          )
+        )}
       </select>
     </div>
   )
