@@ -1,6 +1,10 @@
 import './App.css'
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom'
 import ChallengeList from './components/ChallengeList'
 import TaskList from './components/TaskList'
 import TaskApp from './components/TaskApp'
@@ -48,11 +52,48 @@ const INITIAL_TASKS: Task[] = [
 ]
 
 function AppContent() {
-  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS)
+  const [tasks, setTasks] =
+    useState<Task[]>(INITIAL_TASKS)
 
-  const handleDelete = (id: string | number) => {
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    const savedTasks =
+      localStorage.getItem('task-app-tasks')
+
+    if (savedTasks) {
+      try {
+        const parsedTasks = JSON.parse(savedTasks)
+
+        if (Array.isArray(parsedTasks)) {
+          setTasks(parsedTasks)
+        }
+      } catch {
+        setTasks(INITIAL_TASKS)
+      }
+    }
+
+    setLoaded(true)
+  }, [])
+
+  useEffect(() => {
+    if (!loaded) {
+      return
+    }
+
+    localStorage.setItem(
+      'task-app-tasks',
+      JSON.stringify(tasks)
+    )
+  }, [tasks, loaded])
+
+  const handleDelete = (
+    id: string | number
+  ) => {
     if (window.confirm('Are you sure?')) {
-      setTasks(prev => prev.filter(task => task.id !== id))
+      setTasks(prev =>
+        prev.filter(task => task.id !== id)
+      )
     }
   }
 

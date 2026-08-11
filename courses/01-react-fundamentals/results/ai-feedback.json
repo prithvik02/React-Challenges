@@ -205,5 +205,28 @@
       "maintainability": 90,
       "overall": "The code is well-structured and well-organized, but could benefit from some improvements to maintainability and consistency. With some refactoring, it has the potential to be a high-quality, maintainable codebase."
     }
+  },
+  {
+    "challengeId": "10-useeffect-local-storage",
+    "challengeName": "useEffect - Local Storage Persistence",
+    "aiReview": {
+      "challengeId": "10-useeffect-local-storage",
+      "timestamp": "2026-08-11T19:16:25.860Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and easy to follow, with clear separation of concerns between different components.",
+        "The use of TypeScript and functional components is a good practice, making the code more maintainable and efficient.",
+        "The code is well-documented, with clear and concise comments explaining the purpose of each section."
+      ],
+      "improvements": [
+        "The `useEffect` hook for saving tasks to local storage can be improved by adding a dependency on the `tasks` array, to ensure that the effect is re-run whenever the tasks change.",
+        "The `handleDelete` function can be simplified by using the `filter` method with a callback function, instead of using `prev.filter` and `task.id !== id`.",
+        "The code can benefit from more robust error handling, such as catching and logging errors that may occur when parsing or saving tasks to local storage."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The code is well-structured and maintainable, but can benefit from some improvements to make it more robust and efficient. With some minor tweaks, it can meet the required threshold of ≥ 80%."
+    }
   }
 ]
