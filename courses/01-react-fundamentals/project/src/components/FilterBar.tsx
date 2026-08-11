@@ -8,6 +8,7 @@ type SortOrder =
   | 'priority-high'
   | 'priority-low'
   | 'alphabetical'
+  | 'due-date'
 
 type FilterBarProps = {
   filter: Filter
@@ -16,11 +17,13 @@ type FilterBarProps = {
   ) => void
 
   sortOrder?: SortOrder
+
   onSortChange?: (
     sort: SortOrder
   ) => void
 
   search?: string
+
   onSearchChange?: (
     value: string
   ) => void
@@ -28,6 +31,7 @@ type FilterBarProps = {
   onClearSearch?: () => void
 
   category?: string
+
   onCategoryChange?: (
     value: string
   ) => void
@@ -94,9 +98,9 @@ export default function FilterBar({
       <select
         id="category-filter"
         value={category}
-        onChange={e =>
+        onChange={event =>
           onCategoryChange?.(
-            e.target.value
+            event.target.value
           )
         }
       >
@@ -118,9 +122,9 @@ export default function FilterBar({
         id="search-input"
         type="text"
         value={search}
-        onChange={e =>
+        onChange={event =>
           onSearchChange?.(
-            e.target.value
+            event.target.value
           )
         }
         placeholder="Search tasks"
@@ -139,23 +143,30 @@ export default function FilterBar({
       <select
         id="sort-order"
         value={sortOrder}
-        onChange={e =>
+        onChange={event =>
           onSortChange?.(
-            e.target.value as SortOrder
+            event.target.value as SortOrder
           )
         }
       >
         <option value="recent">
           Recently Added
         </option>
+
         <option value="priority-high">
           Priority: High to Low
         </option>
+
         <option value="priority-low">
           Priority: Low to High
         </option>
+
         <option value="alphabetical">
           Alphabetical
+        </option>
+
+        <option value="due-date">
+          Due Date (Soonest First)
         </option>
       </select>
     </div>

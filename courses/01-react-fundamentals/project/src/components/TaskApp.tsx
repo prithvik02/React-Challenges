@@ -40,6 +40,7 @@ export default function TaskApp({
       | 'priority-high'
       | 'priority-low'
       | 'alphabetical'
+      | 'due-date'
     >('recent')
 
   const [search, setSearch] =
@@ -66,6 +67,9 @@ export default function TaskApp({
     useState('General')
 
   const [newTags, setNewTags] =
+    useState('')
+
+  const [newDueDate, setNewDueDate] =
     useState('')
 
   useEffect(() => {
@@ -105,6 +109,11 @@ export default function TaskApp({
               Array.isArray(task.tags)
                 ? task.tags
                 : [],
+            dueDate:
+              typeof task.dueDate ===
+              'string'
+                ? task.dueDate
+                : undefined,
           }))
 
         setTasks(fixedTasks)
@@ -126,7 +135,9 @@ export default function TaskApp({
       tasks
         .map(task => task.category)
         .filter(
-          (category): category is string =>
+          (
+            category
+          ): category is string =>
             Boolean(category)
         )
     ),
@@ -140,10 +151,12 @@ export default function TaskApp({
       return
     }
 
-    const tags = newTags
+    const cleanTags = newTags
       .split(',')
       .map(tag => tag.trim())
-      .filter(tag => tag.length > 0)
+      .filter(
+        tag => tag.length > 0
+      )
 
     const newTask: Task = {
       id: Date.now(),
@@ -155,7 +168,9 @@ export default function TaskApp({
       category:
         newCategory.trim() ||
         'General',
-      tags,
+      tags: cleanTags,
+      dueDate:
+        newDueDate || undefined,
     }
 
     setTasks(prev => [
@@ -168,6 +183,7 @@ export default function TaskApp({
     setNewPriority('Medium')
     setNewCategory('General')
     setNewTags('')
+    setNewDueDate('')
   }
 
   const handleToggle = (
@@ -209,6 +225,7 @@ export default function TaskApp({
       priority: string
       category?: string
       tags?: string[]
+      dueDate?: string
     }
   ) => {
     if (!updates.title.trim()) {
@@ -226,6 +243,9 @@ export default function TaskApp({
                 'General',
               tags:
                 updates.tags || [],
+              dueDate:
+                updates.dueDate ||
+                undefined,
             }
           : task
       )
@@ -270,20 +290,20 @@ export default function TaskApp({
   if (searchText) {
     filteredTasks =
       filteredTasks.filter(task => {
-        const title =
+        const taskTitle =
           task.title.toLowerCase()
 
-        const description =
+        const taskDescription =
           (
             task.description ||
             ''
           ).toLowerCase()
 
         return (
-          title.includes(
+          taskTitle.includes(
             searchText
           ) ||
-          description.includes(
+          taskDescription.includes(
             searchText
           )
         )
@@ -294,20 +314,20 @@ export default function TaskApp({
     [...filteredTasks]
 
   const getPriorityValue = (
-    priority: string
+    value: string
   ) => {
-    const value =
-      priority.toLowerCase()
+    const priority =
+      value.toLowerCase()
 
-    if (value === 'high') {
+    if (priority === 'high') {
       return 3
     }
 
-    if (value === 'medium') {
+    if (priority === 'medium') {
       return 2
     }
 
-    if (value === 'low') {
+    if (priority === 'low') {
       return 1
     }
 
@@ -358,6 +378,38 @@ export default function TaskApp({
     )
   }
 
+  if (
+    sortOrder === 'due-date'
+  ) {
+    sortedTasks.sort(
+      (a, b) => {
+        if (
+          !a.dueDate &&
+          !b.dueDate
+        ) {
+          return 0
+        }
+
+        if (!a.dueDate) {
+          return 1
+        }
+
+        if (!b.dueDate) {
+          return -1
+        }
+
+        return (
+          new Date(
+            a.dueDate
+          ).getTime() -
+          new Date(
+            b.dueDate
+          ).getTime()
+        )
+      }
+    )
+  }
+
   const isSearching =
     search !== effectiveSearch
 
@@ -369,9 +421,9 @@ export default function TaskApp({
             id="task-title"
             type="text"
             value={newTitle}
-            onChange={e =>
+            onChange={event =>
               setNewTitle(
-                e.target.value
+                event.target.value
               )
             }
             placeholder="Task title"
@@ -382,9 +434,9 @@ export default function TaskApp({
             value={
               newDescription
             }
-            onChange={e =>
+            onChange={event =>
               setNewDescription(
-                e.target.value
+                event.target.value
               )
             }
             placeholder="Description"
@@ -393,18 +445,20 @@ export default function TaskApp({
           <select
             id="task-priority"
             value={newPriority}
-            onChange={e =>
+            onChange={event =>
               setNewPriority(
-                e.target.value
+                event.target.value
               )
             }
           >
             <option value="High">
               High
             </option>
+
             <option value="Medium">
               Medium
             </option>
+
             <option value="Low">
               Low
             </option>
@@ -413,39 +467,54 @@ export default function TaskApp({
           <select
             id="task-category"
             value={newCategory}
-            onChange={e =>
+            onChange={event =>
               setNewCategory(
-                e.target.value
+                event.target.value
               )
             }
           >
             <option value="General">
               General
             </option>
+
             <option value="Work">
               Work
             </option>
+
             <option value="Personal">
               Personal
             </option>
+
             <option value="College">
               College
             </option>
           </select>
 
           <input
-            id="task-tags"
+            id="task-tags-input"
             type="text"
             value={newTags}
-            onChange={e =>
+            onChange={event =>
               setNewTags(
-                e.target.value
+                event.target.value
               )
             }
             placeholder="Tags separated by commas"
           />
 
+          <input
+            id="task-due-date"
+            type="date"
+            value={newDueDate}
+            onChange={event =>
+              setNewDueDate(
+                event.target.value
+              )
+            }
+          />
+
           <button
+            type="button"
             onClick={
               handleAddTask
             }

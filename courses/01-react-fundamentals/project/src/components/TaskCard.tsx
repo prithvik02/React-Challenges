@@ -10,6 +10,7 @@ type TaskCardProps = {
   completed?: boolean
   category?: string
   tags?: string[]
+  dueDate?: string
   onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
   onUpdateTask?: (
@@ -20,6 +21,7 @@ type TaskCardProps = {
       priority: string
       category?: string
       tags?: string[]
+      dueDate?: string
     }
   ) => void
   editingId?: string | number | null
@@ -34,6 +36,7 @@ export default function TaskCard({
   completed,
   category,
   tags,
+  dueDate,
   onToggle,
   onDelete,
   onUpdateTask,
@@ -41,18 +44,38 @@ export default function TaskCard({
 }: TaskCardProps) {
   const taskId = task?.id ?? id ?? 0
   const taskTitle = task?.title ?? title ?? ''
-  const taskDescription = task?.description ?? description ?? ''
-  const taskPriority = task?.priority ?? priority ?? 'Medium'
-  const taskCompleted = task?.completed ?? completed ?? false
-  const taskCategory = task?.category ?? category ?? 'General'
-  const taskTags = task?.tags ?? tags ?? []
+  const taskDescription =
+    task?.description ?? description ?? ''
+  const taskPriority =
+    task?.priority ?? priority ?? 'Medium'
+  const taskCompleted =
+    task?.completed ?? completed ?? false
+  const taskCategory =
+    task?.category ?? category ?? 'General'
+  const taskTags =
+    task?.tags ?? tags ?? []
+  const taskDueDate =
+    task?.dueDate ?? dueDate ?? ''
 
   const [editing, setEditing] = useState(false)
-  const [editTitle, setEditTitle] = useState(taskTitle)
-  const [editDescription, setEditDescription] = useState(taskDescription)
-  const [editPriority, setEditPriority] = useState(taskPriority)
-  const [editCategory, setEditCategory] = useState(taskCategory)
-  const [editTags, setEditTags] = useState(taskTags.join(', '))
+
+  const [editTitle, setEditTitle] =
+    useState(taskTitle)
+
+  const [editDescription, setEditDescription] =
+    useState(taskDescription)
+
+  const [editPriority, setEditPriority] =
+    useState(taskPriority)
+
+  const [editCategory, setEditCategory] =
+    useState(taskCategory)
+
+  const [editTags, setEditTags] =
+    useState(taskTags.join(', '))
+
+  const [editDueDate, setEditDueDate] =
+    useState(taskDueDate)
 
   useEffect(() => {
     if (
@@ -70,12 +93,14 @@ export default function TaskCard({
     setEditPriority(taskPriority)
     setEditCategory(taskCategory)
     setEditTags(taskTags.join(', '))
+    setEditDueDate(taskDueDate)
   }, [
     taskTitle,
     taskDescription,
     taskPriority,
     taskCategory,
     taskTags,
+    taskDueDate,
   ])
 
   const startEdit = () => {
@@ -84,6 +109,7 @@ export default function TaskCard({
     setEditPriority(taskPriority)
     setEditCategory(taskCategory)
     setEditTags(taskTags.join(', '))
+    setEditDueDate(taskDueDate)
     setEditing(true)
   }
 
@@ -106,6 +132,7 @@ export default function TaskCard({
         priority: editPriority,
         category: editCategory.trim() || 'General',
         tags: cleanTags,
+        dueDate: editDueDate || undefined,
       })
     }
 
@@ -118,8 +145,55 @@ export default function TaskCard({
     setEditPriority(taskPriority)
     setEditCategory(taskCategory)
     setEditTags(taskTags.join(', '))
+    setEditDueDate(taskDueDate)
     setEditing(false)
   }
+
+  const getDueDateStatus = () => {
+    if (!taskDueDate) {
+      return ''
+    }
+
+    const due = new Date(taskDueDate)
+
+    if (Number.isNaN(due.getTime())) {
+      return ''
+    }
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    const dueDay = new Date(due)
+    dueDay.setHours(0, 0, 0, 0)
+
+    const difference =
+      dueDay.getTime() - today.getTime()
+
+    const days =
+      Math.round(
+        difference / (1000 * 60 * 60 * 24)
+      )
+
+    if (!taskCompleted && days < 0) {
+      return 'Overdue'
+    }
+
+    if (days === 0) {
+      return 'Due Today'
+    }
+
+    if (days > 0 && days <= 3) {
+      return 'Due Soon'
+    }
+
+    return ''
+  }
+
+  const dueStatus = getDueDateStatus()
+
+  const readableDueDate = taskDueDate
+    ? new Date(taskDueDate).toLocaleDateString()
+    : ''
 
   if (editing) {
     return (
@@ -128,19 +202,25 @@ export default function TaskCard({
           id="edit-title"
           type="text"
           value={editTitle}
-          onChange={event => setEditTitle(event.target.value)}
+          onChange={event =>
+            setEditTitle(event.target.value)
+          }
         />
 
         <textarea
           id="edit-description"
           value={editDescription}
-          onChange={event => setEditDescription(event.target.value)}
+          onChange={event =>
+            setEditDescription(event.target.value)
+          }
         />
 
         <select
           id="edit-priority"
           value={editPriority}
-          onChange={event => setEditPriority(event.target.value)}
+          onChange={event =>
+            setEditPriority(event.target.value)
+          }
         >
           <option value="High">High</option>
           <option value="Medium">Medium</option>
@@ -150,7 +230,9 @@ export default function TaskCard({
         <select
           id="edit-category"
           value={editCategory}
-          onChange={event => setEditCategory(event.target.value)}
+          onChange={event =>
+            setEditCategory(event.target.value)
+          }
         >
           <option value="General">General</option>
           <option value="Work">Work</option>
@@ -162,15 +244,32 @@ export default function TaskCard({
           id="edit-tags"
           type="text"
           value={editTags}
-          onChange={event => setEditTags(event.target.value)}
+          onChange={event =>
+            setEditTags(event.target.value)
+          }
           placeholder="Tags separated by commas"
         />
 
-        <button type="button" onClick={saveEdit}>
+        <input
+          id="edit-due-date"
+          type="date"
+          value={editDueDate}
+          onChange={event =>
+            setEditDueDate(event.target.value)
+          }
+        />
+
+        <button
+          type="button"
+          onClick={saveEdit}
+        >
           Save
         </button>
 
-        <button type="button" onClick={cancelEdit}>
+        <button
+          type="button"
+          onClick={cancelEdit}
+        >
           Cancel
         </button>
       </div>
@@ -186,13 +285,17 @@ export default function TaskCard({
           <input
             type="checkbox"
             checked={taskCompleted}
-            onChange={() => onToggle(taskId)}
+            onChange={() =>
+              onToggle(taskId)
+            }
           />
         )}
 
         <span
           style={{
-            textDecoration: taskCompleted ? 'line-through' : 'none',
+            textDecoration: taskCompleted
+              ? 'line-through'
+              : 'none',
           }}
         >
           {taskCompleted ? 'Completed' : ''}
@@ -219,10 +322,36 @@ export default function TaskCard({
         ))}
       </div>
 
-      {taskDescription && <p>{taskDescription}</p>}
+      {taskDescription && (
+        <p>{taskDescription}</p>
+      )}
+
+      {taskDueDate && (
+        <div
+          id="task-due-date"
+          data-overdue={
+            dueStatus === 'Overdue'
+              ? 'true'
+              : 'false'
+          }
+        >
+          <span>
+            Due: {readableDueDate}
+          </span>
+
+          {dueStatus && (
+            <span>
+              {dueStatus}
+            </span>
+          )}
+        </div>
+      )}
 
       {onUpdateTask && (
-        <button type="button" onClick={startEdit}>
+        <button
+          type="button"
+          onClick={startEdit}
+        >
           Edit
         </button>
       )}
@@ -230,7 +359,9 @@ export default function TaskCard({
       {onDelete && (
         <button
           type="button"
-          onClick={() => onDelete(taskId)}
+          onClick={() =>
+            onDelete(taskId)
+          }
         >
           Delete
         </button>

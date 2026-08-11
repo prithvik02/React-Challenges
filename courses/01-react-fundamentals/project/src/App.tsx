@@ -63,9 +63,7 @@ const INITIAL_TASKS: Task[] = [
 
 function AppContent() {
   const [tasks, setTasks] =
-    useState<Task[]>(
-      INITIAL_TASKS
-    )
+    useState<Task[]>(INITIAL_TASKS)
 
   const [loaded, setLoaded] =
     useState(false)
@@ -91,11 +89,14 @@ function AppContent() {
                   ? task.category
                   : 'General',
               tags:
-                Array.isArray(
-                  task.tags
-                )
+                Array.isArray(task.tags)
                   ? task.tags
                   : [],
+              dueDate:
+                typeof task.dueDate ===
+                'string'
+                  ? task.dueDate
+                  : undefined,
             }))
 
           setTasks(fixedTasks)
@@ -254,9 +255,7 @@ function AppContent() {
                   setTasks={setTasks}
                   showForm
                   countFormat="tasks"
-                  showFilterBar={
-                    false
-                  }
+                  showFilterBar={false}
                 />
               }
             />

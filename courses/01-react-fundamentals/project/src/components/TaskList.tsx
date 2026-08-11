@@ -8,6 +8,7 @@ export type Task = {
   completed: boolean
   category?: string
   tags?: string[]
+  dueDate?: string
 }
 
 type TaskListProps = {
@@ -23,6 +24,7 @@ type TaskListProps = {
       priority: string
       category?: string
       tags?: string[]
+      dueDate?: string
     }
   ) => void
   editingId?: string | number | null
@@ -40,8 +42,7 @@ export default function TaskList({
   return (
     <div id="task-list">
       <div id="task-count">
-        {countText ||
-          `${tasks.length} Tasks`}
+        {countText || `${tasks.length} Tasks`}
       </div>
 
       {tasks.map(task => (

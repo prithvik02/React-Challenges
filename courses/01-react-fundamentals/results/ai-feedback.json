@@ -274,5 +274,28 @@
       "maintainability": 80,
       "overall": "The code is well-structured and follows good practices, but could benefit from some refactoring to improve maintainability and readability."
     }
+  },
+  {
+    "challengeId": "13-due-dates-and-sorting",
+    "challengeName": "Due Dates and Sorting",
+    "aiReview": {
+      "challengeId": "13-due-dates-and-sorting",
+      "timestamp": "2026-08-11T19:35:11.435Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and functional components is a good practice.",
+        "The code is well-commented and easy to understand."
+      ],
+      "improvements": [
+        "Some of the functions are too long and complex. Consider breaking them down into smaller functions.",
+        "The use of magic numbers (e.g., 3 in the due date calculation) should be avoided. Consider defining a constant for these values.",
+        "The code could benefit from more type checking and validation. Consider using libraries like Joi or Yup for this purpose."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The code is well-structured and follows good practices, but there are some areas for improvement to make it more maintainable and efficient."
+    }
   }
 ]
