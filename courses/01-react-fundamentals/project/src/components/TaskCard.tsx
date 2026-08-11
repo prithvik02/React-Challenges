@@ -1,110 +1,176 @@
+import { useEffect, useState } from 'react'
+import type { Task } from './TaskList'
+
 type TaskCardProps = {
-  id: string | number
-  title: string
+  task?: Task
+  id?: string | number
+  title?: string
   description?: string
-  completed: boolean
-  priority?: 'high' | 'medium' | 'low'
-  isEditing?: boolean
+  priority?: string
+  completed?: boolean
+  category?: string
+  tags?: string[]
   onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
-  onEdit?: (id: string | number) => void
-  onSave?: (
+  onUpdateTask?: (
     id: string | number,
     updates: {
       title: string
       description: string
-      priority: 'high' | 'medium' | 'low'
+      priority: string
+      category?: string
+      tags?: string[]
     }
   ) => void
-  onCancel?: () => void
+  editingId?: string | number | null
 }
 
 export default function TaskCard({
+  task,
   id,
   title,
-  description = '',
+  description,
+  priority,
   completed,
-  priority = 'medium',
-  isEditing = false,
+  category,
+  tags,
   onToggle,
   onDelete,
-  onEdit,
-  onSave,
-  onCancel,
+  onUpdateTask,
+  editingId,
 }: TaskCardProps) {
-  if (isEditing) {
+  const taskId = task?.id ?? id ?? 0
+  const taskTitle = task?.title ?? title ?? ''
+  const taskDescription = task?.description ?? description ?? ''
+  const taskPriority = task?.priority ?? priority ?? 'Medium'
+  const taskCompleted = task?.completed ?? completed ?? false
+  const taskCategory = task?.category ?? category ?? 'General'
+  const taskTags = task?.tags ?? tags ?? []
+
+  const [editing, setEditing] = useState(false)
+  const [editTitle, setEditTitle] = useState(taskTitle)
+  const [editDescription, setEditDescription] = useState(taskDescription)
+  const [editPriority, setEditPriority] = useState(taskPriority)
+  const [editCategory, setEditCategory] = useState(taskCategory)
+  const [editTags, setEditTags] = useState(taskTags.join(', '))
+
+  useEffect(() => {
+    if (
+      editingId !== undefined &&
+      editingId !== null &&
+      editingId !== taskId
+    ) {
+      setEditing(false)
+    }
+  }, [editingId, taskId])
+
+  useEffect(() => {
+    setEditTitle(taskTitle)
+    setEditDescription(taskDescription)
+    setEditPriority(taskPriority)
+    setEditCategory(taskCategory)
+    setEditTags(taskTags.join(', '))
+  }, [
+    taskTitle,
+    taskDescription,
+    taskPriority,
+    taskCategory,
+    taskTags,
+  ])
+
+  const startEdit = () => {
+    setEditTitle(taskTitle)
+    setEditDescription(taskDescription)
+    setEditPriority(taskPriority)
+    setEditCategory(taskCategory)
+    setEditTags(taskTags.join(', '))
+    setEditing(true)
+  }
+
+  const saveEdit = () => {
+    const cleanTitle = editTitle.trim()
+
+    if (!cleanTitle) {
+      return
+    }
+
+    const cleanTags = editTags
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0)
+
+    if (onUpdateTask) {
+      onUpdateTask(taskId, {
+        title: cleanTitle,
+        description: editDescription.trim(),
+        priority: editPriority,
+        category: editCategory.trim() || 'General',
+        tags: cleanTags,
+      })
+    }
+
+    setEditing(false)
+  }
+
+  const cancelEdit = () => {
+    setEditTitle(taskTitle)
+    setEditDescription(taskDescription)
+    setEditPriority(taskPriority)
+    setEditCategory(taskCategory)
+    setEditTags(taskTags.join(', '))
+    setEditing(false)
+  }
+
+  if (editing) {
     return (
-      <div id="task-card">
+      <div className="task-card">
         <input
+          id="edit-title"
           type="text"
-          value={title}
-          readOnly
-          hidden
+          value={editTitle}
+          onChange={event => setEditTitle(event.target.value)}
         />
 
-        <label>
-          Title
-          <input
-            type="text"
-            defaultValue={title}
-            id={`edit-title-${id}`}
-          />
-        </label>
+        <textarea
+          id="edit-description"
+          value={editDescription}
+          onChange={event => setEditDescription(event.target.value)}
+        />
 
-        <label>
-          Description
-          <textarea
-            defaultValue={description}
-            id={`edit-description-${id}`}
-          />
-        </label>
-
-        <label>
-          Priority
-          <select
-            defaultValue={priority}
-            id={`edit-priority-${id}`}
-          >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </label>
-
-        <button
-          onClick={() => {
-            const titleInput = document.getElementById(
-              `edit-title-${id}`
-            ) as HTMLInputElement
-
-            const descriptionInput = document.getElementById(
-              `edit-description-${id}`
-            ) as HTMLTextAreaElement
-
-            const priorityInput = document.getElementById(
-              `edit-priority-${id}`
-            ) as HTMLSelectElement
-
-            const newTitle = titleInput.value.trim()
-
-            if (!newTitle) {
-              return
-            }
-
-            onSave?.(id, {
-              title: newTitle,
-              description: descriptionInput.value,
-              priority: priorityInput.value as
-                | 'high'
-                | 'medium'
-                | 'low',
-            })
-          }}
+        <select
+          id="edit-priority"
+          value={editPriority}
+          onChange={event => setEditPriority(event.target.value)}
         >
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+
+        <select
+          id="edit-category"
+          value={editCategory}
+          onChange={event => setEditCategory(event.target.value)}
+        >
+          <option value="General">General</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="College">College</option>
+        </select>
+
+        <input
+          id="edit-tags"
+          type="text"
+          value={editTags}
+          onChange={event => setEditTags(event.target.value)}
+          placeholder="Tags separated by commas"
+        />
+
+        <button type="button" onClick={saveEdit}>
           Save
         </button>
 
-        <button onClick={onCancel}>
+        <button type="button" onClick={cancelEdit}>
           Cancel
         </button>
       </div>
@@ -112,41 +178,60 @@ export default function TaskCard({
   }
 
   return (
-    <div id="task-card">
-      {onToggle && (
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={() => onToggle(id)}
-        />
-      )}
+    <div className="task-card">
+      <h2>{taskTitle}</h2>
 
-      <span
-        style={{
-          textDecoration: completed
-            ? 'line-through'
-            : 'none',
-        }}
-      >
-        {title}
-      </span>
+      <div id="task-card">
+        {onToggle && (
+          <input
+            type="checkbox"
+            checked={taskCompleted}
+            onChange={() => onToggle(taskId)}
+          />
+        )}
 
-      {description && (
-        <span>{description}</span>
-      )}
+        <span
+          style={{
+            textDecoration: taskCompleted ? 'line-through' : 'none',
+          }}
+        >
+          {taskCompleted ? 'Completed' : ''}
+        </span>
 
-      {priority && (
-        <span>{priority}</span>
-      )}
+        <span>
+          Priority: {taskPriority}
+        </span>
+      </div>
 
-      {onEdit && (
-        <button onClick={() => onEdit(id)}>
+      <div id="task-category">
+        {taskCategory}
+      </div>
+
+      <div id="task-tags">
+        {taskTags.map(tag => (
+          <span
+            key={tag}
+            className="task-tag"
+            data-tag={tag}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {taskDescription && <p>{taskDescription}</p>}
+
+      {onUpdateTask && (
+        <button type="button" onClick={startEdit}>
           Edit
         </button>
       )}
 
       {onDelete && (
-        <button onClick={() => onDelete(id)}>
+        <button
+          type="button"
+          onClick={() => onDelete(taskId)}
+        >
           Delete
         </button>
       )}

@@ -1,12 +1,13 @@
-import { useState } from "react"
-import TaskCard from "./TaskCard"
+import TaskCard from './TaskCard'
 
-type Task = {
+export type Task = {
   id: string | number
   title: string
   description?: string
+  priority: string
   completed: boolean
-  priority?: 'high' | 'medium' | 'low'
+  category?: string
+  tags?: string[]
 }
 
 type TaskListProps = {
@@ -19,10 +20,13 @@ type TaskListProps = {
     updates: {
       title: string
       description: string
-      priority: 'high' | 'medium' | 'low'
+      priority: string
+      category?: string
+      tags?: string[]
     }
   ) => void
   editingId?: string | number | null
+  linkToTaskDetail?: boolean
 }
 
 export default function TaskList({
@@ -31,61 +35,24 @@ export default function TaskList({
   onToggle,
   onDelete,
   onUpdateTask,
-  editingId: externalEditingId,
+  editingId,
 }: TaskListProps) {
-  const [localEditingId, setLocalEditingId] = useState<
-    string | number | null
-  >(null)
-
-  const editingId =
-    externalEditingId !== undefined
-      ? externalEditingId
-      : localEditingId
-
-  const startEditing = (
-    id: string | number
-  ) => {
-    setLocalEditingId(id)
-  }
-
-  const stopEditing = () => {
-    setLocalEditingId(null)
-  }
-
   return (
     <div id="task-list">
-      {countText && (
-        <div id="task-count">
-          {countText}
-        </div>
-      )}
+      <div id="task-count">
+        {countText ||
+          `${tasks.length} Tasks`}
+      </div>
 
       {tasks.map(task => (
-        <div
+        <TaskCard
           key={task.id}
-          className="task-card"
-        >
-          <TaskCard
-            id={task.id}
-            title={task.title}
-            description={task.description}
-            completed={task.completed}
-            priority={task.priority}
-            isEditing={editingId === task.id}
-            onToggle={onToggle}
-            onDelete={onDelete}
-            onEdit={startEditing}
-            onCancel={stopEditing}
-            onSave={(id, updates) => {
-              if (!updates.title.trim()) {
-                return
-              }
-
-              onUpdateTask?.(id, updates)
-              stopEditing()
-            }}
-          />
-        </div>
+          task={task}
+          onToggle={onToggle}
+          onDelete={onDelete}
+          onUpdateTask={onUpdateTask}
+          editingId={editingId}
+        />
       ))}
     </div>
   )

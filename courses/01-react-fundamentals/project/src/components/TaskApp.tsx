@@ -5,12 +5,16 @@ import type { Task } from './TaskList'
 
 type TaskAppProps = {
   tasks: Task[]
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>
+  setTasks: React.Dispatch<
+    React.SetStateAction<Task[]>
+  >
   showForm?: boolean
   countFormat?: string
   showFilterBar?: boolean
   showStatsPanel?: boolean
-  onDelete?: (id: string | number) => void
+  onDelete?: (
+    id: string | number
+  ) => void
   linkToTaskDetail?: boolean
 }
 
@@ -23,22 +27,46 @@ export default function TaskApp({
   onDelete,
 }: TaskAppProps) {
   const [filter, setFilter] =
-    useState<'all' | 'active' | 'completed'>('all')
+    useState<
+      'all' | 'active' | 'completed'
+    >('all')
+
+  const [categoryFilter, setCategoryFilter] =
+    useState('all')
 
   const [sortOrder, setSortOrder] =
     useState<
-      'recent' | 'priority-high' | 'priority-low' | 'alphabetical'
+      | 'recent'
+      | 'priority-high'
+      | 'priority-low'
+      | 'alphabetical'
     >('recent')
 
-  const [search, setSearch] = useState('')
-  const [effectiveSearch, setEffectiveSearch] = useState('')
+  const [search, setSearch] =
+    useState('')
+
+  const [effectiveSearch, setEffectiveSearch] =
+    useState('')
 
   const [editingId, setEditingId] =
-    useState<string | number | null>(null)
+    useState<
+      string | number | null
+    >(null)
 
-  const [newTitle, setNewTitle] = useState('')
-  const [newDescription, setNewDescription] = useState('')
-  const [newPriority, setNewPriority] = useState('Medium')
+  const [newTitle, setNewTitle] =
+    useState('')
+
+  const [newDescription, setNewDescription] =
+    useState('')
+
+  const [newPriority, setNewPriority] =
+    useState('Medium')
+
+  const [newCategory, setNewCategory] =
+    useState('General')
+
+  const [newTags, setNewTags] =
+    useState('')
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -50,51 +78,126 @@ export default function TaskApp({
     }
   }, [search])
 
-  const isSearching = search !== effectiveSearch
+  useEffect(() => {
+    const savedTasks =
+      localStorage.getItem(
+        'task-app-tasks'
+      )
+
+    if (!savedTasks) {
+      return
+    }
+
+    try {
+      const parsedTasks =
+        JSON.parse(savedTasks)
+
+      if (Array.isArray(parsedTasks)) {
+        const fixedTasks =
+          parsedTasks.map(task => ({
+            ...task,
+            category:
+              typeof task.category ===
+              'string'
+                ? task.category
+                : 'General',
+            tags:
+              Array.isArray(task.tags)
+                ? task.tags
+                : [],
+          }))
+
+        setTasks(fixedTasks)
+      }
+    } catch {
+      return
+    }
+  }, [setTasks])
+
+  useEffect(() => {
+    localStorage.setItem(
+      'task-app-tasks',
+      JSON.stringify(tasks)
+    )
+  }, [tasks])
+
+  const categories = [
+    ...new Set(
+      tasks
+        .map(task => task.category)
+        .filter(
+          (category): category is string =>
+            Boolean(category)
+        )
+    ),
+  ]
 
   const handleAddTask = () => {
-    const title = newTitle.trim()
+    const title =
+      newTitle.trim()
 
     if (!title) {
       return
     }
 
+    const tags = newTags
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0)
+
     const newTask: Task = {
       id: Date.now(),
       title,
-      description: newDescription,
+      description:
+        newDescription.trim(),
       priority: newPriority,
       completed: false,
+      category:
+        newCategory.trim() ||
+        'General',
+      tags,
     }
 
-    setTasks(prev => [...prev, newTask])
+    setTasks(prev => [
+      ...prev,
+      newTask,
+    ])
 
     setNewTitle('')
     setNewDescription('')
     setNewPriority('Medium')
+    setNewCategory('General')
+    setNewTags('')
   }
 
-  const handleToggle = (id: string | number) => {
+  const handleToggle = (
+    id: string | number
+  ) => {
     setTasks(prev =>
       prev.map(task =>
         task.id === id
           ? {
               ...task,
-              completed: !task.completed,
+              completed:
+                !task.completed,
             }
           : task
       )
     )
   }
 
-  const handleDelete = (id: string | number) => {
+  const handleDelete = (
+    id: string | number
+  ) => {
     if (onDelete) {
       onDelete(id)
       return
     }
 
     setTasks(prev =>
-      prev.filter(task => task.id !== id)
+      prev.filter(
+        task => task.id !== id
+      )
     )
   }
 
@@ -104,6 +207,8 @@ export default function TaskApp({
       title: string
       description: string
       priority: string
+      category?: string
+      tags?: string[]
     }
   ) => {
     if (!updates.title.trim()) {
@@ -116,6 +221,11 @@ export default function TaskApp({
           ? {
               ...task,
               ...updates,
+              category:
+                updates.category ||
+                'General',
+              tags:
+                updates.tags || [],
             }
           : task
       )
@@ -127,39 +237,67 @@ export default function TaskApp({
   let filteredTasks = tasks
 
   if (filter === 'active') {
-    filteredTasks = tasks.filter(
-      task => !task.completed
-    )
+    filteredTasks =
+      filteredTasks.filter(
+        task => !task.completed
+      )
   }
 
   if (filter === 'completed') {
-    filteredTasks = tasks.filter(
-      task => task.completed
-    )
+    filteredTasks =
+      filteredTasks.filter(
+        task => task.completed
+      )
+  }
+
+  if (
+    categoryFilter !== 'all'
+  ) {
+    filteredTasks =
+      filteredTasks.filter(
+        task =>
+          (task.category ||
+            'General') ===
+          categoryFilter
+      )
   }
 
   const searchText =
-    effectiveSearch.trim().toLowerCase()
+    effectiveSearch
+      .trim()
+      .toLowerCase()
 
   if (searchText) {
-    filteredTasks = filteredTasks.filter(task => {
-      const title =
-        task.title.toLowerCase()
+    filteredTasks =
+      filteredTasks.filter(task => {
+        const title =
+          task.title.toLowerCase()
 
-      const description =
-        (task.description || '').toLowerCase()
+        const description =
+          (
+            task.description ||
+            ''
+          ).toLowerCase()
 
-      return (
-        title.includes(searchText) ||
-        description.includes(searchText)
-      )
-    })
+        return (
+          title.includes(
+            searchText
+          ) ||
+          description.includes(
+            searchText
+          )
+        )
+      })
   }
 
-  const sortedTasks = [...filteredTasks]
+  const sortedTasks =
+    [...filteredTasks]
 
-  const getPriorityValue = (priority: string) => {
-    const value = priority.toLowerCase()
+  const getPriorityValue = (
+    priority: string
+  ) => {
+    const value =
+      priority.toLowerCase()
 
     if (value === 'high') {
       return 3
@@ -176,31 +314,52 @@ export default function TaskApp({
     return 0
   }
 
-  if (sortOrder === 'priority-high') {
+  if (
+    sortOrder ===
+    'priority-high'
+  ) {
     sortedTasks.sort(
       (a, b) =>
-        getPriorityValue(String(b.priority)) -
-        getPriorityValue(String(a.priority))
-    )
-  }
-
-  if (sortOrder === 'priority-low') {
-    sortedTasks.sort(
-      (a, b) =>
-        getPriorityValue(String(a.priority)) -
-        getPriorityValue(String(b.priority))
-    )
-  }
-
-  if (sortOrder === 'alphabetical') {
-    sortedTasks.sort((a, b) =>
-      a.title
-        .toLowerCase()
-        .localeCompare(
-          b.title.toLowerCase()
+        getPriorityValue(
+          String(b.priority)
+        ) -
+        getPriorityValue(
+          String(a.priority)
         )
     )
   }
+
+  if (
+    sortOrder ===
+    'priority-low'
+  ) {
+    sortedTasks.sort(
+      (a, b) =>
+        getPriorityValue(
+          String(a.priority)
+        ) -
+        getPriorityValue(
+          String(b.priority)
+        )
+    )
+  }
+
+  if (
+    sortOrder ===
+    'alphabetical'
+  ) {
+    sortedTasks.sort(
+      (a, b) =>
+        a.title
+          .toLowerCase()
+          .localeCompare(
+            b.title.toLowerCase()
+          )
+    )
+  }
+
+  const isSearching =
+    search !== effectiveSearch
 
   return (
     <div>
@@ -211,16 +370,22 @@ export default function TaskApp({
             type="text"
             value={newTitle}
             onChange={e =>
-              setNewTitle(e.target.value)
+              setNewTitle(
+                e.target.value
+              )
             }
             placeholder="Task title"
           />
 
           <textarea
             id="task-description"
-            value={newDescription}
+            value={
+              newDescription
+            }
             onChange={e =>
-              setNewDescription(e.target.value)
+              setNewDescription(
+                e.target.value
+              )
             }
             placeholder="Description"
           />
@@ -229,15 +394,62 @@ export default function TaskApp({
             id="task-priority"
             value={newPriority}
             onChange={e =>
-              setNewPriority(e.target.value)
+              setNewPriority(
+                e.target.value
+              )
             }
           >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
+            <option value="High">
+              High
+            </option>
+            <option value="Medium">
+              Medium
+            </option>
+            <option value="Low">
+              Low
+            </option>
           </select>
 
-          <button onClick={handleAddTask}>
+          <select
+            id="task-category"
+            value={newCategory}
+            onChange={e =>
+              setNewCategory(
+                e.target.value
+              )
+            }
+          >
+            <option value="General">
+              General
+            </option>
+            <option value="Work">
+              Work
+            </option>
+            <option value="Personal">
+              Personal
+            </option>
+            <option value="College">
+              College
+            </option>
+          </select>
+
+          <input
+            id="task-tags"
+            type="text"
+            value={newTags}
+            onChange={e =>
+              setNewTags(
+                e.target.value
+              )
+            }
+            placeholder="Tags separated by commas"
+          />
+
+          <button
+            onClick={
+              handleAddTask
+            }
+          >
             Add Task
           </button>
         </div>
@@ -246,15 +458,30 @@ export default function TaskApp({
       {showFilterBar && (
         <FilterBar
           filter={filter}
-          onFilterChange={setFilter}
+          onFilterChange={
+            setFilter
+          }
           sortOrder={sortOrder}
-          onSortChange={setSortOrder}
+          onSortChange={
+            setSortOrder
+          }
           search={search}
-          onSearchChange={setSearch}
+          onSearchChange={
+            setSearch
+          }
           onClearSearch={() => {
             setSearch('')
             setEffectiveSearch('')
           }}
+          category={
+            categoryFilter
+          }
+          onCategoryChange={
+            setCategoryFilter
+          }
+          categories={
+            categories
+          }
         />
       )}
 
@@ -272,14 +499,28 @@ export default function TaskApp({
         <TaskList
           tasks={sortedTasks}
           countText={
-            countFormat === 'completed'
-              ? `${tasks.filter(task => task.completed).length} completed`
+            countFormat ===
+            'completed'
+              ? `${
+                  tasks.filter(
+                    task =>
+                      task.completed
+                  ).length
+                } completed`
               : `${sortedTasks.length} tasks`
           }
-          onToggle={handleToggle}
-          onDelete={handleDelete}
-          onUpdateTask={handleUpdateTask}
-          editingId={editingId}
+          onToggle={
+            handleToggle
+          }
+          onDelete={
+            handleDelete
+          }
+          onUpdateTask={
+            handleUpdateTask
+          }
+          editingId={
+            editingId
+          }
         />
       )}
     </div>

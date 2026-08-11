@@ -20,6 +20,8 @@ const INITIAL_TASKS: Task[] = [
     description: 'Description one',
     priority: 'High',
     completed: false,
+    category: 'Work',
+    tags: ['important', 'work'],
   },
   {
     id: 2,
@@ -27,6 +29,8 @@ const INITIAL_TASKS: Task[] = [
     description: 'Description two',
     priority: 'Medium',
     completed: false,
+    category: 'Personal',
+    tags: ['home'],
   },
   {
     id: 3,
@@ -34,6 +38,8 @@ const INITIAL_TASKS: Task[] = [
     description: 'Description three',
     priority: 'Low',
     completed: false,
+    category: 'College',
+    tags: ['study'],
   },
   {
     id: 4,
@@ -41,6 +47,8 @@ const INITIAL_TASKS: Task[] = [
     description: 'Description four',
     priority: 'Medium',
     completed: false,
+    category: 'Work',
+    tags: ['project'],
   },
   {
     id: 5,
@@ -48,25 +56,49 @@ const INITIAL_TASKS: Task[] = [
     description: 'Description five',
     priority: 'High',
     completed: false,
+    category: 'Personal',
+    tags: ['important'],
   },
 ]
 
 function AppContent() {
   const [tasks, setTasks] =
-    useState<Task[]>(INITIAL_TASKS)
+    useState<Task[]>(
+      INITIAL_TASKS
+    )
 
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] =
+    useState(false)
 
   useEffect(() => {
     const savedTasks =
-      localStorage.getItem('task-app-tasks')
+      localStorage.getItem(
+        'task-app-tasks'
+      )
 
     if (savedTasks) {
       try {
-        const parsedTasks = JSON.parse(savedTasks)
+        const parsedTasks =
+          JSON.parse(savedTasks)
 
         if (Array.isArray(parsedTasks)) {
-          setTasks(parsedTasks)
+          const fixedTasks =
+            parsedTasks.map(task => ({
+              ...task,
+              category:
+                typeof task.category ===
+                'string'
+                  ? task.category
+                  : 'General',
+              tags:
+                Array.isArray(
+                  task.tags
+                )
+                  ? task.tags
+                  : [],
+            }))
+
+          setTasks(fixedTasks)
         }
       } catch {
         setTasks(INITIAL_TASKS)
@@ -90,9 +122,15 @@ function AppContent() {
   const handleDelete = (
     id: string | number
   ) => {
-    if (window.confirm('Are you sure?')) {
+    if (
+      window.confirm(
+        'Are you sure?'
+      )
+    ) {
       setTasks(prev =>
-        prev.filter(task => task.id !== id)
+        prev.filter(
+          task => task.id !== id
+        )
       )
     }
   }
@@ -104,12 +142,19 @@ function AppContent() {
           <Routes>
             <Route
               path="/"
-              element={<ChallengeList />}
+              element={
+                <ChallengeList />
+              }
             />
 
             <Route
               path="/challenge/01-static-task-display"
-              element={<TaskList />}
+              element={
+                <TaskList
+                  tasks={tasks}
+                  countText={`${tasks.length} Tasks`}
+                />
+              }
             />
 
             <Route
@@ -156,7 +201,9 @@ function AppContent() {
                   setTasks={setTasks}
                   showForm
                   countFormat="tasks"
-                  onDelete={handleDelete}
+                  onDelete={
+                    handleDelete
+                  }
                 />
               }
             />
@@ -207,7 +254,9 @@ function AppContent() {
                   setTasks={setTasks}
                   showForm
                   countFormat="tasks"
-                  showFilterBar={false}
+                  showFilterBar={
+                    false
+                  }
                 />
               }
             />
@@ -363,12 +412,16 @@ function AppContent() {
 
             <Route
               path="/challenge/21-react-router/task/:id"
-              element={<TaskDetailPage />}
+              element={
+                <TaskDetailPage />
+              }
             />
 
             <Route
               path="/challenge/22-data-fetching"
-              element={<FetchDemoView />}
+              element={
+                <FetchDemoView />
+              }
             />
 
             <Route

@@ -1,4 +1,7 @@
-type Filter = 'all' | 'active' | 'completed'
+type Filter =
+  | 'all'
+  | 'active'
+  | 'completed'
 
 type SortOrder =
   | 'recent'
@@ -8,76 +11,107 @@ type SortOrder =
 
 type FilterBarProps = {
   filter: Filter
-  onFilterChange: (filter: Filter) => void
+  onFilterChange: (
+    filter: Filter
+  ) => void
+
   sortOrder?: SortOrder
-  onSortChange?: (sortOrder: SortOrder) => void
+  onSortChange?: (
+    sort: SortOrder
+  ) => void
+
   search?: string
-  onSearchChange?: (search: string) => void
+  onSearchChange?: (
+    value: string
+  ) => void
+
   onClearSearch?: () => void
+
+  category?: string
+  onCategoryChange?: (
+    value: string
+  ) => void
+
+  categories?: string[]
 }
 
 export default function FilterBar({
   filter,
   onFilterChange,
   sortOrder = 'recent',
-  onSortChange = () => {},
+  onSortChange,
   search = '',
-  onSearchChange = () => {},
-  onClearSearch = () => {},
+  onSearchChange,
+  onClearSearch,
+  category = 'all',
+  onCategoryChange,
+  categories = [],
 }: FilterBarProps) {
   return (
     <div id="filter-bar">
       <button
-        onClick={() => onFilterChange('all')}
+        type="button"
+        onClick={() =>
+          onFilterChange('all')
+        }
         data-active={
-          filter === 'all' ? 'true' : 'false'
+          filter === 'all'
+            ? 'true'
+            : 'false'
         }
       >
         All
       </button>
 
       <button
-        onClick={() => onFilterChange('active')}
+        type="button"
+        onClick={() =>
+          onFilterChange('active')
+        }
         data-active={
-          filter === 'active' ? 'true' : 'false'
+          filter === 'active'
+            ? 'true'
+            : 'false'
         }
       >
         Active
       </button>
 
       <button
-        onClick={() => onFilterChange('completed')}
+        type="button"
+        onClick={() =>
+          onFilterChange('completed')
+        }
         data-active={
-          filter === 'completed' ? 'true' : 'false'
+          filter === 'completed'
+            ? 'true'
+            : 'false'
         }
       >
         Completed
       </button>
 
       <select
-        id="sort-order"
-        value={sortOrder}
+        id="category-filter"
+        value={category}
         onChange={e =>
-          onSortChange(
-            e.target.value as SortOrder
+          onCategoryChange?.(
+            e.target.value
           )
         }
       >
-        <option value="recent">
-          Recently Added
+        <option value="all">
+          All categories
         </option>
 
-        <option value="priority-high">
-          Priority: High to Low
-        </option>
-
-        <option value="priority-low">
-          Priority: Low to High
-        </option>
-
-        <option value="alphabetical">
-          Alphabetical
-        </option>
+        {categories.map(item => (
+          <option
+            key={item}
+            value={item}
+          >
+            {item}
+          </option>
+        ))}
       </select>
 
       <input
@@ -85,7 +119,9 @@ export default function FilterBar({
         type="text"
         value={search}
         onChange={e =>
-          onSearchChange(e.target.value)
+          onSearchChange?.(
+            e.target.value
+          )
         }
         placeholder="Search tasks"
       />
@@ -93,11 +129,35 @@ export default function FilterBar({
       {search.length > 0 && (
         <button
           id="clear-search"
+          type="button"
           onClick={onClearSearch}
         >
           Clear search
         </button>
       )}
+
+      <select
+        id="sort-order"
+        value={sortOrder}
+        onChange={e =>
+          onSortChange?.(
+            e.target.value as SortOrder
+          )
+        }
+      >
+        <option value="recent">
+          Recently Added
+        </option>
+        <option value="priority-high">
+          Priority: High to Low
+        </option>
+        <option value="priority-low">
+          Priority: Low to High
+        </option>
+        <option value="alphabetical">
+          Alphabetical
+        </option>
+      </select>
     </div>
   )
 }
