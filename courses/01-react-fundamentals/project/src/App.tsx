@@ -1,5 +1,8 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState,
+} from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -63,7 +66,9 @@ const INITIAL_TASKS: Task[] = [
 
 function AppContent() {
   const [tasks, setTasks] =
-    useState<Task[]>(INITIAL_TASKS)
+    useState<Task[]>(
+      INITIAL_TASKS
+    )
 
   const [loaded, setLoaded] =
     useState(false)
@@ -79,30 +84,42 @@ function AppContent() {
         const parsedTasks =
           JSON.parse(savedTasks)
 
-        if (Array.isArray(parsedTasks)) {
+        if (
+          Array.isArray(
+            parsedTasks
+          )
+        ) {
           const fixedTasks =
-            parsedTasks.map(task => ({
-              ...task,
-              category:
-                typeof task.category ===
-                'string'
-                  ? task.category
-                  : 'General',
-              tags:
-                Array.isArray(task.tags)
-                  ? task.tags
-                  : [],
-              dueDate:
-                typeof task.dueDate ===
-                'string'
-                  ? task.dueDate
-                  : undefined,
-            }))
+            parsedTasks.map(
+              task => ({
+                ...task,
+                category:
+                  typeof task.category ===
+                  'string'
+                    ? task.category
+                    : 'General',
+                tags:
+                  Array.isArray(
+                    task.tags
+                  )
+                    ? task.tags
+                    : [],
+                dueDate:
+                  typeof task.dueDate ===
+                  'string'
+                    ? task.dueDate
+                    : undefined,
+              })
+            )
 
-          setTasks(fixedTasks)
+          setTasks(
+            fixedTasks
+          )
         }
       } catch {
-        setTasks(INITIAL_TASKS)
+        setTasks(
+          INITIAL_TASKS
+        )
       }
     }
 
@@ -130,7 +147,8 @@ function AppContent() {
     ) {
       setTasks(prev =>
         prev.filter(
-          task => task.id !== id
+          task =>
+            task.id !== id
         )
       )
     }
@@ -163,7 +181,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm={false}
                   countFormat="tasks"
                 />
@@ -175,7 +195,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -187,7 +209,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="completed"
                 />
@@ -199,7 +223,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   onDelete={
@@ -214,7 +240,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -227,7 +255,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -240,7 +270,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -252,7 +284,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar={false}
@@ -265,7 +299,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -277,7 +313,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -290,7 +328,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -303,7 +343,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -316,7 +358,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showStatsPanel
@@ -329,7 +373,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -341,7 +387,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -353,7 +401,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -365,7 +415,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -377,7 +429,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -389,7 +443,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                 />
@@ -401,7 +457,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   linkToTaskDetail
@@ -428,7 +486,9 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  setTasks={
+                    setTasks
+                  }
                   showForm
                   countFormat="tasks"
                   showFilterBar

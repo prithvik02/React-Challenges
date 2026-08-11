@@ -1,6 +1,11 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import TaskList from './TaskList'
 import FilterBar from './FilterBar'
+import StatsPanel from './StatsPanel'
 import type { Task } from './TaskList'
 
 type TaskAppProps = {
@@ -24,6 +29,7 @@ export default function TaskApp({
   showForm = false,
   countFormat = 'tasks',
   showFilterBar = true,
+  showStatsPanel = false,
   onDelete,
 }: TaskAppProps) {
   const [filter, setFilter] =
@@ -130,18 +136,114 @@ export default function TaskApp({
     )
   }, [tasks])
 
-  const categories = [
-    ...new Set(
-      tasks
-        .map(task => task.category)
-        .filter(
-          (
-            category
-          ): category is string =>
-            Boolean(category)
+  const stats = useMemo(() => {
+    const total = tasks.length
+
+    const completed =
+      tasks.filter(
+        task => task.completed
+      ).length
+
+    const active =
+      tasks.filter(
+        task => !task.completed
+      ).length
+
+    const overdue =
+      tasks.filter(task => {
+        if (
+          task.completed ||
+          !task.dueDate
+        ) {
+          return false
+        }
+
+        const dueDate = new Date(
+          task.dueDate
         )
-    ),
-  ]
+
+        if (
+          Number.isNaN(
+            dueDate.getTime()
+          )
+        ) {
+          return false
+        }
+
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        dueDate.setHours(0, 0, 0, 0)
+
+        return dueDate < today
+      }).length
+
+    const completedPercentage =
+      total > 0
+        ? Math.round(
+            (completed / total) *
+              100
+          )
+        : 0
+
+    const categories: Record<
+      string,
+      number
+    > = {}
+
+    tasks.forEach(task => {
+      const category =
+        task.category || 'General'
+
+      categories[category] =
+        (categories[category] || 0) +
+        1
+    })
+
+    const priorities: Record<
+      string,
+      number
+    > = {}
+
+    tasks.forEach(task => {
+      const priority =
+        task.priority || 'Medium'
+
+      priorities[priority] =
+        (priorities[priority] || 0) +
+        1
+    })
+
+    return {
+      total,
+      completed,
+      completedPercentage,
+      active,
+      overdue,
+      categories,
+      priorities,
+    }
+  }, [tasks])
+
+  const categories = useMemo(
+    () =>
+      [
+        ...new Set(
+          tasks
+            .map(
+              task =>
+                task.category
+            )
+            .filter(
+              (
+                category
+              ): category is string =>
+                Boolean(category)
+            )
+        ),
+      ],
+    [tasks]
+  )
 
   const handleAddTask = () => {
     const title =
@@ -290,20 +392,20 @@ export default function TaskApp({
   if (searchText) {
     filteredTasks =
       filteredTasks.filter(task => {
-        const taskTitle =
+        const title =
           task.title.toLowerCase()
 
-        const taskDescription =
+        const description =
           (
             task.description ||
             ''
           ).toLowerCase()
 
         return (
-          taskTitle.includes(
+          title.includes(
             searchText
           ) ||
-          taskDescription.includes(
+          description.includes(
             searchText
           )
         )
@@ -316,18 +418,24 @@ export default function TaskApp({
   const getPriorityValue = (
     value: string
   ) => {
-    const priority =
-      value.toLowerCase()
-
-    if (priority === 'high') {
+    if (
+      value.toLowerCase() ===
+      'high'
+    ) {
       return 3
     }
 
-    if (priority === 'medium') {
+    if (
+      value.toLowerCase() ===
+      'medium'
+    ) {
       return 2
     }
 
-    if (priority === 'low') {
+    if (
+      value.toLowerCase() ===
+      'low'
+    ) {
       return 1
     }
 
@@ -341,10 +449,10 @@ export default function TaskApp({
     sortedTasks.sort(
       (a, b) =>
         getPriorityValue(
-          String(b.priority)
+          b.priority
         ) -
         getPriorityValue(
-          String(a.priority)
+          a.priority
         )
     )
   }
@@ -356,10 +464,10 @@ export default function TaskApp({
     sortedTasks.sort(
       (a, b) =>
         getPriorityValue(
-          String(a.priority)
+          a.priority
         ) -
         getPriorityValue(
-          String(b.priority)
+          b.priority
         )
     )
   }
@@ -379,7 +487,8 @@ export default function TaskApp({
   }
 
   if (
-    sortOrder === 'due-date'
+    sortOrder ===
+    'due-date'
   ) {
     sortedTasks.sort(
       (a, b) => {
@@ -551,6 +660,13 @@ export default function TaskApp({
           categories={
             categories
           }
+        />
+      )}
+
+      {showStatsPanel && (
+        <StatsPanel
+          tasks={tasks}
+          stats={stats}
         />
       )}
 
