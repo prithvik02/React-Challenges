@@ -4,6 +4,7 @@ type Task = {
   id: string | number
   title: string
   completed: boolean
+  priority?: 'high' | 'medium' | 'low'
 }
 
 type TaskListProps = {
@@ -17,21 +18,29 @@ export default function TaskList({
   tasks,
   countText,
   onToggle,
-  onDelete
+  onDelete,
 }: TaskListProps) {
   return (
     <div id="task-list">
-      <div id="task-count">{countText}</div>
+      {countText && (
+        <div id="task-count">
+          {countText}
+        </div>
+      )}
 
       {tasks.map(task => (
-        <TaskCard
-          key={task.id}
-          id={task.id}
-          title={task.title}
-          completed={task.completed}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
+        <div key={task.id} className="task-card">
+          <h2>{task.title}</h2>
+
+          <TaskCard
+            id={task.id}
+            title={task.title}
+            completed={task.completed}
+            priority={task.priority}
+            onToggle={onToggle}
+            onDelete={onDelete}
+          />
+        </div>
       ))}
     </div>
   )

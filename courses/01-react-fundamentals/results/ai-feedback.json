@@ -136,5 +136,28 @@
       "maintainability": 90,
       "overall": "The code is well-structured and follows good practices, but there are some areas that can be improved for better maintainability and readability."
     }
+  },
+  {
+    "challengeId": "07-priority-based-sorting",
+    "challengeName": "Priority-Based Sorting",
+    "aiReview": {
+      "challengeId": "07-priority-based-sorting",
+      "timestamp": "2026-08-11T17:01:21.238Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and functional components is a good practice.",
+        "The code is well-organized and easy to follow."
+      ],
+      "improvements": [
+        "The sorting logic can be simplified by using a more generic approach, such as using a sorting function that takes a key and a comparison function as arguments.",
+        "The use of magic numbers (e.g., 3, 2, 1) in the sorting logic can be replaced with named constants for better readability.",
+        "The `handleDelete` function in `App.tsx` can be moved to a separate utility file for better organization."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The code is well-structured and follows good practices, but there are some areas for improvement to make it more maintainable and efficient."
+    }
   }
 ]

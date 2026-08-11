@@ -1,11 +1,24 @@
-type Filter = 'all' | 'active' | 'completed';
+type Filter = 'all' | 'active' | 'completed'
+
+type SortOrder =
+  | 'recent'
+  | 'priority-high'
+  | 'priority-low'
+  | 'alphabetical'
 
 type FilterBarProps = {
-  filter: Filter;
-  onFilterChange: (filter: Filter) => void;
-};
+  filter: Filter
+  onFilterChange: (filter: Filter) => void
+  sortOrder: SortOrder
+  onSortChange: (sortOrder: SortOrder) => void
+}
 
-function FilterBar({ filter, onFilterChange }: FilterBarProps) {
+export default function FilterBar({
+  filter,
+  onFilterChange,
+  sortOrder,
+  onSortChange,
+}: FilterBarProps) {
   return (
     <div id="filter-bar">
       <button
@@ -28,8 +41,19 @@ function FilterBar({ filter, onFilterChange }: FilterBarProps) {
       >
         Completed
       </button>
-    </div>
-  );
-}
 
-export default FilterBar;
+      <select
+        id="sort-order"
+        value={sortOrder}
+        onChange={(e) =>
+          onSortChange(e.target.value as SortOrder)
+        }
+      >
+        <option value="recent">Recently Added</option>
+        <option value="priority-high">Priority: High to Low</option>
+        <option value="priority-low">Priority: Low to High</option>
+        <option value="alphabetical">Alphabetical</option>
+      </select>
+    </div>
+  )
+}
