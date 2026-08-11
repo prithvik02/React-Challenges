@@ -31,8 +31,10 @@ export default function TaskApp({
       'recent' | 'priority-high' | 'priority-low' | 'alphabetical'
     >('recent')
 
-  const [newTitle, setNewTitle] = useState("")
-  const [newDescription, setNewDescription] = useState("")
+  const [search, setSearch] = useState('')
+
+  const [newTitle, setNewTitle] = useState('')
+  const [newDescription, setNewDescription] = useState('')
   const [newPriority, setNewPriority] =
     useState<'high' | 'medium' | 'low'>('medium')
 
@@ -46,18 +48,19 @@ export default function TaskApp({
       return
     }
 
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      description: newDescription,
-      completed: false,
-      priority: newPriority,
-    }
+    setTasks(prev => [
+      ...prev,
+      {
+        id: Date.now(),
+        title,
+        description: newDescription,
+        completed: false,
+        priority: newPriority,
+      },
+    ])
 
-    setTasks(prev => [...prev, newTask])
-
-    setNewTitle("")
-    setNewDescription("")
+    setNewTitle('')
+    setNewDescription('')
     setNewPriority('medium')
   }
 
@@ -120,6 +123,22 @@ export default function TaskApp({
     )
   }
 
+  const searchText = search.trim().toLowerCase()
+
+  if (searchText) {
+    filteredTasks = filteredTasks.filter(task => {
+      const title = task.title.toLowerCase()
+
+      const description =
+        (task.description || '').toLowerCase()
+
+      return (
+        title.includes(searchText) ||
+        description.includes(searchText)
+      )
+    })
+  }
+
   const sortedTasks = [...filteredTasks]
 
   const priority = {
@@ -171,7 +190,6 @@ export default function TaskApp({
           <input
             id="task-title"
             type="text"
-            placeholder="Task title"
             value={newTitle}
             onChange={e =>
               setNewTitle(e.target.value)
@@ -180,7 +198,6 @@ export default function TaskApp({
 
           <textarea
             id="task-description"
-            placeholder="Description"
             value={newDescription}
             onChange={e =>
               setNewDescription(e.target.value)
@@ -210,13 +227,37 @@ export default function TaskApp({
         </div>
       )}
 
-      {showFilterBar && (
+      {showFilterBar ? (
         <FilterBar
           filter={filter}
           onFilterChange={setFilter}
           sortOrder={sortOrder}
           onSortChange={setSortOrder}
+          search={search}
+          onSearchChange={setSearch}
+          onClearSearch={() => setSearch('')}
         />
+      ) : (
+        <div id="search-area">
+          <input
+            id="search-input"
+            type="text"
+            value={search}
+            onChange={e =>
+              setSearch(e.target.value)
+            }
+            placeholder="Search tasks"
+          />
+
+          {search.length > 0 && (
+            <button
+              id="clear-search"
+              onClick={() => setSearch('')}
+            >
+              Clear search
+            </button>
+          )}
+        </div>
       )}
 
       <div id="task-count">
@@ -225,12 +266,12 @@ export default function TaskApp({
 
       {sortedTasks.length === 0 ? (
         <div id="filter-empty-message">
-          No tasks match this filter
+          No tasks found
         </div>
       ) : (
         <TaskList
           tasks={sortedTasks}
-          countText={`${sortedTasks.length} tasks`}
+          countText={`Showing ${sortedTasks.length} of ${tasks.length} tasks`}
           onToggle={handleToggle}
           onDelete={handleDelete}
           onUpdateTask={handleUpdateTask}
