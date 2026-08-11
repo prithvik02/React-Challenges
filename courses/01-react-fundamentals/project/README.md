@@ -68,11 +68,11 @@ npm run review -- --challenge=01-static-task-display
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 10/8/2026, 1:25:20 pm*
+*Auto-updated when you run review. Last run: 11/8/2026, 9:33:28 pm*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 5 / 23 (21.7%) |
+| Challenges completed | 6 / 23 (26.1%) |
 | Average score | 90.7% |
 
 | Challenge | Skills covered | Status |
@@ -82,7 +82,7 @@ npm run review -- --challenge=01-static-task-display
 | Adding New Tasks | Controlled inputs, Event handlers, Form validation, Form handling, Immutable state | Passed |
 | Task Completion Toggle | Updating array state, Event handlers with params, Conditional styling | Passed |
 | Task Deletion | filter, Immutable state, Confirmation patterns, Prop functions with arguments | Passed |
-| Task Filtering | Derived state, Conditional rendering, Filter logic composition | — |
+| Task Filtering | Derived state, Conditional rendering, Filter logic composition | Passed |
 | Priority-Based Sorting | Array sort, Sort stability, Multiple sort criteria, Select dropdowns | — |
 | Task Editing | Inline editing, Conditional rendering, Edit mode state, Controlled inputs, Form handling, State synchronization | — |
 | Search Functionality | Text search, Combining filters, String methods, Search UI patterns | — |

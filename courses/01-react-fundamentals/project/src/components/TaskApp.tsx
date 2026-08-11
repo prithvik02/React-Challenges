@@ -1,4 +1,6 @@
+import { useState } from "react"
 import TaskList from "./TaskList"
+import FilterBar from "./FilterBar"
 
 type Task = {
   id: string | number
@@ -12,6 +14,9 @@ type TaskAppProps = {
 }
 
 export default function TaskApp({ tasks, setTasks }: TaskAppProps) {
+  const [filter, setFilter] =
+    useState<'all' | 'active' | 'completed'>('all')
+
   const handleToggle = (id: string | number) => {
     setTasks(prev =>
       prev.map(task =>
@@ -26,14 +31,39 @@ export default function TaskApp({ tasks, setTasks }: TaskAppProps) {
     setTasks(prev => prev.filter(task => task.id !== id))
   }
 
+  let filteredTasks = tasks
+
+  if (filter === 'active') {
+    filteredTasks = tasks.filter(task => !task.completed)
+  }
+
+  if (filter === 'completed') {
+    filteredTasks = tasks.filter(task => task.completed)
+  }
+
   return (
     <div>
-      <TaskList
-        tasks={tasks}
-        countText={`${tasks.length} tasks`}
-        onToggle={handleToggle}
-        onDelete={handleDelete}
+      <FilterBar
+        filter={filter}
+        onFilterChange={setFilter}
       />
+
+      <div id="task-count">
+        Showing {filteredTasks.length} of {tasks.length} tasks
+      </div>
+
+      {filteredTasks.length === 0 ? (
+        <div id="filter-empty-message">
+          No tasks match this filter
+        </div>
+      ) : (
+        <TaskList
+          tasks={filteredTasks}
+          countText={`${filteredTasks.length} tasks`}
+          onToggle={handleToggle}
+          onDelete={handleDelete}
+        />
+      )}
     </div>
   )
 }
