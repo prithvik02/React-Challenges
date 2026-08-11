@@ -3117,5 +3117,210 @@
       "maintainability": 80,
       "overall": "The code is well-structured and maintainable, but can benefit from some improvements to make it more robust and efficient. With some minor tweaks, it can meet the required threshold of ≥ 80%."
     }
+  },
+  {
+    "challengeId": "11-useeffect-debounced-search",
+    "challengeName": "useEffect - Debounced Search",
+    "timestamp": "2026-08-11T19:22:48.895Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 88
+    },
+    "totalScore": 90.7,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: useEffect - Debounced Search"
+              ],
+              "fullName": " Challenge 11: useEffect - Debounced Search FilterBar should exist for search/debounce integration",
+              "status": "passed",
+              "title": "FilterBar should exist for search/debounce integration",
+              "duration": 17,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: useEffect - Debounced Search"
+              ],
+              "fullName": " Challenge 11: useEffect - Debounced Search TaskList should render tasks",
+              "status": "passed",
+              "title": "TaskList should render tasks",
+              "duration": 8,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1786476170726,
+          "endTime": 1786476170751,
+          "status": "passed",
+          "message": "",
+          "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/01-react-fundamentals/project/tests/challenge-11.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "functionalComponent",
+        "useEffect"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/components/FilterBar.tsx",
+          "patternsFound": [
+            "functionalComponent"
+          ],
+          "patternsMissing": [
+            "useEffect"
+          ]
+        },
+        {
+          "file": "src/components/TaskApp.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "useEffect"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/App.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "useEffect"
+          ],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-11.spec.ts",
+          "file": "challenge-11.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 11: useEffect Debounced Search - E2E",
+              "file": "challenge-11.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should display task list",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 172,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-11T19:22:53.554Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-e3db42bbbc868bb5cc60",
+                  "file": "challenge-11.spec.ts",
+                  "line": 8,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "11-useeffect-debounced-search",
+      "timestamp": "2026-08-11T19:22:53.940Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and organized into separate components for FilterBar and TaskApp.",
+        "The use of TypeScript and functional components makes the code more maintainable and scalable.",
+        "The code includes a good number of comments and explanations to help understand the logic and functionality."
+      ],
+      "improvements": [
+        "Some of the variable names could be more descriptive, especially in the TaskApp component. For example, `newTitle` could be renamed to `newTaskTitle`.",
+        "The `handleToggle` function could be simplified by using the `map` method to update the tasks array directly.",
+        "The `handleDelete` function could be extracted into a separate function to make the code more modular and reusable."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and maintainable, but could benefit from some minor improvements to make it more efficient and scalable. Overall, the code is a good example of how to implement debounced search functionality in a React application."
+    },
+    "aiResults": {
+      "challengeId": "11-useeffect-debounced-search",
+      "timestamp": "2026-08-11T19:22:53.940Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and organized into separate components for FilterBar and TaskApp.",
+        "The use of TypeScript and functional components makes the code more maintainable and scalable.",
+        "The code includes a good number of comments and explanations to help understand the logic and functionality."
+      ],
+      "improvements": [
+        "Some of the variable names could be more descriptive, especially in the TaskApp component. For example, `newTitle` could be renamed to `newTaskTitle`.",
+        "The `handleToggle` function could be simplified by using the `map` method to update the tasks array directly.",
+        "The `handleDelete` function could be extracted into a separate function to make the code more modular and reusable."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and maintainable, but could benefit from some minor improvements to make it more efficient and scalable. Overall, the code is a good example of how to implement debounced search functionality in a React application."
+    }
   }
 ]

@@ -31,6 +31,7 @@ export default function TaskApp({
     >('recent')
 
   const [search, setSearch] = useState('')
+  const [effectiveSearch, setEffectiveSearch] = useState('')
 
   const [editingId, setEditingId] =
     useState<string | number | null>(null)
@@ -38,6 +39,18 @@ export default function TaskApp({
   const [newTitle, setNewTitle] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [newPriority, setNewPriority] = useState('Medium')
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setEffectiveSearch(search)
+    }, 300)
+
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [search])
+
+  const isSearching = search !== effectiveSearch
 
   const handleAddTask = () => {
     const title = newTitle.trim()
@@ -125,7 +138,8 @@ export default function TaskApp({
     )
   }
 
-  const searchText = search.trim().toLowerCase()
+  const searchText =
+    effectiveSearch.trim().toLowerCase()
 
   if (searchText) {
     filteredTasks = filteredTasks.filter(task => {
@@ -188,32 +202,6 @@ export default function TaskApp({
     )
   }
 
-  useEffect(() => {
-    const savedTasks =
-      localStorage.getItem('task-app-tasks')
-
-    if (!savedTasks) {
-      return
-    }
-
-    try {
-      const parsedTasks = JSON.parse(savedTasks)
-
-      if (Array.isArray(parsedTasks)) {
-        setTasks(parsedTasks)
-      }
-    } catch {
-      return
-    }
-  }, [setTasks])
-
-  useEffect(() => {
-    localStorage.setItem(
-      'task-app-tasks',
-      JSON.stringify(tasks)
-    )
-  }, [tasks])
-
   return (
     <div>
       {showForm && (
@@ -255,7 +243,7 @@ export default function TaskApp({
         </div>
       )}
 
-      {showFilterBar ? (
+      {showFilterBar && (
         <FilterBar
           filter={filter}
           onFilterChange={setFilter}
@@ -263,28 +251,16 @@ export default function TaskApp({
           onSortChange={setSortOrder}
           search={search}
           onSearchChange={setSearch}
-          onClearSearch={() => setSearch('')}
+          onClearSearch={() => {
+            setSearch('')
+            setEffectiveSearch('')
+          }}
         />
-      ) : (
-        <div id="search-area">
-          <input
-            id="search-input"
-            type="text"
-            value={search}
-            onChange={e =>
-              setSearch(e.target.value)
-            }
-            placeholder="Search tasks"
-          />
+      )}
 
-          {search.length > 0 && (
-            <button
-              id="clear-search"
-              onClick={() => setSearch('')}
-            >
-              Clear search
-            </button>
-          )}
+      {isSearching && (
+        <div id="searching-indicator">
+          Searching...
         </div>
       )}
 
