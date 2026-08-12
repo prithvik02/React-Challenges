@@ -1,60 +1,53 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import type { ReactNode } from 'react'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
-export type Theme = 'light' | 'dark'
+type Theme = 'light' | 'dark'
 
-export type ThemeContextType = {
+type ThemeContextValue = {
   theme: Theme
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
 }
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(
-  undefined
-)
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: 'light',
+  setTheme: () => {},
+  toggleTheme: () => {},
+})
 
 type ThemeProviderProps = {
   children: ReactNode
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('task-app-theme')
-
-    if (savedTheme === 'dark') {
-      return 'dark'
-    }
-
-    return 'light'
-  })
-
-  useEffect(() => {
-    localStorage.setItem('task-app-theme', theme)
-  }, [theme])
+  const [theme, setTheme] = useLocalStorage<Theme>(
+    'task-app-theme',
+    'light'
+  )
 
   const toggleTheme = () => {
-    setTheme((current) => {
-      if (current === 'light') {
-        return 'dark'
-      }
-
-      return 'light'
-    })
+    setTheme((currentTheme) =>
+      currentTheme === 'light' ? 'dark' : 'light'
+    )
   }
 
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme,
+      toggleTheme,
+    }),
+    [theme]
+  )
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   )
 }
 
-export function useTheme(): ThemeContextType {
-  const context = useContext(ThemeContext)
-
-  if (context === undefined) {
-    throw new Error('useTheme must be used inside ThemeProvider')
-  }
-
-  return context
+export function useTheme() {
+  return useContext(ThemeContext)
 }

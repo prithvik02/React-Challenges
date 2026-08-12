@@ -8,6 +8,7 @@ import TaskDetailPage from './components/TaskDetailPage'
 import FetchDemoView from './components/FetchDemoView'
 import ThemeToggle from './components/ThemeToggle'
 import { ThemeProvider, useTheme } from './contexts/ThemeContext'
+import { useLocalStorage } from './hooks/useLocalStorage'
 import type { Task } from './components/TaskList'
 
 const INITIAL_TASKS: Task[] = [
@@ -59,7 +60,11 @@ const INITIAL_TASKS: Task[] = [
 ]
 
 function AppContent() {
-  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS)
+  const [tasks, setTasks] = useLocalStorage<Task[]>(
+    'task-app-tasks',
+    INITIAL_TASKS
+  )
+
   const { theme } = useTheme()
 
   const handleDelete = (id: string | number) => {
