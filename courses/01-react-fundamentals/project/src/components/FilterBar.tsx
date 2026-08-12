@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import FormInput from './FormInput'
 import Button from './Button'
 
@@ -51,8 +52,17 @@ export default function FilterBar({
   onCategoryChange = () => {},
   categories = [],
 }: FilterBarProps) {
+  const searchInputRef =
+    useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    searchInputRef.current?.focus()
+  }, [])
+
   return (
-    <div id="filter-bar">
+    <div
+      data-filter-bar="true"
+    >
       <button
         type="button"
         onClick={() =>
@@ -100,6 +110,7 @@ export default function FilterBar({
           )
         }
         placeholder="Search tasks"
+        inputRef={searchInputRef}
       />
 
       {search.length > 0 && (
@@ -163,16 +174,14 @@ export default function FilterBar({
           All categories
         </option>
 
-        {categories.map(
-          item => (
-            <option
-              key={item}
-              value={item}
-            >
-              {item}
-            </option>
-          )
-        )}
+        {categories.map(item => (
+          <option
+            key={item}
+            value={item}
+          >
+            {item}
+          </option>
+        ))}
       </select>
     </div>
   )

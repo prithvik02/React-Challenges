@@ -1,13 +1,18 @@
+import type { RefObject } from 'react'
+
 type FormInputProps = {
   label?: string
   id: string
   value: string
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >
   ) => void
   type?: string
   placeholder?: string
   error?: string
+  inputRef?: RefObject<HTMLInputElement | null>
 }
 
 export default function FormInput({
@@ -18,6 +23,7 @@ export default function FormInput({
   type = 'text',
   placeholder,
   error,
+  inputRef,
 }: FormInputProps) {
   return (
     <div className="form-input">
@@ -28,6 +34,7 @@ export default function FormInput({
       )}
 
       <input
+        ref={inputRef}
         id={id}
         type={type}
         value={value}
