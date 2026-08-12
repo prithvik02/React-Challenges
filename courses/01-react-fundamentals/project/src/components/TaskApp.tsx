@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -245,7 +246,7 @@ export default function TaskApp({
     [tasks]
   )
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     const title =
       newTitle.trim()
 
@@ -286,120 +287,128 @@ export default function TaskApp({
     setNewCategory('General')
     setNewTags('')
     setNewDueDate('')
-  }
+  }, [
+    newTitle,
+    newDescription,
+    newPriority,
+    newCategory,
+    newTags,
+    newDueDate,
+    setTasks,
+])
 
-  const handleToggle = (
-    id: string | number
-  ) => {
-    setTasks(prev =>
-      prev.map(task =>
-        task.id === id
-          ? {
-              ...task,
-              completed:
-                !task.completed,
-            }
-          : task
+  const handleToggle = useCallback(
+    (id: string | number) => {
+      setTasks(prev =>
+        prev.map(task =>
+          task.id === id
+            ? {
+                ...task,
+                completed:
+                  !task.completed,
+              }
+            : task
+        )
       )
-    )
-  }
+    },
+    [setTasks]
+  )
 
-  const handleDelete = (
-    id: string | number
-  ) => {
-    if (onDelete) {
-      onDelete(id)
-      return
-    }
+  const handleDelete = useCallback(
+    (id: string | number) => {
+      if (onDelete) {
+        onDelete(id)
+        return
+      }
 
-    setTasks(prev =>
-      prev.filter(
-        task => task.id !== id
+      setTasks(prev =>
+        prev.filter(
+          task => task.id !== id
+        )
       )
-    )
-  }
+    },
+    [onDelete, setTasks]
+  )
 
-  const handleUpdateTask = (
-    id: string | number,
-    updates: {
-      title: string
-      description: string
-      priority: string
-      category?: string
-      tags?: string[]
-      dueDate?: string
-    }
-  ) => {
-    if (!updates.title.trim()) {
-      return
-    }
+  const handleUpdateTask = useCallback(
+    (
+      id: string | number,
+      updates: {
+        title: string
+        description: string
+        priority: string
+        category?: string
+        tags?: string[]
+        dueDate?: string
+      }
+    ) => {
+      if (!updates.title.trim()) {
+        return
+      }
 
-    setTasks(prev =>
-      prev.map(task =>
-        task.id === id
-          ? {
-              ...task,
-              ...updates,
-              category:
-                updates.category ||
-                'General',
-              tags:
-                updates.tags || [],
-              dueDate:
-                updates.dueDate ||
-                undefined,
-            }
-          : task
+      setTasks(prev =>
+        prev.map(task =>
+          task.id === id
+            ? {
+                ...task,
+                ...updates,
+                category:
+                  updates.category ||
+                  'General',
+                tags:
+                  updates.tags || [],
+                dueDate:
+                  updates.dueDate ||
+                  undefined,
+              }
+            : task
+        )
       )
-    )
 
-    setEditingId(null)
-  }
+      setEditingId(null)
+    },
+    [setTasks]
+  )
 
-  let filteredTasks = tasks
+  const sortedTasks = useMemo(() => {
+    let result = [...tasks]
 
-  if (filter === 'active') {
-    filteredTasks =
-      filteredTasks.filter(
+    if (filter === 'active') {
+      result = result.filter(
         task => !task.completed
       )
-  }
+    }
 
-  if (filter === 'completed') {
-    filteredTasks =
-      filteredTasks.filter(
+    if (filter === 'completed') {
+      result = result.filter(
         task => task.completed
       )
-  }
+    }
 
-  if (
-    categoryFilter !== 'all'
-  ) {
-    filteredTasks =
-      filteredTasks.filter(
+    if (
+      categoryFilter !== 'all'
+    ) {
+      result = result.filter(
         task =>
           (task.category ||
             'General') ===
           categoryFilter
       )
-  }
+    }
 
-  const searchText =
-    effectiveSearch
-      .trim()
-      .toLowerCase()
+    const searchText =
+      effectiveSearch
+        .trim()
+        .toLowerCase()
 
-  if (searchText) {
-    filteredTasks =
-      filteredTasks.filter(task => {
+    if (searchText) {
+      result = result.filter(task => {
         const title =
           task.title.toLowerCase()
 
-        const description =
-          (
-            task.description ||
-            ''
-          ).toLowerCase()
+        const description = (
+          task.description || ''
+        ).toLowerCase()
 
         return (
           title.includes(
@@ -410,88 +419,84 @@ export default function TaskApp({
           )
         )
       })
-  }
+    }
 
-  const sortedTasks =
-    [...filteredTasks]
+    const getPriorityValue = (
+      value: string
+    ) => {
+      if (
+        value.toLowerCase() ===
+        'high'
+      ) {
+        return 3
+      }
 
-  const getPriorityValue = (
-    value: string
-  ) => {
-    if (
-      value.toLowerCase() ===
-      'high'
-    ) {
-      return 3
+      if (
+        value.toLowerCase() ===
+        'medium'
+      ) {
+        return 2
+      }
+
+      if (
+        value.toLowerCase() ===
+        'low'
+      ) {
+        return 1
+      }
+
+      return 0
     }
 
     if (
-      value.toLowerCase() ===
-      'medium'
+      sortOrder ===
+      'priority-high'
     ) {
-      return 2
-    }
-
-    if (
-      value.toLowerCase() ===
-      'low'
-    ) {
-      return 1
-    }
-
-    return 0
-  }
-
-  if (
-    sortOrder ===
-    'priority-high'
-  ) {
-    sortedTasks.sort(
-      (a, b) =>
-        getPriorityValue(
-          b.priority
-        ) -
-        getPriorityValue(
-          a.priority
-        )
-    )
-  }
-
-  if (
-    sortOrder ===
-    'priority-low'
-  ) {
-    sortedTasks.sort(
-      (a, b) =>
-        getPriorityValue(
-          a.priority
-        ) -
-        getPriorityValue(
-          b.priority
-        )
-    )
-  }
-
-  if (
-    sortOrder ===
-    'alphabetical'
-  ) {
-    sortedTasks.sort(
-      (a, b) =>
-        a.title
-          .toLowerCase()
-          .localeCompare(
-            b.title.toLowerCase()
+      result.sort(
+        (a, b) =>
+          getPriorityValue(
+            b.priority
+          ) -
+          getPriorityValue(
+            a.priority
           )
-    )
-  }
+      )
+    }
 
-  if (
-    sortOrder ===
-    'due-date'
-  ) {
-    sortedTasks.sort(
-      (a, b) => {
+    if (
+      sortOrder ===
+      'priority-low'
+    ) {
+      result.sort(
+        (a, b) =>
+          getPriorityValue(
+            a.priority
+          ) -
+          getPriorityValue(
+            b.priority
+          )
+      )
+    }
+
+    if (
+      sortOrder ===
+      'alphabetical'
+    ) {
+      result.sort(
+        (a, b) =>
+          a.title
+            .toLowerCase()
+            .localeCompare(
+              b.title.toLowerCase()
+            )
+      )
+    }
+
+    if (
+      sortOrder ===
+      'due-date'
+    ) {
+      result.sort((a, b) => {
         if (
           !a.dueDate &&
           !b.dueDate
@@ -515,12 +520,29 @@ export default function TaskApp({
             b.dueDate
           ).getTime()
         )
-      }
-    )
-  }
+      })
+    }
 
-  const isSearching =
-    search !== effectiveSearch
+    return result
+  }, [
+    tasks,
+    filter,
+    categoryFilter,
+    effectiveSearch,
+    sortOrder,
+  ])
+
+  const isSearching = useMemo(
+    () =>
+      search !== effectiveSearch,
+    [search, effectiveSearch]
+  )
+
+  const handleClearSearch =
+    useCallback(() => {
+      setSearch('')
+      setEffectiveSearch('')
+    }, [])
 
   return (
     <div>
@@ -540,9 +562,7 @@ export default function TaskApp({
 
           <textarea
             id="task-description"
-            value={
-              newDescription
-            }
+            value={newDescription}
             onChange={event =>
               setNewDescription(
                 event.target.value
@@ -647,10 +667,9 @@ export default function TaskApp({
           onSearchChange={
             setSearch
           }
-          onClearSearch={() => {
-            setSearch('')
-            setEffectiveSearch('')
-          }}
+          onClearSearch={
+            handleClearSearch
+          }
           category={
             categoryFilter
           }

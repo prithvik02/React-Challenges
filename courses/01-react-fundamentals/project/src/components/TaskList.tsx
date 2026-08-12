@@ -1,14 +1,15 @@
+import { useMemo } from 'react'
 import TaskCard from './TaskCard'
 
 export type Task = {
   id: string | number
   title: string
   description: string
-  priority: string
+  priority: 'High' | 'Medium' | 'Low'
   completed: boolean
   category?: string
   tags?: string[]
-  dueDate?: string
+  dueDate?: string | number
 }
 
 type TaskListProps = {
@@ -18,85 +19,48 @@ type TaskListProps = {
   onDelete?: (id: string | number) => void
   onUpdateTask?: (
     id: string | number,
-    updates: {
-      title: string
-      description: string
-      priority: string
-      category: string
-      tags: string[]
-      dueDate?: string
-    }
+    updates: Partial<Task>
   ) => void
-  editingId?: string | number | null
+  editingId?: string | number
 }
 
-const defaultTasks: Task[] = [
-  {
-    id: 1,
-    title: 'Task One',
-    description: 'First task',
-    priority: 'High',
-    completed: false,
-    category: 'General',
-    tags: [],
-  },
-  {
-    id: 2,
-    title: 'Task Two',
-    description: 'Second task',
-    priority: 'Medium',
-    completed: false,
-    category: 'General',
-    tags: [],
-  },
-  {
-    id: 3,
-    title: 'Task Three',
-    description: 'Third task',
-    priority: 'Low',
-    completed: false,
-    category: 'General',
-    tags: [],
-  },
-]
-
-export default function TaskList({
-  tasks = defaultTasks,
+function TaskList({
+  tasks = [],
   countText,
   onToggle,
   onDelete,
   onUpdateTask,
   editingId,
 }: TaskListProps) {
-  const completedCount = tasks.filter(
-    task => task.completed
-  ).length
+  const displayedTasks = useMemo(() => {
+    return tasks
+  }, [tasks])
 
   return (
-    <section id="task-list">
+    <div id="task-list">
       <div id="task-count">
-        {countText ??
-          `${completedCount} of ${tasks.length} completed`}
+        {countText || `${displayedTasks.length} Tasks`}
       </div>
 
-      {tasks.map(task => (
+      {displayedTasks.map((task) => (
         <TaskCard
           key={task.id}
           id={task.id}
-          task={task}
           title={task.title}
           description={task.description}
           priority={task.priority}
           completed={task.completed}
-          category={task.category ?? 'General'}
-          tags={task.tags ?? []}
+          category={task.category || 'General'}
+          tags={task.tags || []}
           dueDate={task.dueDate}
           onToggle={onToggle}
           onDelete={onDelete}
           onUpdateTask={onUpdateTask}
-          editingId={editingId}
+          editing={editingId === task.id}
         />
       ))}
-    </section>
+    </div>
   )
 }
+
+export default TaskList
