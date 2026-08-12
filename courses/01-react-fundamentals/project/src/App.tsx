@@ -1,15 +1,19 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ChallengeList from './components/ChallengeList'
 import TaskList from './components/TaskList'
 import TaskApp from './components/TaskApp'
 import TaskDetailPage from './components/TaskDetailPage'
 import FetchDemoView from './components/FetchDemoView'
-import ThemeToggle from './components/ThemeToggle'
-import { ThemeProvider, useTheme } from './contexts/ThemeContext'
-import { useLocalStorage } from './hooks/useLocalStorage'
+import { ThemeProvider } from './contexts/ThemeContext'
 import type { Task } from './components/TaskList'
+import { useLocalStorage } from './hooks/useLocalStorage'
+import {
+  taskReducer,
+  DELETE_TASK,
+  TOGGLE_TASK,
+} from './reducers/taskReducer'
 
 const INITIAL_TASKS: Task[] = [
   {
@@ -60,31 +64,46 @@ const INITIAL_TASKS: Task[] = [
 ]
 
 function AppContent() {
-  const [tasks, setTasks] = useLocalStorage<Task[]>(
+  const [savedTasks, setSavedTasks] = useLocalStorage<Task[]>(
     'task-app-tasks',
     INITIAL_TASKS
   )
 
-  const { theme } = useTheme()
+  const [tasks, dispatch] = useReducer(
+    taskReducer,
+    savedTasks
+  )
+
+  useEffect(() => {
+    setSavedTasks(tasks)
+  }, [tasks, setSavedTasks])
 
   const handleDelete = (id: string | number) => {
     if (window.confirm('Are you sure?')) {
-      setTasks((prev) => prev.filter((task) => task.id !== id))
+      dispatch({
+        type: DELETE_TASK,
+        payload: id,
+      })
     }
+  }
+
+  const handleToggle = (id: string | number) => {
+    dispatch({
+      type: TOGGLE_TASK,
+      payload: id,
+    })
   }
 
   return (
     <BrowserRouter>
-      <div className="App" data-theme={theme}>
-        <ThemeToggle />
-
+      <div className="App">
         <main>
           <Routes>
             <Route path="/" element={<ChallengeList />} />
 
             <Route
               path="/challenge/01-static-task-display"
-              element={<TaskList />}
+              element={<TaskList tasks={tasks} />}
             />
 
             <Route
@@ -92,7 +111,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm={false}
                   countFormat="tasks"
                 />
@@ -104,7 +123,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -116,9 +135,10 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="completed"
+                  onToggle={handleToggle}
                 />
               }
             />
@@ -128,7 +148,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   onDelete={handleDelete}
@@ -141,7 +161,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -154,7 +174,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -167,7 +187,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -179,7 +199,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -192,7 +212,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -204,7 +224,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -217,7 +237,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -230,7 +250,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
@@ -243,7 +263,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showStatsPanel
@@ -256,7 +276,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -268,7 +288,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -280,7 +300,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -292,7 +312,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -304,7 +324,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -316,7 +336,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                 />
@@ -328,7 +348,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   linkToTaskDetail
@@ -351,7 +371,7 @@ function AppContent() {
               element={
                 <TaskApp
                   tasks={tasks}
-                  setTasks={setTasks}
+                  dispatch={dispatch}
                   showForm
                   countFormat="tasks"
                   showFilterBar
