@@ -7,20 +7,17 @@ import {
 import TaskList from './TaskList'
 import FilterBar from './FilterBar'
 import StatsPanel from './StatsPanel'
+import ErrorBoundary from './ErrorBoundary'
 import type { Task } from './TaskList'
 
 type TaskAppProps = {
   tasks: Task[]
-  setTasks: React.Dispatch<
-    React.SetStateAction<Task[]>
-  >
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>
   showForm?: boolean
   countFormat?: string
   showFilterBar?: boolean
   showStatsPanel?: boolean
-  onDelete?: (
-    id: string | number
-  ) => void
+  onDelete?: (id: string | number) => void
   linkToTaskDetail?: boolean
 }
 
@@ -34,12 +31,9 @@ export default function TaskApp({
   onDelete,
 }: TaskAppProps) {
   const [filter, setFilter] =
-    useState<
-      'all' | 'active' | 'completed'
-    >('all')
+    useState<'all' | 'active' | 'completed'>('all')
 
-  const [categoryFilter, setCategoryFilter] =
-    useState('all')
+  const [categoryFilter, setCategoryFilter] = useState('all')
 
   const [sortOrder, setSortOrder] =
     useState<
@@ -50,34 +44,18 @@ export default function TaskApp({
       | 'due-date'
     >('recent')
 
-  const [search, setSearch] =
-    useState('')
-
-  const [effectiveSearch, setEffectiveSearch] =
-    useState('')
+  const [search, setSearch] = useState('')
+  const [effectiveSearch, setEffectiveSearch] = useState('')
 
   const [editingId, setEditingId] =
-    useState<
-      string | number | null
-    >(null)
+    useState<string | number | null>(null)
 
-  const [newTitle, setNewTitle] =
-    useState('')
-
-  const [newDescription, setNewDescription] =
-    useState('')
-
-  const [newPriority, setNewPriority] =
-    useState('Medium')
-
-  const [newCategory, setNewCategory] =
-    useState('General')
-
-  const [newTags, setNewTags] =
-    useState('')
-
-  const [newDueDate, setNewDueDate] =
-    useState('')
+  const [newTitle, setNewTitle] = useState('')
+  const [newDescription, setNewDescription] = useState('')
+  const [newPriority, setNewPriority] = useState('Medium')
+  const [newCategory, setNewCategory] = useState('General')
+  const [newTags, setNewTags] = useState('')
+  const [newDueDate, setNewDueDate] = useState('')
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -90,38 +68,30 @@ export default function TaskApp({
   }, [search])
 
   useEffect(() => {
-    const savedTasks =
-      localStorage.getItem(
-        'task-app-tasks'
-      )
+    const savedTasks = localStorage.getItem('task-app-tasks')
 
     if (!savedTasks) {
       return
     }
 
     try {
-      const parsedTasks =
-        JSON.parse(savedTasks)
+      const parsedTasks = JSON.parse(savedTasks)
 
       if (Array.isArray(parsedTasks)) {
-        const fixedTasks =
-          parsedTasks.map(task => ({
-            ...task,
-            category:
-              typeof task.category ===
-              'string'
-                ? task.category
-                : 'General',
-            tags:
-              Array.isArray(task.tags)
-                ? task.tags
-                : [],
-            dueDate:
-              typeof task.dueDate ===
-              'string'
-                ? task.dueDate
-                : undefined,
-          }))
+        const fixedTasks = parsedTasks.map(task => ({
+          ...task,
+          category:
+            typeof task.category === 'string'
+              ? task.category
+              : 'General',
+          tags: Array.isArray(task.tags)
+            ? task.tags
+            : [],
+          dueDate:
+            typeof task.dueDate === 'string'
+              ? task.dueDate
+              : undefined,
+        }))
 
         setTasks(fixedTasks)
       }
@@ -131,88 +101,67 @@ export default function TaskApp({
   }, [setTasks])
 
   useEffect(() => {
-    localStorage.setItem(
-      'task-app-tasks',
-      JSON.stringify(tasks)
-    )
+    try {
+      localStorage.setItem(
+        'task-app-tasks',
+        JSON.stringify(tasks)
+      )
+    } catch {
+      return
+    }
   }, [tasks])
 
   const stats = useMemo(() => {
     const total = tasks.length
 
-    const completed =
-      tasks.filter(
-        task => task.completed
-      ).length
+    const completed = tasks.filter(
+      task => task.completed
+    ).length
 
-    const active =
-      tasks.filter(
-        task => !task.completed
-      ).length
+    const active = tasks.filter(
+      task => !task.completed
+    ).length
 
-    const overdue =
-      tasks.filter(task => {
-        if (
-          task.completed ||
-          !task.dueDate
-        ) {
-          return false
-        }
+    const overdue = tasks.filter(task => {
+      if (task.completed || !task.dueDate) {
+        return false
+      }
 
-        const dueDate = new Date(
-          task.dueDate
-        )
+      const dueDate = new Date(task.dueDate)
 
-        if (
-          Number.isNaN(
-            dueDate.getTime()
-          )
-        ) {
-          return false
-        }
+      if (Number.isNaN(dueDate.getTime())) {
+        return false
+      }
 
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
 
-        dueDate.setHours(0, 0, 0, 0)
+      dueDate.setHours(0, 0, 0, 0)
 
-        return dueDate < today
-      }).length
+      return dueDate < today
+    }).length
 
     const completedPercentage =
       total > 0
-        ? Math.round(
-            (completed / total) *
-              100
-          )
+        ? Math.round((completed / total) * 100)
         : 0
 
-    const categories: Record<
-      string,
-      number
-    > = {}
+    const categories: Record<string, number> = {}
 
     tasks.forEach(task => {
-      const category =
-        task.category || 'General'
+      const category = task.category || 'General'
 
       categories[category] =
-        (categories[category] || 0) +
-        1
+        (categories[category] || 0) + 1
     })
 
-    const priorities: Record<
-      string,
-      number
-    > = {}
+    const priorities: Record<string, number> = {}
 
     tasks.forEach(task => {
-      const priority =
-        task.priority || 'Medium'
+      const priority = task.priority || 'Medium'
 
       priorities[priority] =
-        (priorities[priority] || 0) +
-        1
+        (priorities[priority] || 0) + 1
     })
 
     return {
@@ -231,10 +180,7 @@ export default function TaskApp({
       [
         ...new Set(
           tasks
-            .map(
-              task =>
-                task.category
-            )
+            .map(task => task.category)
             .filter(
               (
                 category
@@ -247,8 +193,7 @@ export default function TaskApp({
   )
 
   const handleAddTask = useCallback(() => {
-    const title =
-      newTitle.trim()
+    const title = newTitle.trim()
 
     if (!title) {
       return
@@ -257,29 +202,20 @@ export default function TaskApp({
     const cleanTags = newTags
       .split(',')
       .map(tag => tag.trim())
-      .filter(
-        tag => tag.length > 0
-      )
+      .filter(tag => tag.length > 0)
 
     const newTask: Task = {
       id: Date.now(),
       title,
-      description:
-        newDescription.trim(),
+      description: newDescription.trim(),
       priority: newPriority,
       completed: false,
-      category:
-        newCategory.trim() ||
-        'General',
+      category: newCategory.trim() || 'General',
       tags: cleanTags,
-      dueDate:
-        newDueDate || undefined,
+      dueDate: newDueDate || undefined,
     }
 
-    setTasks(prev => [
-      ...prev,
-      newTask,
-    ])
+    setTasks(prev => [...prev, newTask])
 
     setNewTitle('')
     setNewDescription('')
@@ -295,7 +231,7 @@ export default function TaskApp({
     newTags,
     newDueDate,
     setTasks,
-])
+  ])
 
   const handleToggle = useCallback(
     (id: string | number) => {
@@ -304,8 +240,7 @@ export default function TaskApp({
           task.id === id
             ? {
                 ...task,
-                completed:
-                  !task.completed,
+                completed: !task.completed,
               }
             : task
         )
@@ -322,9 +257,7 @@ export default function TaskApp({
       }
 
       setTasks(prev =>
-        prev.filter(
-          task => task.id !== id
-        )
+        prev.filter(task => task.id !== id)
       )
     },
     [onDelete, setTasks]
@@ -353,13 +286,10 @@ export default function TaskApp({
                 ...task,
                 ...updates,
                 category:
-                  updates.category ||
-                  'General',
-                tags:
-                  updates.tags || [],
+                  updates.category || 'General',
+                tags: updates.tags || [],
                 dueDate:
-                  updates.dueDate ||
-                  undefined,
+                  updates.dueDate || undefined,
               }
             : task
         )
@@ -374,133 +304,83 @@ export default function TaskApp({
     let result = [...tasks]
 
     if (filter === 'active') {
-      result = result.filter(
-        task => !task.completed
-      )
+      result = result.filter(task => !task.completed)
     }
 
     if (filter === 'completed') {
-      result = result.filter(
-        task => task.completed
-      )
+      result = result.filter(task => task.completed)
     }
 
-    if (
-      categoryFilter !== 'all'
-    ) {
+    if (categoryFilter !== 'all') {
       result = result.filter(
         task =>
-          (task.category ||
-            'General') ===
+          (task.category || 'General') ===
           categoryFilter
       )
     }
 
-    const searchText =
-      effectiveSearch
-        .trim()
-        .toLowerCase()
+    const searchText = effectiveSearch
+      .trim()
+      .toLowerCase()
 
     if (searchText) {
       result = result.filter(task => {
-        const title =
-          task.title.toLowerCase()
+        const title = task.title.toLowerCase()
 
         const description = (
           task.description || ''
         ).toLowerCase()
 
         return (
-          title.includes(
-            searchText
-          ) ||
-          description.includes(
-            searchText
-          )
+          title.includes(searchText) ||
+          description.includes(searchText)
         )
       })
     }
 
-    const getPriorityValue = (
-      value: string
-    ) => {
-      if (
-        value.toLowerCase() ===
-        'high'
-      ) {
+    const getPriorityValue = (value: string) => {
+      if (value.toLowerCase() === 'high') {
         return 3
       }
 
-      if (
-        value.toLowerCase() ===
-        'medium'
-      ) {
+      if (value.toLowerCase() === 'medium') {
         return 2
       }
 
-      if (
-        value.toLowerCase() ===
-        'low'
-      ) {
+      if (value.toLowerCase() === 'low') {
         return 1
       }
 
       return 0
     }
 
-    if (
-      sortOrder ===
-      'priority-high'
-    ) {
+    if (sortOrder === 'priority-high') {
       result.sort(
         (a, b) =>
-          getPriorityValue(
-            b.priority
-          ) -
-          getPriorityValue(
-            a.priority
-          )
+          getPriorityValue(b.priority) -
+          getPriorityValue(a.priority)
       )
     }
 
-    if (
-      sortOrder ===
-      'priority-low'
-    ) {
+    if (sortOrder === 'priority-low') {
       result.sort(
         (a, b) =>
-          getPriorityValue(
-            a.priority
-          ) -
-          getPriorityValue(
-            b.priority
-          )
+          getPriorityValue(a.priority) -
+          getPriorityValue(b.priority)
       )
     }
 
-    if (
-      sortOrder ===
-      'alphabetical'
-    ) {
-      result.sort(
-        (a, b) =>
-          a.title
-            .toLowerCase()
-            .localeCompare(
-              b.title.toLowerCase()
-            )
+    if (sortOrder === 'alphabetical') {
+      result.sort((a, b) =>
+        a.title
+          .toLowerCase()
+          .localeCompare(b.title.toLowerCase())
       )
     }
 
-    if (
-      sortOrder ===
-      'due-date'
-    ) {
+    if (sortOrder === 'due-date') {
       result.sort((a, b) => {
-        if (
-          !a.dueDate &&
-          !b.dueDate
-        ) {
+        if (!a.dueDate && !b.dueDate) {
           return 0
         }
 
@@ -513,12 +393,8 @@ export default function TaskApp({
         }
 
         return (
-          new Date(
-            a.dueDate
-          ).getTime() -
-          new Date(
-            b.dueDate
-          ).getTime()
+          new Date(a.dueDate).getTime() -
+          new Date(b.dueDate).getTime()
         )
       })
     }
@@ -533,16 +409,14 @@ export default function TaskApp({
   ])
 
   const isSearching = useMemo(
-    () =>
-      search !== effectiveSearch,
+    () => search !== effectiveSearch,
     [search, effectiveSearch]
   )
 
-  const handleClearSearch =
-    useCallback(() => {
-      setSearch('')
-      setEffectiveSearch('')
-    }, [])
+  const handleClearSearch = useCallback(() => {
+    setSearch('')
+    setEffectiveSearch('')
+  }, [])
 
   return (
     <div>
@@ -553,9 +427,7 @@ export default function TaskApp({
             type="text"
             value={newTitle}
             onChange={event =>
-              setNewTitle(
-                event.target.value
-              )
+              setNewTitle(event.target.value)
             }
             placeholder="Task title"
           />
@@ -564,9 +436,7 @@ export default function TaskApp({
             id="task-description"
             value={newDescription}
             onChange={event =>
-              setNewDescription(
-                event.target.value
-              )
+              setNewDescription(event.target.value)
             }
             placeholder="Description"
           />
@@ -575,48 +445,25 @@ export default function TaskApp({
             id="task-priority"
             value={newPriority}
             onChange={event =>
-              setNewPriority(
-                event.target.value
-              )
+              setNewPriority(event.target.value)
             }
           >
-            <option value="High">
-              High
-            </option>
-
-            <option value="Medium">
-              Medium
-            </option>
-
-            <option value="Low">
-              Low
-            </option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
           </select>
 
           <select
             id="task-category"
             value={newCategory}
             onChange={event =>
-              setNewCategory(
-                event.target.value
-              )
+              setNewCategory(event.target.value)
             }
           >
-            <option value="General">
-              General
-            </option>
-
-            <option value="Work">
-              Work
-            </option>
-
-            <option value="Personal">
-              Personal
-            </option>
-
-            <option value="College">
-              College
-            </option>
+            <option value="General">General</option>
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="College">College</option>
           </select>
 
           <input
@@ -624,9 +471,7 @@ export default function TaskApp({
             type="text"
             value={newTags}
             onChange={event =>
-              setNewTags(
-                event.target.value
-              )
+              setNewTags(event.target.value)
             }
             placeholder="Tags separated by commas"
           />
@@ -636,17 +481,13 @@ export default function TaskApp({
             type="date"
             value={newDueDate}
             onChange={event =>
-              setNewDueDate(
-                event.target.value
-              )
+              setNewDueDate(event.target.value)
             }
           />
 
           <button
             type="button"
-            onClick={
-              handleAddTask
-            }
+            onClick={handleAddTask}
           >
             Add Task
           </button>
@@ -656,29 +497,15 @@ export default function TaskApp({
       {showFilterBar && (
         <FilterBar
           filter={filter}
-          onFilterChange={
-            setFilter
-          }
+          onFilterChange={setFilter}
           sortOrder={sortOrder}
-          onSortChange={
-            setSortOrder
-          }
+          onSortChange={setSortOrder}
           search={search}
-          onSearchChange={
-            setSearch
-          }
-          onClearSearch={
-            handleClearSearch
-          }
-          category={
-            categoryFilter
-          }
-          onCategoryChange={
-            setCategoryFilter
-          }
-          categories={
-            categories
-          }
+          onSearchChange={setSearch}
+          onClearSearch={handleClearSearch}
+          category={categoryFilter}
+          onCategoryChange={setCategoryFilter}
+          categories={categories}
         />
       )}
 
@@ -700,32 +527,24 @@ export default function TaskApp({
           No tasks found
         </div>
       ) : (
-        <TaskList
-          tasks={sortedTasks}
-          countText={
-            countFormat ===
-            'completed'
-              ? `${
-                  tasks.filter(
-                    task =>
-                      task.completed
-                  ).length
-                } completed`
-              : `${sortedTasks.length} tasks`
-          }
-          onToggle={
-            handleToggle
-          }
-          onDelete={
-            handleDelete
-          }
-          onUpdateTask={
-            handleUpdateTask
-          }
-          editingId={
-            editingId
-          }
-        />
+        <ErrorBoundary>
+          <TaskList
+            tasks={sortedTasks}
+            countText={
+              countFormat === 'completed'
+                ? `${
+                    tasks.filter(
+                      task => task.completed
+                    ).length
+                  } completed`
+                : `${sortedTasks.length} tasks`
+            }
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+            onUpdateTask={handleUpdateTask}
+            editingId={editingId}
+          />
+        </ErrorBoundary>
       )}
     </div>
   )

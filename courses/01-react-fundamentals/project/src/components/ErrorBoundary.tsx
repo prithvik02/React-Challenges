@@ -1,42 +1,33 @@
 import React from 'react'
 
-type ErrorBoundaryProps = {
+type Props = {
   children: React.ReactNode
 }
 
-type ErrorBoundaryState = {
+type State = {
   hasError: boolean
-  error: Error | null
 }
 
-class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props)
-
-    this.state = {
-      hasError: false,
-      error: null,
-    }
+class ErrorBoundary extends React.Component<Props, State> {
+  state: State = {
+    hasError: false,
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+  static getDerivedStateFromError(): State {
     return {
       hasError: true,
-      error,
     }
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by ErrorBoundary:', error, errorInfo)
+    if (import.meta.env.DEV) {
+      console.error(error, errorInfo)
+    }
   }
 
   handleRetry = () => {
     this.setState({
       hasError: false,
-      error: null,
     })
   }
 
@@ -44,11 +35,9 @@ class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div id="error-boundary-fallback">
-          <h2>Something went wrong.</h2>
+          <h2>Something went wrong</h2>
 
-          <p>
-            {this.state.error?.message || 'An unexpected error occurred.'}
-          </p>
+          <p>Please try again.</p>
 
           <button
             id="error-retry"

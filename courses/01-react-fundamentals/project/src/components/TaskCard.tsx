@@ -47,20 +47,13 @@ function TaskCard({
   renderCount.current += 1
 
   const [editTitle, setEditTitle] = useState(title)
-  const [editDescription, setEditDescription] =
-    useState(description)
-  const [editPriority, setEditPriority] =
-    useState(priority)
-  const [editCategory, setEditCategory] =
-    useState(category)
-  const [editTags, setEditTags] =
-    useState(tags.join(', '))
-  const [editDueDate, setEditDueDate] =
-    useState(dueDate || '')
+  const [editDescription, setEditDescription] = useState(description)
+  const [editPriority, setEditPriority] = useState(priority)
+  const [editCategory, setEditCategory] = useState(category)
+  const [editTags, setEditTags] = useState(tags.join(', '))
+  const [editDueDate, setEditDueDate] = useState(dueDate || '')
 
-  const isEditing =
-    id !== undefined &&
-    editingId === id
+  const isEditing = id !== undefined && editingId === id
 
   const handleEdit = () => {
     if (id === undefined) {
@@ -80,18 +73,14 @@ function TaskCard({
   }
 
   const handleSave = () => {
-    if (
-      id === undefined ||
-      !onUpdateTask ||
-      !editTitle.trim()
-    ) {
+    if (id === undefined || !onUpdateTask || !editTitle.trim()) {
       return
     }
 
     const parsedTags = editTags
       .split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag.length > 0)
+      .map((tag) => tag.trim())
+      .filter((tag) => tag.length > 0)
 
     onUpdateTask(id, {
       title: editTitle.trim(),
@@ -117,10 +106,7 @@ function TaskCard({
   }
 
   const handleDelete = () => {
-    if (
-      id === undefined ||
-      !onDelete
-    ) {
+    if (id === undefined || !onDelete) {
       return
     }
 
@@ -130,8 +116,10 @@ function TaskCard({
   }
 
   return (
-    <div
+    <article
+      id="task-card"
       className="task-card"
+      data-completed={completed ? 'true' : 'false'}
       data-render-count={renderCount.current}
     >
       {isEditing ? (
@@ -140,27 +128,19 @@ function TaskCard({
             id="edit-task-title"
             type="text"
             value={editTitle}
-            onChange={event =>
-              setEditTitle(event.target.value)
-            }
+            onChange={(event) => setEditTitle(event.target.value)}
           />
 
           <textarea
             id="edit-task-description"
             value={editDescription}
-            onChange={event =>
-              setEditDescription(
-                event.target.value
-              )
-            }
+            onChange={(event) => setEditDescription(event.target.value)}
           />
 
           <select
             id="edit-task-priority"
             value={editPriority}
-            onChange={event =>
-              setEditPriority(event.target.value)
-            }
+            onChange={(event) => setEditPriority(event.target.value)}
           >
             <option value="High">High</option>
             <option value="Medium">Medium</option>
@@ -170,9 +150,7 @@ function TaskCard({
           <select
             id="edit-task-category"
             value={editCategory}
-            onChange={event =>
-              setEditCategory(event.target.value)
-            }
+            onChange={(event) => setEditCategory(event.target.value)}
           >
             <option value="General">General</option>
             <option value="Work">Work</option>
@@ -184,47 +162,35 @@ function TaskCard({
             id="edit-task-tags"
             type="text"
             value={editTags}
-            onChange={event =>
-              setEditTags(event.target.value)
-            }
+            onChange={(event) => setEditTags(event.target.value)}
           />
 
           <input
             id="edit-task-due-date"
             type="date"
             value={editDueDate}
-            onChange={event =>
-              setEditDueDate(event.target.value)
-            }
+            onChange={(event) => setEditDueDate(event.target.value)}
           />
 
-          <button
-            type="button"
-            onClick={handleSave}
-          >
+          <button type="button" onClick={handleSave}>
             Save
           </button>
 
-          <button
-            type="button"
-            onClick={handleCancel}
-          >
+          <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </div>
       ) : (
         <>
-          <div id="task-card">
-            <span
-              style={{
-                textDecoration: completed
-                  ? 'line-through'
-                  : 'none',
-              }}
-            >
-              {title}
-            </span>
+          <h2
+            style={{
+              textDecoration: completed ? 'line-through' : 'none',
+            }}
+          >
+            {title}
+          </h2>
 
+          <div id="task-card-info">
             <Badge variant="priority">
               Priority: {priority}
             </Badge>
@@ -249,40 +215,36 @@ function TaskCard({
 
           {dueDate && (
             <div id="task-due-date">
-              {new Date(
-                dueDate
-              ).toLocaleDateString()}
+              {new Date(dueDate).toLocaleDateString()}
             </div>
           )}
 
           {completed && (
-            <StatusIndicator
-              status="completed"
-            />
+            <StatusIndicator status="completed" />
           )}
 
           <p>{description}</p>
 
-          {onToggle &&
-            id !== undefined && (
-              <input
-                type="checkbox"
-                checked={completed}
-                onChange={() =>
+          {onToggle && (
+            <input
+              type="checkbox"
+              checked={completed}
+              onChange={() => {
+                if (id !== undefined) {
                   onToggle(id)
                 }
-              />
-            )}
+              }}
+            />
+          )}
 
-          {onEdit &&
-            id !== undefined && (
-              <button
-                type="button"
-                onClick={handleEdit}
-              >
-                Edit
-              </button>
-            )}
+          {onEdit && id !== undefined && (
+            <button
+              type="button"
+              onClick={handleEdit}
+            >
+              Edit
+            </button>
+          )}
 
           {onUpdateTask &&
             id !== undefined &&
@@ -295,18 +257,17 @@ function TaskCard({
               </button>
             )}
 
-          {onDelete &&
-            id !== undefined && (
-              <button
-                type="button"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            )}
+          {onDelete && id !== undefined && (
+            <button
+              type="button"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          )}
         </>
       )}
-    </div>
+    </article>
   )
 }
 

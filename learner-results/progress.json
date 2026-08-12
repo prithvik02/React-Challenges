@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-08-12T08:20:44.647Z",
+  "lastUpdated": "2026-08-12T09:16:27.486Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
     "overallScore": 29.9,
-    "completionPercentage": 35.8,
+    "completionPercentage": 37.7,
     "badgeLevel": "none",
     "totalChallenges": 53,
-    "completedChallenges": 19
+    "completedChallenges": 20
   },
   "courses": {
     "01-react-fundamentals": {
       "courseId": "01-react-fundamentals",
       "courseName": "React Fundamentals",
       "averageScore": 90.5,
-      "completionPercentage": 82.6,
+      "completionPercentage": 87,
       "badgeLevel": "silver",
       "totalChallenges": 23,
-      "completedChallenges": 19,
+      "completedChallenges": 20,
       "challenges": {
         "01-static-task-display": {
           "challengeId": "01-static-task-display",
@@ -295,6 +295,21 @@
           "passed": true,
           "score": 90.7,
           "lastRun": "2026-08-12T08:20:29.679Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 88
+          }
+        },
+        "20-error-boundaries": {
+          "challengeId": "20-error-boundaries",
+          "challengeName": "Error Boundaries and Error Handling",
+          "passed": true,
+          "score": 90.7,
+          "lastRun": "2026-08-12T09:16:20.478Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,

@@ -5064,5 +5064,227 @@
       "maintainability": 90,
       "overall": "The code is well-structured and follows good practices, but there are some areas for improvement to make it more maintainable and efficient."
     }
+  },
+  {
+    "challengeId": "20-error-boundaries",
+    "challengeName": "Error Boundaries and Error Handling",
+    "timestamp": "2026-08-12T09:16:20.478Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 88
+    },
+    "totalScore": 90.7,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 20: Error Boundaries and Error Handling"
+              ],
+              "fullName": " Challenge 20: Error Boundaries and Error Handling ErrorBoundary should render children when no error",
+              "status": "passed",
+              "title": "ErrorBoundary should render children when no error",
+              "duration": 17,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 20: Error Boundaries and Error Handling"
+              ],
+              "fullName": " Challenge 20: Error Boundaries and Error Handling ErrorBoundary should have fallback with id=\"error-boundary-fallback\" when error caught",
+              "status": "passed",
+              "title": "ErrorBoundary should have fallback with id=\"error-boundary-fallback\" when error caught",
+              "duration": 16,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 20: Error Boundaries and Error Handling"
+              ],
+              "fullName": " Challenge 20: Error Boundaries and Error Handling ErrorBoundary should have Retry button with id=\"error-retry\"",
+              "status": "passed",
+              "title": "ErrorBoundary should have Retry button with id=\"error-retry\"",
+              "duration": 5,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 20: Error Boundaries and Error Handling"
+              ],
+              "fullName": " Challenge 20: Error Boundaries and Error Handling Retry button should be clickable",
+              "status": "passed",
+              "title": "Retry button should be clickable",
+              "duration": 78,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1786526182405,
+          "endTime": 1786526182522,
+          "status": "passed",
+          "message": "",
+          "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/01-react-fundamentals/project/tests/challenge-20.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "functionalComponent"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/components/ErrorBoundary.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "functionalComponent"
+          ]
+        },
+        {
+          "file": "src/components/TaskApp.tsx",
+          "patternsFound": [
+            "functionalComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/hooks/useLocalStorage.ts",
+          "patternsFound": [],
+          "patternsMissing": [
+            "functionalComponent"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-20.spec.ts",
+          "file": "challenge-20.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 20: Error Boundaries - E2E",
+              "file": "challenge-20.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should display task list or main content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 176,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T09:16:25.398Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1d641d769955c6bc30c0-ac7bb770a40f47a29acf",
+                  "file": "challenge-20.spec.ts",
+                  "line": 4,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "20-error-boundaries",
+      "timestamp": "2026-08-12T09:16:25.792Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and React hooks is well-implemented.",
+        "The error boundary component is a good addition to handle rendering errors."
+      ],
+      "improvements": [
+        "Some of the functions in the TaskApp component are quite long and complex. Consider breaking them down into smaller functions for better readability and maintainability.",
+        "The use of try-catch blocks in the localStorage operations can be improved by logging the error in the catch block to provide more information about the issue.",
+        "Consider adding more unit tests to cover the error boundary component and the localStorage operations."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and follows good practices. However, there are a few areas that can be improved for better maintainability and readability."
+    },
+    "aiResults": {
+      "challengeId": "20-error-boundaries",
+      "timestamp": "2026-08-12T09:16:25.792Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and React hooks is well-implemented.",
+        "The error boundary component is a good addition to handle rendering errors."
+      ],
+      "improvements": [
+        "Some of the functions in the TaskApp component are quite long and complex. Consider breaking them down into smaller functions for better readability and maintainability.",
+        "The use of try-catch blocks in the localStorage operations can be improved by logging the error in the catch block to provide more information about the issue.",
+        "Consider adding more unit tests to cover the error boundary component and the localStorage operations."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and follows good practices. However, there are a few areas that can be improved for better maintainability and readability."
+    }
   }
 ]
