@@ -5576,5 +5576,246 @@
       "maintainability": 80,
       "overall": "The code is well-organized and demonstrates a good understanding of React and React Router. However, there are some areas for improvement to enhance maintainability and readability."
     }
+  },
+  {
+    "challengeId": "22-data-fetching",
+    "challengeName": "Data Fetching - Loading and Error State",
+    "timestamp": "2026-08-12T18:23:41.044Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 88
+    },
+    "totalScore": 90.7,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 22: Data Fetching - Loading and Error State"
+              ],
+              "fullName": " Challenge 22: Data Fetching - Loading and Error State FetchDemoView should show loading state initially or fetch from API",
+              "status": "passed",
+              "title": "FetchDemoView should show loading state initially or fetch from API",
+              "duration": 23,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 22: Data Fetching - Loading and Error State"
+              ],
+              "fullName": " Challenge 22: Data Fetching - Loading and Error State FetchDemoView should have fetch-list when data is loaded",
+              "status": "passed",
+              "title": "FetchDemoView should have fetch-list when data is loaded",
+              "duration": 6,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 22: Data Fetching - Loading and Error State"
+              ],
+              "fullName": " Challenge 22: Data Fetching - Loading and Error State FetchDemoView should show fetch-error when fetch fails",
+              "status": "passed",
+              "title": "FetchDemoView should show fetch-error when fetch fails",
+              "duration": 15,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1786559022863,
+          "endTime": 1786559022907,
+          "status": "passed",
+          "message": "",
+          "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/01-react-fundamentals/project/tests/challenge-22.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "functionalComponent",
+        "useState"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/components/FetchDemoView.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/App.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "useState"
+          ],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-22.spec.ts",
+          "file": "challenge-22.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 22: Data Fetching - E2E",
+              "file": "challenge-22.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should show loading or list",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1680,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T18:23:46.362Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "897c0b09f5b8225a79bd-7bc66a1771cb4c50b87e",
+                  "file": "challenge-22.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should eventually show fetch-list when API succeeds",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 181,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T18:23:48.128Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "897c0b09f5b8225a79bd-874b54bff2542e762bf2",
+                  "file": "challenge-22.spec.ts",
+                  "line": 19,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "22-data-fetching",
+      "timestamp": "2026-08-12T18:23:48.474Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a clear pattern for handling loading, error, and data states.",
+        "The use of TypeScript and React Hooks is well-implemented and easy to follow.",
+        "The code includes a good level of commenting and explanation, making it easier for others to understand."
+      ],
+      "improvements": [
+        "Consider adding more specific error handling and logging to handle potential issues with the API request.",
+        "The `cancelled` variable in the `useEffect` hook could be replaced with a more robust solution, such as using an `AbortController`.",
+        "Some of the variable names, such as `items` and `loading`, could be more descriptive to improve code readability."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-written and demonstrates a good understanding of React Hooks and data fetching. However, there are some areas for improvement to make the code more robust and maintainable."
+    },
+    "aiResults": {
+      "challengeId": "22-data-fetching",
+      "timestamp": "2026-08-12T18:23:48.474Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a clear pattern for handling loading, error, and data states.",
+        "The use of TypeScript and React Hooks is well-implemented and easy to follow.",
+        "The code includes a good level of commenting and explanation, making it easier for others to understand."
+      ],
+      "improvements": [
+        "Consider adding more specific error handling and logging to handle potential issues with the API request.",
+        "The `cancelled` variable in the `useEffect` hook could be replaced with a more robust solution, such as using an `AbortController`.",
+        "Some of the variable names, such as `items` and `loading`, could be more descriptive to improve code readability."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-written and demonstrates a good understanding of React Hooks and data fetching. However, there are some areas for improvement to make the code more robust and maintainable."
+    }
   }
 ]

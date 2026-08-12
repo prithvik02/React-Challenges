@@ -481,5 +481,28 @@
       "maintainability": 80,
       "overall": "The code is well-organized and demonstrates a good understanding of React and React Router. However, there are some areas for improvement to enhance maintainability and readability."
     }
+  },
+  {
+    "challengeId": "22-data-fetching",
+    "challengeName": "Data Fetching - Loading and Error State",
+    "aiReview": {
+      "challengeId": "22-data-fetching",
+      "timestamp": "2026-08-12T18:23:48.474Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a clear pattern for handling loading, error, and data states.",
+        "The use of TypeScript and React Hooks is well-implemented and easy to follow.",
+        "The code includes a good level of commenting and explanation, making it easier for others to understand."
+      ],
+      "improvements": [
+        "Consider adding more specific error handling and logging to handle potential issues with the API request.",
+        "The `cancelled` variable in the `useEffect` hook could be replaced with a more robust solution, such as using an `AbortController`.",
+        "Some of the variable names, such as `items` and `loading`, could be more descriptive to improve code readability."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-written and demonstrates a good understanding of React Hooks and data fetching. However, there are some areas for improvement to make the code more robust and maintainable."
+    }
   }
 ]
