@@ -28,7 +28,7 @@ type TaskListProps = {
     }
   ) => void
   editingId?: string | number | null
-  onEdit?: (id: string | number) => void
+  linkToTaskDetail?: boolean
 }
 
 const defaultTasks: Task[] = [
@@ -68,10 +68,10 @@ export default function TaskList({
   onDelete,
   onUpdateTask,
   editingId,
-  onEdit,
+  linkToTaskDetail = false,
 }: TaskListProps) {
   const completedCount = tasks.filter(
-    (task) => task.completed
+    task => task.completed
   ).length
 
   return (
@@ -81,7 +81,7 @@ export default function TaskList({
           `${completedCount} of ${tasks.length} completed`}
       </div>
 
-      {tasks.map((task) => (
+      {tasks.map(task => (
         <TaskCard
           key={task.id}
           id={task.id}
@@ -96,7 +96,7 @@ export default function TaskList({
           onDelete={onDelete}
           onUpdateTask={onUpdateTask}
           editingId={editingId}
-          onEdit={onEdit}
+          linkToTaskDetail={linkToTaskDetail}
         />
       ))}
     </section>

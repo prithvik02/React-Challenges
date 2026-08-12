@@ -5286,5 +5286,295 @@
       "maintainability": 90,
       "overall": "The code is well-structured and follows good practices. However, there are a few areas that can be improved for better maintainability and readability."
     }
+  },
+  {
+    "challengeId": "21-react-router",
+    "challengeName": "React Router - Routing and Navigation",
+    "timestamp": "2026-08-12T17:53:29.932Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 89.95,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 21: React Router - Routing and Navigation"
+              ],
+              "fullName": " Challenge 21: React Router - Routing and Navigation TaskDetailPage should use useParams and render task detail or not found",
+              "status": "passed",
+              "title": "TaskDetailPage should use useParams and render task detail or not found",
+              "duration": 25,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 21: React Router - Routing and Navigation"
+              ],
+              "fullName": " Challenge 21: React Router - Routing and Navigation TaskDetailPage should have back button with id task-detail-back",
+              "status": "passed",
+              "title": "TaskDetailPage should have back button with id task-detail-back",
+              "duration": 3,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1786557222965,
+          "endTime": 1786557222994,
+          "status": "passed",
+          "message": "",
+          "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/01-react-fundamentals/project/tests/challenge-21.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "functionalComponent",
+        "props"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/components/TaskDetailPage.tsx",
+          "patternsFound": [
+            "functionalComponent"
+          ],
+          "patternsMissing": [
+            "props"
+          ]
+        },
+        {
+          "file": "src/App.tsx",
+          "patternsFound": [
+            "functionalComponent"
+          ],
+          "patternsMissing": [
+            "props"
+          ]
+        },
+        {
+          "file": "src/components/TaskApp.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/TaskList.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/TaskCard.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-21.spec.ts",
+          "file": "challenge-21.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 21: React Router - E2E",
+              "file": "challenge-21.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should display task list",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 310,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T17:53:50.899Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "22625d08e539c53447bc-d4276de94028c4486994",
+                  "file": "challenge-21.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "task detail route should be reachable",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 177,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T17:53:51.328Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "22625d08e539c53447bc-0603557c1a6fa646b519",
+                  "file": "challenge-21.spec.ts",
+                  "line": 12,
+                  "column": 3
+                },
+                {
+                  "title": "back button should exist on task detail page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 168,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-12T17:53:51.512Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "22625d08e539c53447bc-f85ca2164f7d61a1e83d",
+                  "file": "challenge-21.spec.ts",
+                  "line": 17,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "21-react-router",
+      "timestamp": "2026-08-12T17:53:51.857Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and React Router is well-implemented.",
+        "The code includes proper error handling and edge cases."
+      ],
+      "improvements": [
+        "Some function names could be more descriptive, such as `handleEdit` and `handleSave` in `TaskCard`.",
+        "The `useEffect` hook in `TaskApp` could be optimized to reduce unnecessary re-renders.",
+        "The `TaskDetailPage` component could benefit from a more robust way of handling task loading and error states."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The code is well-organized and demonstrates a good understanding of React and React Router. However, there are some areas for improvement to enhance maintainability and readability."
+    },
+    "aiResults": {
+      "challengeId": "21-react-router",
+      "timestamp": "2026-08-12T17:53:51.857Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and React Router is well-implemented.",
+        "The code includes proper error handling and edge cases."
+      ],
+      "improvements": [
+        "Some function names could be more descriptive, such as `handleEdit` and `handleSave` in `TaskCard`.",
+        "The `useEffect` hook in `TaskApp` could be optimized to reduce unnecessary re-renders.",
+        "The `TaskDetailPage` component could benefit from a more robust way of handling task loading and error states."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The code is well-organized and demonstrates a good understanding of React and React Router. However, there are some areas for improvement to enhance maintainability and readability."
+    }
   }
 ]

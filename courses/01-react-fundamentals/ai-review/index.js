@@ -63,7 +63,7 @@ export async function reviewCodeWithAI(challengeId, filesToReview, projectDir) {
         const content = readFileSync(filePath, 'utf-8');
         codeSnippets.push({
           file,
-          content: content.substring(0, 5000) // Limit content size
+          content: content.substring(0, 2500) // Limit content size
         });
       }
     }
@@ -113,7 +113,7 @@ function buildReviewPrompt(challengeId, codeSnippets, challengeContext = '') {
   ).join('\n\n');
 
   const contextSection = challengeContext
-    ? `\n\n## Challenge Instructions and Requirements:\n${challengeContext.substring(0, 3000)}\n`
+    ? `\n\n## Challenge Instructions and Requirements:\n${challengeContext.substring(0, 1500)}\n`
     : '';
 
   return `You are an expert React code reviewer. Review the following code for challenge "${challengeId}".
