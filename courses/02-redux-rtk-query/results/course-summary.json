@@ -1,20 +1,107 @@
 {
   "courseId": "02-redux-rtk-query",
   "courseName": "Redux & RTK Query",
-  "lastUpdated": "2026-08-22T07:06:00.603Z",
+  "lastUpdated": "2026-08-22T08:25:23.779Z",
   "totalChallenges": 13,
-  "completedChallenges": 0,
-  "averageScore": 77.5,
-  "completionPercentage": 0,
+  "completedChallenges": 2,
+  "averageScore": 42.1,
+  "completionPercentage": 15.4,
   "badgeLevel": "none",
   "challengeResults": [
     {
       "challengeId": "01-store-setup",
       "challengeName": "Store Setup with configureStore",
-      "score": 77.5,
+      "score": 90.55,
+      "passed": true
+    },
+    {
+      "challengeId": "02-first-slice",
+      "challengeName": "First Slice with createSlice",
+      "score": 88.05,
+      "passed": true
+    },
+    {
+      "challengeId": "03-reading-dispatching",
+      "challengeName": "Reading and Dispatching in Components",
+      "score": 29.154999999999998,
+      "passed": false
+    },
+    {
+      "challengeId": "04-multiple-slices",
+      "challengeName": "Multiple Slices in the Store",
+      "score": 40,
+      "passed": false
+    },
+    {
+      "challengeId": "05-async-thunks",
+      "challengeName": "Async Logic with createAsyncThunk",
+      "score": 42.5,
+      "passed": false
+    },
+    {
+      "challengeId": "06-rtk-query-setup",
+      "challengeName": "RTK Query Setup and API Slice",
+      "score": 54.155,
+      "passed": false
+    },
+    {
+      "challengeId": "07-queries",
+      "challengeName": "Query Endpoints and useQuery Hooks",
+      "score": 29.154999999999998,
+      "passed": false
+    },
+    {
+      "challengeId": "08-caching-refetch",
+      "challengeName": "Caching and Cache Tags",
+      "score": 20,
+      "passed": false
+    },
+    {
+      "challengeId": "09-mutations",
+      "challengeName": "Mutations with useMutation",
+      "score": 27.5,
+      "passed": false
+    },
+    {
+      "challengeId": "10-optimistic-updates",
+      "challengeName": "Optimistic Updates",
+      "score": 35,
+      "passed": false
+    },
+    {
+      "challengeId": "11-api-local-state",
+      "challengeName": "API and Local State Together",
+      "score": 27.5,
+      "passed": false
+    },
+    {
+      "challengeId": "12-error-loading-ux",
+      "challengeName": "Error and Loading UX",
+      "score": 25,
+      "passed": false
+    },
+    {
+      "challengeId": "13-query-parameters",
+      "challengeName": "Query with Parameters and Detail View",
+      "score": 39.155,
       "passed": false
     }
   ],
-  "skillStrengths": [],
-  "improvementAreas": []
+  "skillStrengths": [
+    "Store Setup with configureStore",
+    "First Slice with createSlice"
+  ],
+  "improvementAreas": [
+    "Reading and Dispatching in Components",
+    "Multiple Slices in the Store",
+    "Async Logic with createAsyncThunk",
+    "RTK Query Setup and API Slice",
+    "Query Endpoints and useQuery Hooks",
+    "Caching and Cache Tags",
+    "Mutations with useMutation",
+    "Optimistic Updates",
+    "API and Local State Together",
+    "Error and Loading UX",
+    "Query with Parameters and Detail View"
+  ]
 }
