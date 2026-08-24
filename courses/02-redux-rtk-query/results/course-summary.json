@@ -1,47 +1,47 @@
 {
   "courseId": "02-redux-rtk-query",
   "courseName": "Redux & RTK Query",
-  "lastUpdated": "2026-08-22T08:25:23.779Z",
+  "lastUpdated": "2026-08-24T06:10:04.664Z",
   "totalChallenges": 13,
-  "completedChallenges": 2,
-  "averageScore": 42.1,
-  "completionPercentage": 15.4,
+  "completedChallenges": 1,
+  "averageScore": 38.4,
+  "completionPercentage": 7.7,
   "badgeLevel": "none",
   "challengeResults": [
     {
       "challengeId": "01-store-setup",
       "challengeName": "Store Setup with configureStore",
-      "score": 90.55,
-      "passed": true
+      "score": 62.5,
+      "passed": false
     },
     {
       "challengeId": "02-first-slice",
       "challengeName": "First Slice with createSlice",
-      "score": 88.05,
-      "passed": true
+      "score": 73.05,
+      "passed": false
     },
     {
       "challengeId": "03-reading-dispatching",
       "challengeName": "Reading and Dispatching in Components",
-      "score": 29.154999999999998,
-      "passed": false
+      "score": 90.55,
+      "passed": true
     },
     {
       "challengeId": "04-multiple-slices",
       "challengeName": "Multiple Slices in the Store",
-      "score": 40,
+      "score": 25,
       "passed": false
     },
     {
       "challengeId": "05-async-thunks",
       "challengeName": "Async Logic with createAsyncThunk",
-      "score": 42.5,
+      "score": 27.5,
       "passed": false
     },
     {
       "challengeId": "06-rtk-query-setup",
       "challengeName": "RTK Query Setup and API Slice",
-      "score": 54.155,
+      "score": 39.155,
       "passed": false
     },
     {
@@ -65,7 +65,7 @@
     {
       "challengeId": "10-optimistic-updates",
       "challengeName": "Optimistic Updates",
-      "score": 35,
+      "score": 20,
       "passed": false
     },
     {
@@ -77,7 +77,7 @@
     {
       "challengeId": "12-error-loading-ux",
       "challengeName": "Error and Loading UX",
-      "score": 25,
+      "score": 17.5,
       "passed": false
     },
     {
@@ -88,11 +88,10 @@
     }
   ],
   "skillStrengths": [
-    "Store Setup with configureStore",
-    "First Slice with createSlice"
+    "Reading and Dispatching in Components"
   ],
   "improvementAreas": [
-    "Reading and Dispatching in Components",
+    "Store Setup with configureStore",
     "Multiple Slices in the Store",
     "Async Logic with createAsyncThunk",
     "RTK Query Setup and API Slice",
