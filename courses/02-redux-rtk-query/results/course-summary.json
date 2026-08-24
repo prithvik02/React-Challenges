@@ -1,24 +1,24 @@
 {
   "courseId": "02-redux-rtk-query",
   "courseName": "Redux & RTK Query",
-  "lastUpdated": "2026-08-24T06:10:04.664Z",
+  "lastUpdated": "2026-08-24T08:52:37.241Z",
   "totalChallenges": 13,
-  "completedChallenges": 1,
-  "averageScore": 38.4,
-  "completionPercentage": 7.7,
+  "completedChallenges": 4,
+  "averageScore": 46.7,
+  "completionPercentage": 30.8,
   "badgeLevel": "none",
   "challengeResults": [
     {
       "challengeId": "01-store-setup",
       "challengeName": "Store Setup with configureStore",
-      "score": 62.5,
-      "passed": false
+      "score": 90.55,
+      "passed": true
     },
     {
       "challengeId": "02-first-slice",
       "challengeName": "First Slice with createSlice",
-      "score": 73.05,
-      "passed": false
+      "score": 88.05,
+      "passed": true
     },
     {
       "challengeId": "03-reading-dispatching",
@@ -29,8 +29,8 @@
     {
       "challengeId": "04-multiple-slices",
       "challengeName": "Multiple Slices in the Store",
-      "score": 25,
-      "passed": false
+      "score": 90.55,
+      "passed": true
     },
     {
       "challengeId": "05-async-thunks",
@@ -88,11 +88,12 @@
     }
   ],
   "skillStrengths": [
-    "Reading and Dispatching in Components"
+    "Store Setup with configureStore",
+    "First Slice with createSlice",
+    "Reading and Dispatching in Components",
+    "Multiple Slices in the Store"
   ],
   "improvementAreas": [
-    "Store Setup with configureStore",
-    "Multiple Slices in the Store",
     "Async Logic with createAsyncThunk",
     "RTK Query Setup and API Slice",
     "Query Endpoints and useQuery Hooks",

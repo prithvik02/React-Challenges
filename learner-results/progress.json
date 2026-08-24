@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-08-24T06:10:04.913Z",
+  "lastUpdated": "2026-08-24T08:52:37.503Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 42.5,
-    "completionPercentage": 45.3,
+    "overallScore": 45.3,
+    "completionPercentage": 50.9,
     "badgeLevel": "none",
     "totalChallenges": 53,
-    "completedChallenges": 24
+    "completedChallenges": 27
   },
   "courses": {
     "01-react-fundamentals": {
@@ -369,39 +369,39 @@
     "02-redux-rtk-query": {
       "courseId": "02-redux-rtk-query",
       "courseName": "Redux & RTK Query",
-      "averageScore": 38.4,
-      "completionPercentage": 7.7,
+      "averageScore": 46.7,
+      "completionPercentage": 30.8,
       "badgeLevel": "none",
       "totalChallenges": 13,
-      "completedChallenges": 1,
+      "completedChallenges": 4,
       "challenges": {
         "01-store-setup": {
           "challengeId": "01-store-setup",
           "challengeName": "Store Setup with configureStore",
-          "passed": false,
-          "score": 62.5,
-          "lastRun": "2026-08-24T05:37:38.394Z",
+          "passed": true,
+          "score": 90.55,
+          "lastRun": "2026-08-24T06:17:08.880Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,
             "architecture": 100,
             "bestPractices": 100,
-            "e2eTests": 0,
-            "aiReview": 0
+            "e2eTests": 100,
+            "aiReview": 87
           }
         },
         "02-first-slice": {
           "challengeId": "02-first-slice",
           "challengeName": "First Slice with createSlice",
-          "passed": false,
-          "score": 73.05,
-          "lastRun": "2026-08-24T05:37:44.224Z",
+          "passed": true,
+          "score": 88.05,
+          "lastRun": "2026-08-24T06:20:39.500Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,
             "architecture": 75,
             "bestPractices": 100,
-            "e2eTests": 0,
+            "e2eTests": 100,
             "aiReview": 87
           }
         },
@@ -423,16 +423,16 @@
         "04-multiple-slices": {
           "challengeId": "04-multiple-slices",
           "challengeName": "Multiple Slices in the Store",
-          "passed": false,
-          "score": 25,
-          "lastRun": "2026-08-24T05:37:52.081Z",
+          "passed": true,
+          "score": 90.55,
+          "lastRun": "2026-08-24T08:52:32.188Z",
           "scores": {
-            "functionalTests": 0,
+            "functionalTests": 100,
             "codeQuality": 50,
-            "architecture": 75,
+            "architecture": 100,
             "bestPractices": 100,
-            "e2eTests": 0,
-            "aiReview": 0
+            "e2eTests": 100,
+            "aiReview": 87
           }
         },
         "05-async-thunks": {
