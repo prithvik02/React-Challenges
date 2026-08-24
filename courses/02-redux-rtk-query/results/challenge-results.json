@@ -2432,25 +2432,25 @@
   {
     "challengeId": "11-api-local-state",
     "challengeName": "API and Local State Together",
-    "timestamp": "2026-08-24T05:38:15.223Z",
+    "timestamp": "2026-08-24T09:51:01.235Z",
     "scores": {
-      "functionalTests": 0,
+      "functionalTests": 100,
       "codeQuality": 50,
       "architecture": 100,
       "bestPractices": 100,
-      "e2eTests": 0,
-      "aiReview": 0
+      "e2eTests": 100,
+      "aiReview": 87
     },
-    "totalScore": 27.5,
-    "passed": false,
+    "totalScore": 90.55,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 3,
-      "passedTests": 0,
-      "failedTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -2460,16 +2460,10 @@
                 "Challenge 11: API and Local State Together"
               ],
               "fullName": " Challenge 11: API and Local State Together filtersSlice exists and is in store",
-              "status": "failed",
+              "status": "passed",
               "title": "filtersSlice exists and is in store",
-              "duration": 4,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 14,
-                "column": 35
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -2477,16 +2471,10 @@
                 "Challenge 11: API and Local State Together"
               ],
               "fullName": " Challenge 11: API and Local State Together PostsWithFilters uses useSelector and useGetPostsQuery or query hook",
-              "status": "failed",
+              "status": "passed",
               "title": "PostsWithFilters uses useSelector and useGetPostsQuery or query hook",
               "duration": 0,
-              "failureMessages": [
-                "expected '/** Stub: Complete Challenge 11 (API …' to match /useAppSelector|useSelector/"
-              ],
-              "location": {
-                "line": 24,
-                "column": 21
-              }
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -2494,26 +2482,19 @@
                 "Challenge 11: API and Local State Together"
               ],
               "fullName": " Challenge 11: API and Local State Together PostsWithFilters has posts-with-filters and filter-controls data-testids",
-              "status": "failed",
+              "status": "passed",
               "title": "PostsWithFilters has posts-with-filters and filter-controls data-testids",
-              "duration": 1,
-              "failureMessages": [
-                "expected '/** Stub: Complete Challenge 11 (API …' to contain 'filter-controls'"
-              ],
-              "location": {
-                "line": 32,
-                "column": 21
-              }
+              "duration": 0,
+              "failureMessages": []
             }
           ],
-          "startTime": 1787549897038,
-          "endTime": 1787549897044,
-          "status": "failed",
+          "startTime": 1787565062917,
+          "endTime": 1787565062918,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-11.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\tests\\challenge-11.test.tsx\" --reporter=json"
+      ]
     },
     "lintResults": {
       "score": 50,
@@ -2525,6 +2506,8 @@
       "score": 100,
       "passed": true,
       "patternsFound": [
+        "reducer",
+        "middleware",
         "reducer",
         "middleware"
       ],
@@ -2540,12 +2523,11 @@
         },
         {
           "file": "src/store/slices/filtersSlice.ts",
-          "error": "File does not exist",
-          "patternsFound": [],
-          "patternsMissing": [
+          "patternsFound": [
             "reducer",
             "middleware"
-          ]
+          ],
+          "patternsMissing": []
         },
         {
           "file": "src/components/PostsWithFilters.tsx",
@@ -2562,18 +2544,151 @@
       "note": "No best practices requirements specified in challenge"
     },
     "e2eResults": {
-      "score": 0,
-      "passed": false,
-      "totalTests": 0,
-      "passedTests": 0,
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
       "failedTests": 0,
-      "details": [],
-      "error": "Command failed: npx playwright test \"tests/e2e/challenge-11.spec.ts\" --reporter=json"
+      "skippedTests": 0,
+      "flakyTests": 0,
+      "details": [
+        {
+          "title": "challenge-11.spec.ts",
+          "file": "challenge-11.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 11: API and Local State - E2E",
+              "file": "challenge-11.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 11 page with PostsWithFilters",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 193,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-24T09:51:05.018Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-fae6402d7bdc74a17551",
+                  "file": "challenge-11.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should have filter controls",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 185,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-24T09:51:05.018Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-8d519fcb89ba7307e5f5",
+                  "file": "challenge-11.spec.ts",
+                  "line": 13,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
     },
     "aiReviewResults": {
-      "error": "Functional tests must pass first (0/3 passed)",
-      "score": 0,
-      "skipped": true
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-24T09:51:05.369Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: API slice, filter slice, and component logic are well organized.",
+        "Strong TypeScript usage with explicit types for state, actions, and API responses.",
+        "Proper store configuration with middleware and reducerPath integration.",
+        "Component correctly uses both RTK Query and Redux selectors to derive UI state.",
+        "No console statements and ESLint compliance demonstrated."
+      ],
+      "improvements": [
+        "Extract the filter controls into a separate reusable component to avoid duplication in loading and error states.",
+        "Move the derived `filteredPosts` logic into a selector or a custom hook to keep the component lean.",
+        "Remove the duplicate `data-testid=\"posts-with-filters\"` on the inner div; keep a single test id per component.",
+        "Add a dedicated route configuration for `/challenge/11-api-local-state` if not already present.",
+        "Consider using optional chaining or nullish coalescing when accessing `posts` to guard against undefined values.",
+        "Add unit tests for the filter slice and the derived selector to ensure future changes do not break functionality."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets the core functional requirements with clean, typed code and proper Redux Toolkit patterns. Minor refactoring and test coverage would elevate maintainability and reduce duplication.",
+      "requirementCompliance": 90
+    },
+    "aiResults": {
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-24T09:51:05.369Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: API slice, filter slice, and component logic are well organized.",
+        "Strong TypeScript usage with explicit types for state, actions, and API responses.",
+        "Proper store configuration with middleware and reducerPath integration.",
+        "Component correctly uses both RTK Query and Redux selectors to derive UI state.",
+        "No console statements and ESLint compliance demonstrated."
+      ],
+      "improvements": [
+        "Extract the filter controls into a separate reusable component to avoid duplication in loading and error states.",
+        "Move the derived `filteredPosts` logic into a selector or a custom hook to keep the component lean.",
+        "Remove the duplicate `data-testid=\"posts-with-filters\"` on the inner div; keep a single test id per component.",
+        "Add a dedicated route configuration for `/challenge/11-api-local-state` if not already present.",
+        "Consider using optional chaining or nullish coalescing when accessing `posts` to guard against undefined values.",
+        "Add unit tests for the filter slice and the derived selector to ensure future changes do not break functionality."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets the core functional requirements with clean, typed code and proper Redux Toolkit patterns. Minor refactoring and test coverage would elevate maintainability and reduce duplication.",
+      "requirementCompliance": 90
     }
   },
   {

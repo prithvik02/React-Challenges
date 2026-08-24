@@ -6,6 +6,7 @@ import {
 import counterReducer from './slices/counterSlice'
 import uiReducer from './slices/uiSlice'
 import usersReducer from './slices/usersSlice'
+import filtersReducer from './slices/filtersSlice'
 
 import { apiSlice } from '../api/apiSlice'
 
@@ -14,6 +15,8 @@ export const store = configureStore({
     counter: counterReducer,
     ui: uiReducer,
     users: usersReducer,
+    filters: filtersReducer,
+
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
 
