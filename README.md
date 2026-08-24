@@ -637,22 +637,110 @@ example 10 or 11
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 📈 Progress Summary
 
-**Last updated:** 24/8/2026, 3:28:15 pm
+**Last updated:** 24/8/2026, 6:25:35 pm
 
 ### Pathway
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 35 / 53 (66%) |
-| Overall score | 58.4% |
+| Challenges completed | 36 / 53 (67.9%) |
+| Overall score | 59.3% |
 
 ### By course
 
 | Course | Completed | Score | Status |
 |--------|-----------|-------|--------|
 | React Fundamentals | 23/23 (100%) | 90.5% | Pass |
-| Redux & RTK Query | 12/13 (92.3%) | 86.4% | Fail |
+| Redux & RTK Query | 13/13 (100%) | 89.1% | Pass |
 | Next.js App Router | 0/17 (0%) | 0% | Pass |
 

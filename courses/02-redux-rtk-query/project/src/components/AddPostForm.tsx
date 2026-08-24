@@ -6,10 +6,19 @@ export default function AddPostForm() {
   const [body, setBody] = useState('')
   const [userId, setUserId] = useState('1')
 
-  const [addPost, { isLoading, isSuccess, error }] =
-    useAddPostMutation()
+  const [
+    addPost,
+    {
+      isLoading,
+      isSuccess,
+      isError,
+      error,
+    },
+  ] = useAddPostMutation()
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault()
 
     if (!title.trim() || !body.trim()) {
@@ -26,7 +35,7 @@ export default function AddPostForm() {
       setTitle('')
       setBody('')
     } catch {
-      // Error is displayed through the mutation state.
+      // Mutation error is displayed below.
     }
   }
 
@@ -48,7 +57,9 @@ export default function AddPostForm() {
         <input
           type="number"
           value={userId}
-          onChange={event => setUserId(event.target.value)}
+          onChange={event =>
+            setUserId(event.target.value)
+          }
           min="1"
         />
       </label>
@@ -58,7 +69,9 @@ export default function AddPostForm() {
         <input
           type="text"
           value={title}
-          onChange={event => setTitle(event.target.value)}
+          onChange={event =>
+            setTitle(event.target.value)
+          }
           placeholder="Post title"
         />
       </label>
@@ -67,7 +80,9 @@ export default function AddPostForm() {
         Body
         <textarea
           value={body}
-          onChange={event => setBody(event.target.value)}
+          onChange={event =>
+            setBody(event.target.value)
+          }
           placeholder="Post content"
           rows={5}
         />
@@ -87,7 +102,7 @@ export default function AddPostForm() {
         </p>
       )}
 
-      {error && (
+      {isError && (
         <p data-testid="add-post-error">
           Failed to add post.
         </p>

@@ -31,7 +31,7 @@ export const apiSlice = createApi({
 
   endpoints: builder => ({
     // -------------------------
-    // USERS
+    // USERS - Challenge 7
     // -------------------------
     getUsers: builder.query<User[], void>({
       queryFn: async () => {
@@ -61,13 +61,21 @@ export const apiSlice = createApi({
                 type: 'User' as const,
                 id: user.id,
               })),
-              { type: 'User' as const, id: 'LIST' },
+              {
+                type: 'User' as const,
+                id: 'LIST',
+              },
             ]
-          : [{ type: 'User' as const, id: 'LIST' }],
+          : [
+              {
+                type: 'User' as const,
+                id: 'LIST',
+              },
+            ],
     }),
 
     // -------------------------
-    // POSTS
+    // POSTS - Challenge 8
     // -------------------------
     getPosts: builder.query<Post[], void>({
       queryFn: async () => {
@@ -97,13 +105,53 @@ export const apiSlice = createApi({
                 type: 'Post' as const,
                 id: post.id,
               })),
-              { type: 'Post' as const, id: 'LIST' },
+              {
+                type: 'Post' as const,
+                id: 'LIST',
+              },
             ]
-          : [{ type: 'Post' as const, id: 'LIST' }],
+          : [
+              {
+                type: 'Post' as const,
+                id: 'LIST',
+              },
+            ],
     }),
 
     // -------------------------
-    // ADD POST
+    // GET POST BY ID - Challenge 13
+    // -------------------------
+    getPostById: builder.query<Post, number>({
+      queryFn: async id => {
+        try {
+          const data = await mockApi.getPostById(id)
+
+          return {
+            data,
+          }
+        } catch (error) {
+          return {
+            error: {
+              status: 'CUSTOM_ERROR',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to fetch post',
+            },
+          }
+        }
+      },
+
+      providesTags: (_result, _error, id) => [
+        {
+          type: 'Post',
+          id,
+        },
+      ],
+    }),
+
+    // -------------------------
+    // ADD POST - Challenge 9
     // -------------------------
     addPost: builder.mutation<
       Post,
@@ -130,10 +178,13 @@ export const apiSlice = createApi({
       },
 
       invalidatesTags: [
-        { type: 'Post', id: 'LIST' },
+        {
+          type: 'Post',
+          id: 'LIST',
+        },
       ],
 
-      // Optimistic update
+      // Optimistic update - Challenge 10
       async onQueryStarted(
         newPost,
         { dispatch, queryFulfilled }
@@ -167,5 +218,6 @@ export const apiSlice = createApi({
 export const {
   useGetUsersQuery,
   useGetPostsQuery,
+  useGetPostByIdQuery,
   useAddPostMutation,
 } = apiSlice
