@@ -5,6 +5,12 @@ import {
 
 import { mockApi } from './mockServer'
 
+export interface NewPost {
+  userId: number
+  title: string
+  body: string
+}
+
 export const apiSlice = createApi({
   reducerPath: 'api',
 
@@ -15,7 +21,7 @@ export const apiSlice = createApi({
   }),
 
   endpoints: builder => ({
-    // Challenge 7 + Challenge 8
+    // Challenge 7
     getUsers: builder.query({
       queryFn: async () => {
         try {
@@ -99,9 +105,9 @@ export const apiSlice = createApi({
             ],
     }),
 
-    // Mutation for Challenge 8 and later challenges
+    // Challenge 9
     addPost: builder.mutation({
-      queryFn: async post => {
+      queryFn: async (post: NewPost) => {
         try {
           const data = await mockApi.createPost(post)
 

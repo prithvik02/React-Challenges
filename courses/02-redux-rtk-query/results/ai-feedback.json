@@ -1,14 +1,5 @@
 [
   {
-    "challengeId": "09-mutations",
-    "challengeName": "Mutations with useMutation",
-    "aiReview": {
-      "error": "Functional tests must pass first (0/3 passed)",
-      "score": 0,
-      "skipped": true
-    }
-  },
-  {
     "challengeId": "10-optimistic-updates",
     "challengeName": "Optimistic Updates",
     "aiReview": {
@@ -243,6 +234,34 @@
       "readability": 85,
       "maintainability": 85,
       "overall": "The implementation correctly applies RTK Query tag patterns and handles errors gracefully, but could benefit from DRY principles and broader cache invalidation coverage. The code is readable and maintainable, with clear TypeScript usage.",
+      "requirementCompliance": 90
+    }
+  },
+  {
+    "challengeId": "09-mutations",
+    "challengeName": "Mutations with useMutation",
+    "aiReview": {
+      "challengeId": "09-mutations",
+      "timestamp": "2026-08-24T09:39:44.599Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: API slice, mock server, and UI components are well organized.",
+        "Proper use of RTK Query mutation with invalidatesTags to keep the list in sync.",
+        "TypeScript types are consistently applied, ensuring type safety across the slice and form.",
+        "Form component follows best practices: controlled inputs, async submit handling, and loading state management."
+      ],
+      "improvements": [
+        "Add a route for `/challenge/09-mutations` that renders <AddPostForm />; currently the component is not wired into the router.",
+        "Consider using the `query` option instead of `queryFn` for the mutation to keep the API slice declarative and easier to read.",
+        "Specify generic types for the mutation: `builder.mutation<NewPost, Omit<NewPost, 'id'>>` for clearer contract.",
+        "Display the actual error message from the mutation (`error?.data?.message`) rather than a generic string.",
+        "Optionally reset the success message after a short timeout or on form focus to improve UX.",
+        "Add a loading indicator for the form fields (e.g., disable inputs) to prevent duplicate submissions."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation demonstrates solid use of RTK Query mutations and form handling, but it currently lacks the routing integration required by the challenge. Adding the missing route and refining the mutation definition will bring it fully in line with the specifications.",
       "requirementCompliance": 90
     }
   }
