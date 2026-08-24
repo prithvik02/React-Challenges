@@ -1,14 +1,5 @@
 [
   {
-    "challengeId": "05-async-thunks",
-    "challengeName": "Async Logic with createAsyncThunk",
-    "aiReview": {
-      "error": "Functional tests must pass first (0/3 passed)",
-      "score": 0,
-      "skipped": true
-    }
-  },
-  {
     "challengeId": "06-rtk-query-setup",
     "challengeName": "RTK Query Setup and API Slice",
     "aiReview": {
@@ -179,6 +170,30 @@
       "readability": 85,
       "maintainability": 85,
       "overall": "The implementation cleanly satisfies the challenge requirements, leveraging Redux Toolkit patterns effectively. Minor enhancements around typing and documentation could further improve maintainability and clarity.",
+      "requirementCompliance": 90
+    }
+  },
+  {
+    "challengeId": "05-async-thunks",
+    "challengeName": "Async Logic with createAsyncThunk",
+    "aiReview": {
+      "challengeId": "05-async-thunks",
+      "timestamp": "2026-08-24T09:13:52.145Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Correct implementation of createAsyncThunk and extraReducers to manage async state",
+        "Clean integration of the users slice into the Redux store",
+        "TypeScript usage is consistent and error handling is clear"
+      ],
+      "improvements": [
+        "Remove the unused middlewareNote variable and the corresponding void statement to avoid confusion",
+        "Define an explicit interface for the slice state to improve type safety and readability",
+        "Consider consolidating the two exported reducer variants (usersReducer and default export) into a single export to reduce redundancy"
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets all functional requirements and follows Redux Toolkit best practices. Minor refactoring would improve clarity and maintainability, but the core logic is solid and well-structured.",
       "requirementCompliance": 90
     }
   }

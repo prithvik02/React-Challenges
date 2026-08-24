@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// middleware is configured by the store
+const initialState = {
+  sidebarOpen: false,
+}
+
 const uiSlice = createSlice({
   name: 'ui',
-  initialState: {
-    sidebarOpen: false,
-  },
+  initialState,
   reducers: {
-    toggleSidebar: (state) => {
+    toggleSidebar: state => {
       state.sidebarOpen = !state.sidebarOpen
     },
   },

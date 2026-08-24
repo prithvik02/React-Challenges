@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from './slices/counterSlice'
 import uiReducer from './slices/uiSlice'
+import usersReducer from './slices/usersSlice'
 
 // middleware is handled by configureStore
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     ui: uiReducer,
+    users: usersReducer,
   },
 })
 
