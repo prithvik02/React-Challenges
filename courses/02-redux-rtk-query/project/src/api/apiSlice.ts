@@ -5,7 +5,16 @@ import {
 
 import { mockApi } from './mockServer'
 
-export interface NewPost {
+export interface User {
+  id: number
+  name: string
+  email: string
+  username: string
+  phone: string
+}
+
+export interface Post {
+  id: number
   userId: number
   title: string
   body: string
@@ -21,8 +30,10 @@ export const apiSlice = createApi({
   }),
 
   endpoints: builder => ({
-    // Challenge 7
-    getUsers: builder.query({
+    // -------------------------
+    // USERS
+    // -------------------------
+    getUsers: builder.query<User[], void>({
       queryFn: async () => {
         try {
           const data = await mockApi.getUsers()
@@ -50,21 +61,15 @@ export const apiSlice = createApi({
                 type: 'User' as const,
                 id: user.id,
               })),
-              {
-                type: 'User' as const,
-                id: 'LIST',
-              },
+              { type: 'User' as const, id: 'LIST' },
             ]
-          : [
-              {
-                type: 'User' as const,
-                id: 'LIST',
-              },
-            ],
+          : [{ type: 'User' as const, id: 'LIST' }],
     }),
 
-    // Challenge 8
-    getPosts: builder.query({
+    // -------------------------
+    // POSTS
+    // -------------------------
+    getPosts: builder.query<Post[], void>({
       queryFn: async () => {
         try {
           const data = await mockApi.getPosts()
@@ -92,22 +97,19 @@ export const apiSlice = createApi({
                 type: 'Post' as const,
                 id: post.id,
               })),
-              {
-                type: 'Post' as const,
-                id: 'LIST',
-              },
+              { type: 'Post' as const, id: 'LIST' },
             ]
-          : [
-              {
-                type: 'Post' as const,
-                id: 'LIST',
-              },
-            ],
+          : [{ type: 'Post' as const, id: 'LIST' }],
     }),
 
-    // Challenge 9
-    addPost: builder.mutation({
-      queryFn: async (post: NewPost) => {
+    // -------------------------
+    // ADD POST
+    // -------------------------
+    addPost: builder.mutation<
+      Post,
+      Omit<Post, 'id'>
+    >({
+      queryFn: async post => {
         try {
           const data = await mockApi.createPost(post)
 
@@ -128,11 +130,36 @@ export const apiSlice = createApi({
       },
 
       invalidatesTags: [
-        {
-          type: 'Post',
-          id: 'LIST',
-        },
+        { type: 'Post', id: 'LIST' },
       ],
+
+      // Optimistic update
+      async onQueryStarted(
+        newPost,
+        { dispatch, queryFulfilled }
+      ) {
+        const optimisticPost: Post = {
+          ...newPost,
+          id: Date.now(),
+        }
+
+        const patchResult =
+          dispatch(
+            apiSlice.util.updateQueryData(
+              'getPosts',
+              undefined,
+              draft => {
+                draft.push(optimisticPost)
+              }
+            )
+          )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
     }),
   }),
 })

@@ -2231,25 +2231,25 @@
   {
     "challengeId": "10-optimistic-updates",
     "challengeName": "Optimistic Updates",
-    "timestamp": "2026-08-24T05:38:12.345Z",
+    "timestamp": "2026-08-24T09:45:01.993Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
       "architecture": 100,
       "bestPractices": 100,
-      "e2eTests": 0,
-      "aiReview": 0
+      "e2eTests": 100,
+      "aiReview": 87
     },
-    "totalScore": 20,
-    "passed": false,
+    "totalScore": 90.55,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 3,
-      "passedTests": 0,
-      "failedTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -2259,16 +2259,10 @@
                 "Challenge 10: Optimistic Updates"
               ],
               "fullName": " Challenge 10: Optimistic Updates API slice mutation has onQueryStarted",
-              "status": "failed",
+              "status": "passed",
               "title": "API slice mutation has onQueryStarted",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 14,
-                "column": 33
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -2276,16 +2270,10 @@
                 "Challenge 10: Optimistic Updates"
               ],
               "fullName": " Challenge 10: Optimistic Updates optimistic update uses queryFulfilled or updateQueryData",
-              "status": "failed",
+              "status": "passed",
               "title": "optimistic update uses queryFulfilled or updateQueryData",
-              "duration": 1,
-              "failureMessages": [
-                "ENOENT: no such file or directory, open 'D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\src\\api\\apiSlice.ts'"
-              ],
-              "location": {
-                "line": 442,
-                "column": 20
-              }
+              "duration": 0,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -2293,31 +2281,24 @@
                 "Challenge 10: Optimistic Updates"
               ],
               "fullName": " Challenge 10: Optimistic Updates has rollback or undo on error",
-              "status": "failed",
+              "status": "passed",
               "title": "has rollback or undo on error",
               "duration": 0,
-              "failureMessages": [
-                "ENOENT: no such file or directory, open 'D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\src\\api\\apiSlice.ts'"
-              ],
-              "location": {
-                "line": 442,
-                "column": 20
-              }
+              "failureMessages": []
             }
           ],
-          "startTime": 1787549894151,
-          "endTime": 1787549894157,
-          "status": "failed",
+          "startTime": 1787564703754,
+          "endTime": 1787564703755,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-10.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\02-redux-rtk-query\\project\\tests\\challenge-10.test.tsx\" --reporter=json"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
@@ -2328,7 +2309,6 @@
       "details": [
         {
           "file": "src/api/apiSlice.ts",
-          "error": "File does not exist",
           "patternsFound": [],
           "patternsMissing": []
         }
@@ -2342,18 +2322,111 @@
       "note": "No best practices requirements specified in challenge"
     },
     "e2eResults": {
-      "score": 0,
-      "passed": false,
-      "totalTests": 0,
-      "passedTests": 0,
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
       "failedTests": 0,
-      "details": [],
-      "error": "Command failed: npx playwright test \"tests/e2e/challenge-10.spec.ts\" --reporter=json"
+      "skippedTests": 0,
+      "flakyTests": 0,
+      "details": [
+        {
+          "title": "challenge-10.spec.ts",
+          "file": "challenge-10.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 10: Optimistic Updates - E2E",
+              "file": "challenge-10.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 10 page with content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 177,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-24T09:45:05.821Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "2b6a150d93e258235d20-c73851f46778bc6eb125",
+                  "file": "challenge-10.spec.ts",
+                  "line": 8,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
     },
     "aiReviewResults": {
-      "error": "Functional tests must pass first (0/3 passed)",
-      "score": 0,
-      "skipped": true
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-24T09:45:06.152Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear and consistent use of RTK Query patterns, including queryFn, providesTags, and invalidatesTags.",
+        "Optimistic update implemented correctly with updateQueryData and rollback via patchResult.undo().",
+        "Strong TypeScript typing throughout the API slice and mock server.",
+        "No console statements and adherence to ESLint rules."
+      ],
+      "improvements": [
+        "Consider using the result of queryFulfilled to replace the optimistic payload with the server‑returned data for more accurate state.",
+        "Extract common error handling logic into a helper to reduce duplication across endpoints.",
+        "Add unit tests for the optimistic update flow to ensure rollback behaves correctly on failure.",
+        "Document the optimistic update strategy in a README or comment block for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets all functional requirements and follows RTK Query best practices. The code is clean, well‑typed, and easy to understand, with a solid optimistic update pattern. Minor enhancements around result handling and test coverage would further strengthen the solution.",
+      "requirementCompliance": 90
+    },
+    "aiResults": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-24T09:45:06.152Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear and consistent use of RTK Query patterns, including queryFn, providesTags, and invalidatesTags.",
+        "Optimistic update implemented correctly with updateQueryData and rollback via patchResult.undo().",
+        "Strong TypeScript typing throughout the API slice and mock server.",
+        "No console statements and adherence to ESLint rules."
+      ],
+      "improvements": [
+        "Consider using the result of queryFulfilled to replace the optimistic payload with the server‑returned data for more accurate state.",
+        "Extract common error handling logic into a helper to reduce duplication across endpoints.",
+        "Add unit tests for the optimistic update flow to ensure rollback behaves correctly on failure.",
+        "Document the optimistic update strategy in a README or comment block for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets all functional requirements and follows RTK Query best practices. The code is clean, well‑typed, and easy to understand, with a solid optimistic update pattern. Minor enhancements around result handling and test coverage would further strengthen the solution.",
+      "requirementCompliance": 90
     }
   },
   {

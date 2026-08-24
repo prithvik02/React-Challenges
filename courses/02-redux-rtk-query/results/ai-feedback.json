@@ -1,14 +1,5 @@
 [
   {
-    "challengeId": "10-optimistic-updates",
-    "challengeName": "Optimistic Updates",
-    "aiReview": {
-      "error": "Functional tests must pass first (0/3 passed)",
-      "score": 0,
-      "skipped": true
-    }
-  },
-  {
     "challengeId": "11-api-local-state",
     "challengeName": "API and Local State Together",
     "aiReview": {
@@ -262,6 +253,32 @@
       "readability": 85,
       "maintainability": 85,
       "overall": "The implementation demonstrates solid use of RTK Query mutations and form handling, but it currently lacks the routing integration required by the challenge. Adding the missing route and refining the mutation definition will bring it fully in line with the specifications.",
+      "requirementCompliance": 90
+    }
+  },
+  {
+    "challengeId": "10-optimistic-updates",
+    "challengeName": "Optimistic Updates",
+    "aiReview": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-24T09:45:06.152Z",
+      "score": 87,
+      "feedback": [],
+      "strengths": [
+        "Clear and consistent use of RTK Query patterns, including queryFn, providesTags, and invalidatesTags.",
+        "Optimistic update implemented correctly with updateQueryData and rollback via patchResult.undo().",
+        "Strong TypeScript typing throughout the API slice and mock server.",
+        "No console statements and adherence to ESLint rules."
+      ],
+      "improvements": [
+        "Consider using the result of queryFulfilled to replace the optimistic payload with the server‑returned data for more accurate state.",
+        "Extract common error handling logic into a helper to reduce duplication across endpoints.",
+        "Add unit tests for the optimistic update flow to ensure rollback behaves correctly on failure.",
+        "Document the optimistic update strategy in a README or comment block for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 85,
+      "overall": "The implementation meets all functional requirements and follows RTK Query best practices. The code is clean, well‑typed, and easy to understand, with a solid optimistic update pattern. Minor enhancements around result handling and test coverage would further strengthen the solution.",
       "requirementCompliance": 90
     }
   }

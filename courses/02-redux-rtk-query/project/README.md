@@ -57,12 +57,12 @@ npm run review -- --challenge=01-store-setup
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 24/8/2026, 3:09:46 pm*
+*Auto-updated when you run review. Last run: 24/8/2026, 3:15:07 pm*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 9 / 13 (69.2%) |
-| Average score | 70.5% |
+| Challenges completed | 10 / 13 (76.9%) |
+| Average score | 75.9% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
@@ -75,7 +75,7 @@ npm run review -- --challenge=01-store-setup
 | Query Endpoints and useQuery Hooks | RTK Query, useGetUsersQuery, loading, error, data | Passed |
 | Caching and Cache Tags | RTK Query, providesTags, invalidatesTags, cache invalidation | Passed |
 | Mutations with useMutation | RTK Query, builder.mutation, useMutation, POST/PUT/DELETE | Passed |
-| Optimistic Updates | RTK Query, optimistic updates, onQueryStarted, rollback | Not passed |
+| Optimistic Updates | RTK Query, optimistic updates, onQueryStarted, rollback | Passed |
 | API and Local State Together | Redux, RTK Query, slice + API in one store, filtering/sorting | Not passed |
 | Error and Loading UX | RTK Query, loading state, error state, retry, UX | Not passed |
 | Query with Parameters and Detail View | RTK Query, parameterized query, getPostById, useGetPostByIdQuery, skip option, detail view | Not passed |
