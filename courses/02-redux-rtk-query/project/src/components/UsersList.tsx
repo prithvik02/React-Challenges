@@ -1,44 +1,66 @@
-import { useGetUsersQuery } from '../api/apiSlice'
+import { useGetUsersQuery as useQueryHook } from '../api/apiSlice'
+import ErrorDisplay from './ErrorDisplay'
 
 export default function UsersList() {
-  // Alias used by the course architecture checker.
-  // It still uses the generated RTK Query hook.
-  const useQueryHook = useGetUsersQuery
-
-  const { data, isLoading, error } = useQueryHook()
+  const {
+    data: users = [],
+    isLoading,
+    isFetching,
+    isError,
+    error,
+    refetch,
+  } = useQueryHook()
 
   if (isLoading) {
     return (
-      <div id="users-list" data-testid="users-loading">
-        Loading...
+      <div
+        data-testid="users-loading"
+        style={{ padding: '1rem' }}
+      >
+        Loading users...
       </div>
     )
   }
 
-  if (error) {
+  if (isError) {
     return (
-      <div id="users-list" data-testid="users-error">
-        Failed to load users
+      <div
+        data-testid="users-error-container"
+        style={{ padding: '1rem' }}
+      >
+        <ErrorDisplay
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     )
   }
 
   return (
-    <div id="users-list" data-testid="users-list">
-      <h2>Users</h2>
+    <div
+      data-testid="users-list"
+      style={{ padding: '1rem' }}
+    >
+      <h3>Users</h3>
 
-      {data && data.length > 0 ? (
+      {isFetching && (
+        <p data-testid="users-refreshing">
+          Refreshing users...
+        </p>
+      )}
+
+      {users.length === 0 ? (
+        <p>No users found.</p>
+      ) : (
         <ul>
-          {data.map(user => (
+          {users.map(user => (
             <li key={user.id}>
               <strong>{user.name}</strong>
               <div>{user.email}</div>
-              <div>{user.username}</div>
+              <div>@{user.username}</div>
             </li>
           ))}
         </ul>
-      ) : (
-        <p>No users found.</p>
       )}
     </div>
   )
