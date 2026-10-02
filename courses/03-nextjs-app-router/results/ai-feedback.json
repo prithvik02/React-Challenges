@@ -1,1 +1,274 @@
-[]
+[
+  {
+    "challengeId": "03-data-fetching-server",
+    "challengeName": "Data Fetching in Server Components",
+    "aiReview": {
+      "challengeId": "03-data-fetching-server",
+      "timestamp": "2026-10-02T21:26:33.290Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "04-api-route-handlers",
+    "challengeName": "API Route Handlers",
+    "aiReview": {
+      "challengeId": "04-api-route-handlers",
+      "timestamp": "2026-10-02T21:26:41.228Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "05-loading-and-streaming",
+    "challengeName": "Loading and Streaming",
+    "aiReview": {
+      "challengeId": "05-loading-and-streaming",
+      "timestamp": "2026-10-02T21:26:48.406Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "06-dynamic-routes",
+    "challengeName": "Dynamic Routes",
+    "aiReview": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-10-02T21:26:55.530Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "07-static-and-dynamic-rendering",
+    "challengeName": "Static and Dynamic Rendering",
+    "aiReview": {
+      "challengeId": "07-static-and-dynamic-rendering",
+      "timestamp": "2026-10-02T21:27:04.094Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  },
+  {
+    "challengeId": "08-ssr-dynamic-rendering",
+    "challengeName": "SSR (Server-Side Rendering)",
+    "aiReview": {
+      "challengeId": "08-ssr-dynamic-rendering",
+      "timestamp": "2026-10-02T21:27:11.316Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "09-server-actions-and-revalidation",
+    "challengeName": "Server Actions and Revalidation",
+    "aiReview": {
+      "challengeId": "09-server-actions-and-revalidation",
+      "timestamp": "2026-10-02T21:27:20.767Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "10-caching-and-revalidating",
+    "challengeName": "Caching and Revalidating",
+    "aiReview": {
+      "challengeId": "10-caching-and-revalidating",
+      "timestamp": "2026-10-02T21:27:28.163Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "11-error-handling",
+    "challengeName": "Error Handling",
+    "aiReview": {
+      "challengeId": "11-error-handling",
+      "timestamp": "2026-10-02T21:27:35.531Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "12-metadata-and-seo",
+    "challengeName": "Metadata and SEO",
+    "aiReview": {
+      "challengeId": "12-metadata-and-seo",
+      "timestamp": "2026-10-02T21:27:43.479Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  },
+  {
+    "challengeId": "13-images-and-fonts",
+    "challengeName": "Images and Fonts",
+    "aiReview": {
+      "challengeId": "13-images-and-fonts",
+      "timestamp": "2026-10-02T21:27:51.545Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  },
+  {
+    "challengeId": "14-search-and-pagination",
+    "challengeName": "Search and Pagination",
+    "aiReview": {
+      "challengeId": "14-search-and-pagination",
+      "timestamp": "2026-10-02T21:27:58.720Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "15-redux-toolkit-with-nextjs",
+    "challengeName": "Redux Toolkit with Next.js",
+    "aiReview": {
+      "challengeId": "15-redux-toolkit-with-nextjs",
+      "timestamp": "2026-10-02T21:28:06.708Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  },
+  {
+    "challengeId": "16-rtk-query-with-nextjs",
+    "challengeName": "RTK Query with Next.js",
+    "aiReview": {
+      "challengeId": "16-rtk-query-with-nextjs",
+      "timestamp": "2026-10-02T21:28:14.231Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "17-fullstack-capstone",
+    "challengeName": "Fullstack Capstone",
+    "aiReview": {
+      "challengeId": "17-fullstack-capstone",
+      "timestamp": "2026-10-02T21:28:23.745Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "No files found to review"
+    }
+  },
+  {
+    "challengeId": "01-app-router-pages-layout",
+    "challengeName": "App Router, Pages, and Layout",
+    "aiReview": {
+      "challengeId": "01-app-router-pages-layout",
+      "timestamp": "2026-10-02T21:46:53.402Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  },
+  {
+    "challengeId": "02-server-and-client-components",
+    "challengeName": "Server and Client Components",
+    "aiReview": {
+      "challengeId": "02-server-and-client-components",
+      "timestamp": "2026-10-02T21:51:58.652Z",
+      "score": 0,
+      "feedback": [],
+      "strengths": [],
+      "improvements": [],
+      "readability": 0,
+      "maintainability": 0,
+      "overall": "",
+      "error": "Groq API error (404): The model `llama-3.1-8b-instant` does not exist or you do not have access to it."
+    }
+  }
+]

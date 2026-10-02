@@ -1,16 +1,12 @@
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
-import { parse } from '@babel/parser';
-import traverse from '@babel/traverse';
+import { readFileSync, existsSync } from "fs";
+import { join } from "path";
+import { parse } from "@babel/parser";
+import traverse from "@babel/traverse";
 
-/**
- * Checks architecture patterns using AST parsing
- * Adapted for Next.js App Router patterns
- */
 export async function checkArchitecture(challengeMetadata, projectDir) {
   const patternsRequired = challengeMetadata.patternsRequired || [];
   const filesToCheck = challengeMetadata.filesToCheck || [];
-  
+
   if (patternsRequired.length === 0) {
     return {
       score: 100,
@@ -27,16 +23,19 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
     details: []
   };
 
-  let totalChecks = 0;
-  let passedChecks = 0;
+  const patternFiles = {};
+
+  for (const pattern of patternsRequired) {
+    patternFiles[pattern] = [];
+  }
 
   for (const file of filesToCheck) {
     const filePath = join(projectDir, file);
-    
+
     if (!existsSync(filePath)) {
       results.details.push({
         file,
-        error: 'File does not exist',
+        error: "File does not exist",
         patternsFound: [],
         patternsMissing: patternsRequired
       });
@@ -44,18 +43,26 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
     }
 
     try {
-      const fileContent = readFileSync(filePath, 'utf-8');
-      const fileResults = checkFileForPatterns(fileContent, patternsRequired, file);
-      
-      totalChecks += patternsRequired.length;
-      passedChecks += fileResults.patternsFound.length;
-      
-      results.patternsFound.push(...fileResults.patternsFound);
-      results.patternsMissing.push(...fileResults.patternsMissing);
+      const content = readFileSync(filePath, "utf-8");
+
+      const foundPatterns = checkFileForPatterns(
+        content,
+        patternsRequired,
+        file
+      );
+
+      for (const pattern of foundPatterns) {
+        if (patternFiles[pattern]) {
+          patternFiles[pattern].push(file);
+        }
+      }
+
       results.details.push({
         file,
-        patternsFound: fileResults.patternsFound,
-        patternsMissing: fileResults.patternsMissing
+        patternsFound: foundPatterns,
+        patternsMissing: patternsRequired.filter(
+          pattern => !foundPatterns.includes(pattern)
+        )
       });
     } catch (error) {
       results.details.push({
@@ -67,144 +74,261 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
     }
   }
 
-  // Calculate score
-  results.score = totalChecks > 0 
-    ? Math.round((passedChecks / totalChecks) * 100 * 10) / 10
-    : 0;
-  
+  for (const pattern of patternsRequired) {
+    if (patternFiles[pattern] && patternFiles[pattern].length > 0) {
+      results.patternsFound.push(pattern);
+    } else {
+      results.patternsMissing.push(pattern);
+    }
+  }
+
+  results.score =
+    patternsRequired.length > 0
+      ? Math.round(
+          (results.patternsFound.length / patternsRequired.length) *
+            100 *
+            10
+        ) / 10
+      : 100;
+
   results.passed = results.score >= 80;
 
   return results;
 }
 
 function checkFileForPatterns(content, patternsRequired, fileName) {
-  const patternsFound = [];
-  const patternsMissing = [];
+  const foundPatterns = new Set();
+  const normalizedFileName = fileName.replace(/\\/g, "/");
 
   try {
     const ast = parse(content, {
-      sourceType: 'module',
-      plugins: ['typescript', 'jsx', 'decorators-legacy', 'classProperties']
+      sourceType: "module",
+      plugins: [
+        "typescript",
+        "jsx",
+        "decorators-legacy",
+        "classProperties"
+      ]
     });
 
-    const foundPatterns = new Set();
-
-    traverse(ast, {
-      // Check for 'use client' directive
-      Directive(path) {
-        if (path.node.value.value === 'use client') {
-          foundPatterns.add('useClient');
-          foundPatterns.add('clientComponent');
-        }
-      },
-
-      // Check for Server Component (no 'use client')
+    traverse.default(ast, {
       Program(path) {
         const hasUseClient = path.node.directives?.some(
-          d => d.value.value === 'use client'
+          directive => directive.value.value === "use client"
         );
-        if (!hasUseClient && fileName.includes('page.tsx')) {
-          foundPatterns.add('serverComponent');
+
+        if (
+          !hasUseClient &&
+          normalizedFileName.includes("page.tsx")
+        ) {
+          foundPatterns.add("serverComponent");
+        }
+
+        if (normalizedFileName.includes("app/")) {
+          foundPatterns.add("appDirectory");
+        }
+
+        if (normalizedFileName.includes("page.tsx")) {
+          foundPatterns.add("fileBasedRouting");
         }
       },
 
-      // Check for Link component
+      Directive(path) {
+        if (path.node.value.value === "use client") {
+          foundPatterns.add("useClient");
+          foundPatterns.add("clientComponent");
+        }
+      },
+
       ImportDeclaration(path) {
-        if (path.node.source.value === 'next/link') {
-          foundPatterns.add('Link');
+        const source = path.node.source.value;
+
+        if (source === "next/link") {
+          foundPatterns.add("Link");
         }
-        if (path.node.source.value === 'next/navigation') {
-          foundPatterns.add('navigation');
+
+        if (source === "next/navigation") {
+          foundPatterns.add("navigation");
+        }
+
+        if (source === "next/image") {
+          foundPatterns.add("nextImage");
+        }
+
+        if (
+          source === "next/font/google" ||
+          source === "next/font/local"
+        ) {
+          foundPatterns.add("nextFont");
+        }
+
+        if (source === "@reduxjs/toolkit") {
+          foundPatterns.add("configureStore");
+        }
+
+        if (source === "react-redux") {
+          for (const specifier of path.node.specifiers) {
+            const name =
+              specifier.imported?.name ||
+              specifier.local?.name;
+
+            if (name === "Provider") {
+              foundPatterns.add("Provider");
+            }
+
+            if (name === "useSelector") {
+              foundPatterns.add("useSelector");
+            }
+
+            if (name === "useDispatch") {
+              foundPatterns.add("useDispatch");
+            }
+          }
         }
       },
 
-      // Check for async component (Server Component data fetching)
       FunctionDeclaration(path) {
         if (path.node.async) {
-          foundPatterns.add('asyncComponent');
+          foundPatterns.add("asyncComponent");
+
+          if (
+            path.node.id?.name?.toLowerCase().includes("action") ||
+            content.includes("use server")
+          ) {
+            foundPatterns.add("serverAction");
+          }
         }
       },
 
       ArrowFunctionExpression(path) {
         if (path.node.async) {
-          foundPatterns.add('asyncComponent');
+          foundPatterns.add("asyncComponent");
         }
       },
 
-      // Check for metadata export
       ExportNamedDeclaration(path) {
-        if (path.node.declaration) {
-          const decl = path.node.declaration;
-          if (decl.id && decl.id.name === 'metadata') {
-            foundPatterns.add('metadata');
-          }
+        if (!path.node.declaration) {
+          return;
         }
-        path.node.specifiers.forEach(spec => {
-          if (spec.exported.name === 'metadata') {
-            foundPatterns.add('metadata');
-          }
-        });
+
+        const declaration = path.node.declaration;
+
+        if (
+          declaration.id &&
+          declaration.id.name === "metadata"
+        ) {
+          foundPatterns.add("metadata");
+        }
+
+        if (
+          declaration.id &&
+          declaration.id.name === "generateMetadata"
+        ) {
+          foundPatterns.add("generateMetadata");
+        }
       },
 
-      // Check for API route (route.ts)
+      ExportDefaultDeclaration(path) {
+        const declaration = path.node.declaration;
+
+        if (
+          declaration &&
+          declaration.type === "FunctionDeclaration" &&
+          declaration.async
+        ) {
+          foundPatterns.add("asyncComponent");
+        }
+      },
+
       CallExpression(path) {
-        if (path.node.callee.name === 'NextResponse') {
-          foundPatterns.add('apiRoute');
+        if (
+          path.node.callee?.name === "NextResponse"
+        ) {
+          foundPatterns.add("apiRoute");
         }
-        if (path.node.callee.object && 
-            path.node.callee.object.name === 'Response' &&
-            path.node.callee.property &&
-            path.node.callee.property.name === 'json') {
-          foundPatterns.add('apiRoute');
+
+        if (
+          path.node.callee?.object?.name === "Response" &&
+          path.node.callee?.property?.name === "json"
+        ) {
+          foundPatterns.add("apiRoute");
+        }
+
+        if (
+          path.node.callee?.name === "configureStore"
+        ) {
+          foundPatterns.add("configureStore");
+        }
+
+        if (
+          path.node.callee?.name === "useSelector"
+        ) {
+          foundPatterns.add("useSelector");
+        }
+
+        if (
+          path.node.callee?.name === "useDispatch"
+        ) {
+          foundPatterns.add("useDispatch");
         }
       },
 
-      // Check for Server Actions
-      FunctionDeclaration(path) {
-        if (path.node.async && 
-            (path.node.id?.name?.includes('action') || 
-             content.includes('use server'))) {
-          foundPatterns.add('serverAction');
-        }
-      },
-
-      // Check for form handling
       JSXElement(path) {
-        if (path.node.openingElement.name.name === 'form') {
-          foundPatterns.add('formHandling');
+        const name =
+          path.node.openingElement?.name?.name;
+
+        if (name === "form") {
+          foundPatterns.add("formHandling");
+        }
+
+        if (name === "Provider") {
+          foundPatterns.add("Provider");
         }
       },
 
-      // Check for app directory structure
-      Program(path) {
-        if (fileName.includes('app/')) {
-          foundPatterns.add('appDirectory');
-        }
-        if (fileName.includes('page.tsx')) {
-          foundPatterns.add('fileBasedRouting');
+      VariableDeclaration(path) {
+        for (const declaration of path.node.declarations) {
+          if (
+            declaration.id?.name === "dynamic"
+          ) {
+            foundPatterns.add("dynamicExport");
+          }
+
+          if (
+            declaration.id?.name === "revalidate"
+          ) {
+            foundPatterns.add("revalidate");
+          }
         }
       }
     });
-
-    // Check which required patterns were found
-    for (const pattern of patternsRequired) {
-      if (foundPatterns.has(pattern)) {
-        patternsFound.push(pattern);
-      } else {
-        patternsMissing.push(pattern);
-      }
+  } catch (error) {
+    if (content.includes("use client")) {
+      foundPatterns.add("useClient");
+      foundPatterns.add("clientComponent");
     }
 
-  } catch (error) {
-    // If parsing fails, try simple string matching as fallback
-    for (const pattern of patternsRequired) {
-      if (content.includes(pattern) || content.includes(pattern.replace(/([A-Z])/g, '-$1').toLowerCase())) {
-        patternsFound.push(pattern);
-      } else {
-        patternsMissing.push(pattern);
-      }
+    if (
+      normalizedFileName.includes("page.tsx") &&
+      !content.includes("use client")
+    ) {
+      foundPatterns.add("serverComponent");
+    }
+
+    if (normalizedFileName.includes("app/")) {
+      foundPatterns.add("appDirectory");
+    }
+
+    if (normalizedFileName.includes("page.tsx")) {
+      foundPatterns.add("fileBasedRouting");
+    }
+
+    if (content.includes('from "next/link"')) {
+      foundPatterns.add("Link");
     }
   }
 
-  return { patternsFound, patternsMissing };
+  return patternsRequired.filter(pattern =>
+    foundPatterns.has(pattern)
+  );
 }

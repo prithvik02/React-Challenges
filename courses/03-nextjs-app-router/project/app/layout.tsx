@@ -1,19 +1,18 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Next.js App Router Project',
-  description: 'Complete challenges to build your Next.js skills',
-}
+  title: "Next.js Challenge",
+  description: "Next.js App Router challenge",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  )
+  );
 }
