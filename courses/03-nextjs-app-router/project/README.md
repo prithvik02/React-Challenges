@@ -64,17 +64,17 @@ npm run review -- --challenge=01-app-router-pages-layout
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 4/10/2026, 12:20:01 am*
+*Auto-updated when you run review. Last run: 4/10/2026, 12:30:02 am*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 1 / 17 (5.9%) |
-| Average score | 33.5% |
+| Challenges completed | 2 / 17 (11.8%) |
+| Average score | 35.7% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
-| App Router, Pages, and Layout | Next.js App Router, File-based Routing, Link Component, Layout, Page Structure | Passed |
-| Server and Client Components | Server Components, Client Components, 'use client', useState, Event handlers | Not passed |
+| App Router, Pages, and Layout | Next.js App Router, File-based Routing, Link Component, Layout, Page Structure | Not passed |
+| Server and Client Components | Server Components, Client Components, 'use client', useState, Event handlers | Passed |
 | Data Fetching in Server Components | Async Server Components, fetch, Data fetching, Server-side data | Not passed |
 | API Route Handlers | Route Handlers, app/api, GET, POST, Response.json | Not passed |
 | Loading and Streaming | loading.tsx, Streaming, Suspense, Loading UI | Not passed |
@@ -84,7 +84,7 @@ npm run review -- --challenge=01-app-router-pages-layout
 | Server Actions and Revalidation | Server Actions, 'use server', revalidatePath, revalidateTag | Not passed |
 | Caching and Revalidating | fetch cache, revalidate, revalidatePath, revalidateTag | Not passed |
 | Error Handling | error.tsx, notFound(), not-found.tsx, Error boundaries | Not passed |
-| Metadata and SEO | metadata, generateMetadata, Open Graph, SEO | Not passed |
+| Metadata and SEO | metadata, generateMetadata, Open Graph, SEO | Passed |
 | Images and Fonts | next/image, next/font, Image optimization, Font optimization | Not passed |
 | Search and Pagination | searchParams, URL search params, Pagination, Filtering | Not passed |
 | Redux Toolkit with Next.js | Redux Toolkit, configureStore, Provider, useSelector, useDispatch | Not passed |

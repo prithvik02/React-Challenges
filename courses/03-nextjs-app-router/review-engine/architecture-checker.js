@@ -1,280 +1,287 @@
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
-import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
 
-export async function checkArchitecture(challengeMetadata, projectDir) {
-  const patternsRequired = challengeMetadata.patternsRequired || [];
-  const filesToCheck = challengeMetadata.filesToCheck || [];
+function getProjectFiles(projectDir) {
+  const files = [];
 
-  if (patternsRequired.length === 0) {
-    return {
-      score: 100,
-      passed: true,
-      patternsFound: [],
-      patternsMissing: [],
-      details: []
-    };
-  }
-
-  const results = {
-    score: 0,
-    passed: false,
-    patternsFound: [],
-    patternsMissing: [],
-    details: []
-  };
-
-  for (const file of filesToCheck) {
-    const filePath = join(projectDir, file);
-
-    if (!existsSync(filePath)) {
-      results.details.push({
-        file,
-        error: "File does not exist",
-        patternsFound: [],
-        patternsMissing: patternsRequired
-      });
-      continue;
+  function scanDirectory(directory) {
+    if (!existsSync(directory)) {
+      return;
     }
 
-    const content = readFileSync(filePath, "utf8");
-    const foundPatterns = checkFileForPatterns(
-      content,
-      patternsRequired,
-      file
-    );
-
-    results.details.push({
-      file,
-      patternsFound: foundPatterns,
-      patternsMissing: patternsRequired.filter(
-        pattern => !foundPatterns.includes(pattern)
-      )
+    const entries = readdirSync(directory, {
+      withFileTypes: true
     });
 
-    for (const pattern of foundPatterns) {
-      if (!results.patternsFound.includes(pattern)) {
-        results.patternsFound.push(pattern);
+    for (const entry of entries) {
+      const fullPath = join(directory, entry.name);
+
+      if (
+        entry.name === "node_modules" ||
+        entry.name === ".next" ||
+        entry.name === ".git"
+      ) {
+        continue;
+      }
+
+      if (entry.isDirectory()) {
+        scanDirectory(fullPath);
+      } else if (
+        /\.(tsx|ts|jsx|js)$/.test(entry.name)
+      ) {
+        files.push(fullPath);
       }
     }
   }
 
-  results.patternsMissing = patternsRequired.filter(
-    pattern => !results.patternsFound.includes(pattern)
-  );
+  scanDirectory(projectDir);
 
-  results.score =
-    patternsRequired.length === 0
-      ? 100
-      : Math.round(
-          (results.patternsFound.length /
-            patternsRequired.length) *
-            100
-        );
-
-  results.passed = results.score >= 80;
-
-  return results;
+  return files;
 }
 
-function checkFileForPatterns(
-  content,
-  patternsRequired,
-  fileName
-) {
-  const foundPatterns = new Set();
+function checkFile(filePath, projectDir) {
+  const content = readFileSync(filePath, "utf-8");
 
-  const normalizedFileName = fileName
+  const relativePath = filePath
+    .replace(projectDir, "")
     .replace(/\\/g, "/")
-    .toLowerCase();
+    .replace(/^\/+/, "");
 
-  function add(pattern) {
-    if (patternsRequired.includes(pattern)) {
-      foundPatterns.add(pattern);
+  return {
+    file: relativePath,
+    content,
+
+    serverComponent:
+      !content.includes('"use client"') &&
+      !content.includes("'use client'"),
+
+    clientComponent:
+      content.includes('"use client"') ||
+      content.includes("'use client'"),
+
+    useState:
+      content.includes("useState"),
+
+    useClient:
+      content.includes('"use client"') ||
+      content.includes("'use client'"),
+
+    link:
+      content.includes("next/link") ||
+      content.includes("<Link"),
+
+    appDirectory:
+      relativePath.startsWith("app/"),
+
+    fileBasedRouting:
+      relativePath.includes("/page.") ||
+      relativePath.includes("/layout."),
+
+    functionalComponent:
+      /export default function\s+\w+/.test(content) ||
+      /function\s+\w+\s*\(/.test(content),
+
+    reactHooks:
+      /use[A-Z]\w*\s*\(/.test(content)
+  };
+}
+
+export function checkArchitecture(
+  projectDir,
+  requirements = {}
+) {
+  const files = getProjectFiles(projectDir);
+
+  const results = {
+    score: 0,
+    found: [],
+    missing: [],
+    details: []
+  };
+
+  if (files.length === 0) {
+    return {
+      score: 0,
+      found: [],
+      missing: ["No source files found"],
+      details: []
+    };
+  }
+
+  const checkedFiles = files.map((file) =>
+    checkFile(file, projectDir)
+  );
+
+  /*
+   * Check architecture across the entire project.
+   *
+   * A pattern such as useState only needs to exist
+   * in the appropriate Client Component. It should
+   * not be required in every file.
+   */
+  const projectPatterns = {
+    useClient: checkedFiles.some(
+      (file) => file.useClient
+    ),
+
+    clientComponent: checkedFiles.some(
+      (file) => file.clientComponent
+    ),
+
+    useState: checkedFiles.some(
+      (file) => file.useState
+    ),
+
+    serverComponent: checkedFiles.some(
+      (file) => file.serverComponent
+    ),
+
+    functionalComponent: checkedFiles.some(
+      (file) => file.functionalComponent
+    ),
+
+    appDirectory: checkedFiles.some(
+      (file) => file.appDirectory
+    ),
+
+    fileBasedRouting: checkedFiles.some(
+      (file) => file.fileBasedRouting
+    ),
+
+    Link: checkedFiles.some(
+      (file) => file.link
+    ),
+
+    reactHooks: checkedFiles.some(
+      (file) => file.reactHooks
+    )
+  };
+
+  const expectedPatterns = [];
+
+  if (
+    requirements.useClient ||
+    requirements.clientComponent
+  ) {
+    expectedPatterns.push("useClient");
+  }
+
+  if (requirements.useState) {
+    expectedPatterns.push("useState");
+  }
+
+  if (requirements.serverComponent) {
+    expectedPatterns.push("serverComponent");
+  }
+
+  if (requirements.functionalComponent) {
+    expectedPatterns.push("functionalComponent");
+  }
+
+  if (requirements.appDirectory) {
+    expectedPatterns.push("appDirectory");
+  }
+
+  if (requirements.fileBasedRouting) {
+    expectedPatterns.push("fileBasedRouting");
+  }
+
+  if (
+    requirements.Link ||
+    requirements.link
+  ) {
+    expectedPatterns.push("Link");
+  }
+
+  if (requirements.reactHooks) {
+    expectedPatterns.push("reactHooks");
+  }
+
+  /*
+   * If the challenge doesn't explicitly define
+   * architecture requirements, detect the important
+   * Next.js patterns automatically.
+   */
+  if (expectedPatterns.length === 0) {
+    expectedPatterns.push(
+      "appDirectory",
+      "fileBasedRouting"
+    );
+
+    if (projectPatterns.useClient) {
+      expectedPatterns.push("useClient");
+    }
+
+    if (projectPatterns.useState) {
+      expectedPatterns.push("useState");
+    }
+
+    if (projectPatterns.Link) {
+      expectedPatterns.push("Link");
     }
   }
 
-  if (
-    normalizedFileName.includes("page.tsx") ||
-    normalizedFileName.includes("page.jsx") ||
-    normalizedFileName.includes("page.js")
-  ) {
-    if (!content.includes('"use client"') &&
-        !content.includes("'use client'")) {
-      add("serverComponent");
+  for (const pattern of expectedPatterns) {
+    if (projectPatterns[pattern]) {
+      results.found.push(pattern);
+    } else {
+      results.missing.push(pattern);
+    }
+  }
+
+  if (expectedPatterns.length > 0) {
+    results.score = Math.round(
+      (results.found.length /
+        expectedPatterns.length) *
+        100
+    );
+  } else {
+    results.score = 100;
+  }
+
+  /*
+   * File-level details
+   */
+  for (const file of checkedFiles) {
+    const found = [];
+
+    if (file.useClient) {
+      found.push("useClient");
     }
 
-    add("fileBasedRouting");
+    if (file.useState) {
+      found.push("useState");
+    }
+
+    if (file.serverComponent) {
+      found.push("serverComponent");
+    }
+
+    if (file.link) {
+      found.push("Link");
+    }
+
+    if (file.appDirectory) {
+      found.push("appDirectory");
+    }
+
+    if (file.fileBasedRouting) {
+      found.push("fileBasedRouting");
+    }
+
+    if (file.functionalComponent) {
+      found.push("functionalComponent");
+    }
+
+    if (file.reactHooks) {
+      found.push("reactHooks");
+    }
+
+    results.details.push({
+      file: file.file,
+      found
+    });
   }
 
-  if (normalizedFileName.includes("app/")) {
-    add("appDirectory");
-  }
-
-  if (
-    content.includes('"use client"') ||
-    content.includes("'use client'")
-  ) {
-    add("useClient");
-    add("clientComponent");
-  }
-
-  if (
-    content.includes('from "next/link"') ||
-    content.includes("from 'next/link'")
-  ) {
-    add("Link");
-  }
-
-  if (
-    content.includes('from "next/navigation"') ||
-    content.includes("from 'next/navigation'")
-  ) {
-    add("navigation");
-  }
-
-  if (
-    content.includes('from "next/image"') ||
-    content.includes("from 'next/image'")
-  ) {
-    add("nextImage");
-  }
-
-  if (
-    content.includes('from "next/font/google"') ||
-    content.includes("from 'next/font/google'") ||
-    content.includes('from "next/font/local"') ||
-    content.includes("from 'next/font/local'")
-  ) {
-    add("nextFont");
-  }
-
-  if (
-    content.includes("useState") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'") ||
-      content.includes("React.useState")
-    )
-  ) {
-    add("useState");
-  }
-
-  if (
-    content.includes("useEffect") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'")
-    )
-  ) {
-    add("useEffect");
-  }
-
-  if (
-    content.includes("useReducer") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'")
-    )
-  ) {
-    add("useReducer");
-  }
-
-  if (
-    content.includes("useContext") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'")
-    )
-  ) {
-    add("useContext");
-  }
-
-  if (
-    content.includes("useMemo") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'")
-    )
-  ) {
-    add("useMemo");
-  }
-
-  if (
-    content.includes("useCallback") &&
-    (
-      content.includes('from "react"') ||
-      content.includes("from 'react'")
-    )
-  ) {
-    add("useCallback");
-  }
-
-  if (
-    content.includes("configureStore") &&
-    content.includes("@reduxjs/toolkit")
-  ) {
-    add("configureStore");
-  }
-
-  if (
-    content.includes("Provider") &&
-    content.includes("react-redux")
-  ) {
-    add("Provider");
-  }
-
-  if (
-    content.includes("useSelector") &&
-    content.includes("react-redux")
-  ) {
-    add("useSelector");
-  }
-
-  if (
-    content.includes("useDispatch") &&
-    content.includes("react-redux")
-  ) {
-    add("useDispatch");
-  }
-
-  if (
-    content.includes("async function") ||
-    content.includes("async (")
-  ) {
-    add("asyncComponent");
-  }
-
-  if (content.includes("use server")) {
-    add("serverAction");
-  }
-
-  if (
-    content.includes("export const metadata") ||
-    content.includes("export let metadata")
-  ) {
-    add("metadata");
-  }
-
-  if (content.includes("generateMetadata")) {
-    add("generateMetadata");
-  }
-
-  if (content.includes("export const dynamic")) {
-    add("dynamicExport");
-  }
-
-  if (content.includes("export const revalidate")) {
-    add("revalidate");
-  }
-
-  if (
-    content.includes("<form") ||
-    content.includes("<Form")
-  ) {
-    add("formHandling");
-  }
-
-  return Array.from(foundPatterns);
+  return results;
 }

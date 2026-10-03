@@ -1,24 +1,24 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-10-03T18:50:01.889Z",
+  "lastUpdated": "2026-10-03T19:00:02.600Z",
   "totalChallenges": 17,
-  "completedChallenges": 1,
-  "averageScore": 33.5,
-  "completionPercentage": 5.9,
+  "completedChallenges": 2,
+  "averageScore": 35.7,
+  "completionPercentage": 11.8,
   "badgeLevel": "none",
   "challengeResults": [
     {
       "challengeId": "01-app-router-pages-layout",
       "challengeName": "App Router, Pages, and Layout",
-      "score": 90.7,
-      "passed": true
+      "score": 75,
+      "passed": false
     },
     {
       "challengeId": "02-server-and-client-components",
       "challengeName": "Server and Client Components",
-      "score": 74.17,
-      "passed": false
+      "score": 81,
+      "passed": true
     },
     {
       "challengeId": "03-data-fetching-server",
@@ -47,7 +47,7 @@
     {
       "challengeId": "07-static-and-dynamic-rendering",
       "challengeName": "Static and Dynamic Rendering",
-      "score": 32.5,
+      "score": 43.45,
       "passed": false
     },
     {
@@ -77,13 +77,13 @@
     {
       "challengeId": "12-metadata-and-seo",
       "challengeName": "Metadata and SEO",
-      "score": 69.17,
-      "passed": false
+      "score": 80.7,
+      "passed": true
     },
     {
       "challengeId": "13-images-and-fonts",
       "challengeName": "Images and Fonts",
-      "score": 32.5,
+      "score": 42.7,
       "passed": false
     },
     {
@@ -95,7 +95,7 @@
     {
       "challengeId": "15-redux-toolkit-with-nextjs",
       "challengeName": "Redux Toolkit with Next.js",
-      "score": 32.5,
+      "score": 45.7,
       "passed": false
     },
     {
@@ -112,7 +112,8 @@
     }
   ],
   "skillStrengths": [
-    "App Router, Pages, and Layout"
+    "Server and Client Components",
+    "Metadata and SEO"
   ],
   "improvementAreas": [
     "Data Fetching in Server Components",
@@ -124,7 +125,6 @@
     "Server Actions and Revalidation",
     "Caching and Revalidating",
     "Error Handling",
-    "Metadata and SEO",
     "Images and Fonts",
     "Search and Pagination",
     "Redux Toolkit with Next.js",
