@@ -1,3 +1,5 @@
+import PostForm from "../components/PostForm";
+
 type Post = {
   id: number;
   title: string;
@@ -25,6 +27,8 @@ export default async function PostsPage() {
   return (
     <main>
       <h1>Posts</h1>
+
+      <PostForm />
 
       <div>
         {posts.map((post) => (
