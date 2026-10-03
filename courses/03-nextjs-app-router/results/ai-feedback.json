@@ -1,28 +1,5 @@
 [
   {
-    "challengeId": "07-static-and-dynamic-rendering",
-    "challengeName": "Static and Dynamic Rendering",
-    "aiReview": {
-      "challengeId": "07-static-and-dynamic-rendering",
-      "timestamp": "2026-10-03T18:56:59.355Z",
-      "score": 73,
-      "feedback": [],
-      "strengths": [
-        "Clear and concise component structure",
-        "Proper use of TypeScript and JSX syntax",
-        "Separation of concerns by delegating counter logic to a child component"
-      ],
-      "improvements": [
-        "Add a `dynamic` export (e.g., `export const dynamic = 'force-static'` or `'force-dynamic'`) to satisfy the challenge requirement for static/dynamic rendering control.",
-        "Consider adding a comment or documentation block explaining why the page is static or dynamic, which aids future maintainers.",
-        "Ensure the component is exported as a Server Component explicitly if needed (e.g., `export default function Home() { ... }` is fine, but adding `export const runtime = 'edge'` or similar can clarify intent)."
-      ],
-      "readability": 75,
-      "maintainability": 70,
-      "overall": "The component is well‑structured and readable, but it currently lacks the explicit dynamic/static export required by the challenge. Adding that export and a brief comment will bring the implementation in line with the specifications and improve maintainability."
-    }
-  },
-  {
     "challengeId": "08-ssr-dynamic-rendering",
     "challengeName": "SSR (Server-Side Rendering)",
     "aiReview": {
@@ -339,6 +316,25 @@
       "readability": 85,
       "maintainability": 80,
       "overall": "The component is well‑structured and type‑safe, making it easy to understand and maintain. Enhancing it with static params, data fetching, and user experience improvements will bring it closer to a production‑ready dynamic route."
+    }
+  },
+  {
+    "challengeId": "07-static-and-dynamic-rendering",
+    "challengeName": "Static and Dynamic Rendering",
+    "aiReview": {
+      "challengeId": "07-static-and-dynamic-rendering",
+      "timestamp": "2026-10-03T20:10:35.365Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear separation of concerns with dedicated components and async data fetching.\",\n    \"TypeScript usage provides type safety for the fetched data.\",\n    \"Explicit dynamic export on the home page demonstrates understanding of rendering modes.\"\n  ],\n  \"improvements\": [\n    \"Add a `dynamic = 'force-dynamic'` export (or use a dynamic API such as `headers()`/`searchParams`) to the `app/posts/page.tsx` so that the posts list is trul"
     }
   }
 ]
