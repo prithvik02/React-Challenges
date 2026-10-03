@@ -23,29 +23,6 @@
     }
   },
   {
-    "challengeId": "13-images-and-fonts",
-    "challengeName": "Images and Fonts",
-    "aiReview": {
-      "challengeId": "13-images-and-fonts",
-      "timestamp": "2026-10-03T18:57:49.258Z",
-      "score": 68,
-      "feedback": [],
-      "strengths": [
-        "Clear separation of layout and page components using the App Router structure.",
-        "TypeScript is used consistently, providing type safety for props and metadata.",
-        "Minimal and straightforward JSX makes the intent easy to understand."
-      ],
-      "improvements": [
-        "Add `next/image` to `app/page.tsx` (or a child component) with a valid `src`, `alt`, and dimensions or `fill` to satisfy the challenge requirement.",
-        "Import a font from `next/font/google` (e.g., `Inter`) in `app/layout.tsx` and apply its `className` to the `<body>` or a wrapper element so the font is actually used.",
-        "Ensure the new code passes ESLint: avoid unused imports, add `alt` text for images, and keep the component tree clean (e.g., wrap the `<main>` content in a `<section>` or `<article>` if semantic markup is desired)."
-      ],
-      "readability": 70,
-      "maintainability": 65,
-      "overall": "The current implementation demonstrates a solid foundation with proper TypeScript usage and a clean component hierarchy. However, it falls short of the challenge specifications by not incorporating optimized images or custom fonts. Implementing `next/image` and `next/font` will not only meet the functional requirements but also improve performance and visual consistency."
-    }
-  },
-  {
     "challengeId": "14-search-and-pagination",
     "challengeName": "Search and Pagination",
     "aiReview": {
@@ -348,6 +325,25 @@
     "aiReview": {
       "challengeId": "11-error-handling",
       "timestamp": "2026-10-03T21:07:21.376Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": ""
+    }
+  },
+  {
+    "challengeId": "13-images-and-fonts",
+    "challengeName": "Images and Fonts",
+    "aiReview": {
+      "challengeId": "13-images-and-fonts",
+      "timestamp": "2026-10-03T21:17:23.912Z",
       "score": 50,
       "feedback": [],
       "strengths": [

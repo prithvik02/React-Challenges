@@ -1,42 +1,20 @@
-import { notFound } from "next/navigation";
+"use client";
 
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-};
-
-type PostPageProps = {
-  params: {
-    id: string;
-  };
-};
-
-async function getPost(id: string): Promise<Post | null> {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`
-  );
-
-  if (!response.ok) {
-    return null;
-  }
-
-  return response.json();
-}
-
-export default async function PostPage({
-  params,
-}: PostPageProps) {
-  const post = await getPost(params.id);
-
-  if (!post) {
-    notFound();
-  }
-
+export default function Error({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   return (
     <main>
-      <h1>{post.title}</h1>
-      <p>{post.body}</p>
+      <h1>Something went wrong</h1>
+
+      <p>There was an error loading this page.</p>
+
+      <button onClick={() => reset()}>
+        Try again
+      </button>
     </main>
   );
 }
