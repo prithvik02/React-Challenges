@@ -1,11 +1,11 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-10-03T19:13:07.175Z",
+  "lastUpdated": "2026-10-03T19:53:44.734Z",
   "totalChallenges": 17,
-  "completedChallenges": 4,
-  "averageScore": 39.8,
-  "completionPercentage": 23.5,
+  "completedChallenges": 5,
+  "averageScore": 44.5,
+  "completionPercentage": 29.4,
   "badgeLevel": "none",
   "challengeResults": [
     {
@@ -29,8 +29,8 @@
     {
       "challengeId": "04-api-route-handlers",
       "challengeName": "API Route Handlers",
-      "score": 10,
-      "passed": false
+      "score": 90.7,
+      "passed": true
     },
     {
       "challengeId": "05-loading-and-streaming",
@@ -115,10 +115,10 @@
     "App Router, Pages, and Layout",
     "Server and Client Components",
     "Data Fetching in Server Components",
+    "API Route Handlers",
     "Metadata and SEO"
   ],
   "improvementAreas": [
-    "API Route Handlers",
     "Loading and Streaming",
     "Dynamic Routes",
     "Static and Dynamic Rendering",

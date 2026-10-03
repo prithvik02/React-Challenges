@@ -1,117 +1,250 @@
-import { spawnSync, execSync } from 'child_process';
-import { existsSync } from 'fs';
-import { join } from 'path';
+import { spawnSync, execSync } from "child_process";
+import { existsSync } from "fs";
+import { join } from "path";
 
-const E2E_TIMEOUT_MS = 240000; // 4 min; on Windows use execSync to avoid spawnSync npx.cmd EINVAL
+const E2E_TIMEOUT_MS = 240000;
 
-/**
- * Runs Playwright E2E tests for a specific challenge
- * These tests verify visual output and user interactions
- */
 export async function runE2ETests(challengeId, projectDir) {
-  const challengeNum = challengeId.split('-')[0];
+  const challengeNum = challengeId.split("-")[0];
   const testFileName = `challenge-${challengeNum}.spec.ts`;
-  const testFileAbs = join(projectDir, 'tests', 'e2e', testFileName);
+
+  const testFileAbs = join(
+    projectDir,
+    "tests",
+    "e2e",
+    testFileName
+  );
+
   const testFileRel = `tests/e2e/${testFileName}`;
 
   if (!existsSync(testFileAbs)) {
     return {
       score: 0,
       passed: false,
+      totalTests: 0,
+      passedTests: 0,
+      failedTests: 0,
       error: `E2E test file not found: ${testFileAbs}`,
-      details: []
+      details: [],
     };
   }
 
   try {
-    const env = { ...process.env, CI: '1' };
-    let output;
-    if (process.platform === 'win32') {
-      output = execSync(`npx playwright test "${testFileRel}" --reporter=json`, {
-        cwd: projectDir,
-        encoding: 'utf-8',
-        timeout: E2E_TIMEOUT_MS,
-        env,
-        stdio: ['pipe', 'pipe', 'pipe']
-      });
+    const env = { ...process.env };
+
+    let output = "";
+
+    if (process.platform === "win32") {
+      output = execSync(
+        `npx playwright test "${testFileRel}" --reporter=json`,
+        {
+          cwd: projectDir,
+          encoding: "utf8",
+          timeout: E2E_TIMEOUT_MS,
+          env,
+          stdio: ["ignore", "pipe", "pipe"],
+        }
+      );
     } else {
-      const result = spawnSync('npx', ['playwright', 'test', testFileRel, '--reporter=json'], {
-        cwd: projectDir,
-        encoding: 'utf-8',
-        timeout: E2E_TIMEOUT_MS,
-        env,
-        shell: false
-      });
-      output = (result.stdout || '') + (result.stderr || '');
-      if (result.error) throw result.error;
+      const result = spawnSync(
+        "npx",
+        [
+          "playwright",
+          "test",
+          testFileRel,
+          "--reporter=json",
+        ],
+        {
+          cwd: projectDir,
+          encoding: "utf8",
+          timeout: E2E_TIMEOUT_MS,
+          env,
+          shell: false,
+        }
+      );
+
+      output = `${result.stdout || ""}${result.stderr || ""}`;
+
+      if (result.error) {
+        throw result.error;
+      }
+
       if (result.status !== 0) {
-        const err = new Error(result.signal ? String(result.signal) : `Exit ${result.status}`);
-        err.stdout = result.stdout;
-        err.stderr = result.stderr;
-        throw err;
+        const error = new Error(
+          result.signal
+            ? String(result.signal)
+            : `Playwright exited with code ${result.status}`
+        );
+
+        error.stdout = result.stdout;
+        error.stderr = result.stderr;
+
+        throw error;
       }
     }
 
-    // Parse Playwright JSON output (may have npm prefix)
-    const raw = (output || '') + '';
-    const jsonMatch = raw.match(/\{[\s\S]*"stats"[\s\S]*\}|\[[\s\S]*"status"[\s\S]*\]/);
-    const jsonStr = jsonMatch ? jsonMatch[0] : raw;
-    const testResults = JSON.parse(jsonStr);
-    const stats = testResults.stats || {};
-    // Playwright JSON reporter uses: expected (passed), unexpected (failed), skipped, flaky
-    const totalTests = (stats.expected ?? 0) + (stats.unexpected ?? 0) + (stats.skipped ?? 0) + (stats.flaky ?? 0) || (Array.isArray(testResults) ? testResults.length : 0);
-    const passedTests = stats.expected ?? (Array.isArray(testResults) ? testResults.filter(t => t.status === 'passed').length : 0);
-    const failedTests = stats.unexpected ?? (Array.isArray(testResults) ? testResults.filter(t => t.status === 'failed').length : 0);
+    const testResults = parsePlaywrightJson(output);
 
-    const score = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
-
-    return {
-      score: Math.round(score * 10) / 10,
-      passed: failedTests === 0 && totalTests > 0,
-      totalTests,
-      passedTests,
-      failedTests,
-      details: testResults.suites || testResults,
-      screenshots: testResults.screenshots || []
-    };
+    return createResult(testResults);
   } catch (error) {
-    const errorOutput = (error.stdout ?? '') + (error.stderr ?? '');
-    const fullMessage = [error.message, errorOutput.trim()].filter(Boolean).join('\n');
+    const errorOutput = `${error.stdout || ""}${error.stderr || ""}`;
 
-    // Try to parse error output (Playwright may output JSON even on failure)
-    try {
-      const jsonMatch = errorOutput.match(/\{[\s\S]*"stats"[\s\S]*\}|\[[\s\S]*"status"[\s\S]*\]/);
-      if (jsonMatch) {
-        const testResults = JSON.parse(jsonMatch[0]);
-        const stats = testResults.stats || {};
-        const totalTests = (stats.expected ?? 0) + (stats.unexpected ?? 0) + (stats.skipped ?? 0) + (stats.flaky ?? 0) || (Array.isArray(testResults) ? testResults.length : 0);
-        const passedTests = stats.expected ?? (Array.isArray(testResults) ? testResults.filter(t => t.status === 'passed').length : 0);
-        const failedTests = stats.unexpected ?? (Array.isArray(testResults) ? testResults.filter(t => t.status === 'failed').length : 0);
-        const score = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
+    const parsedResults = tryParsePlaywrightJson(errorOutput);
 
-        return {
-          score: Math.round(score * 10) / 10,
-          passed: false,
-          totalTests,
-          passedTests,
-          failedTests,
-          details: testResults.suites || testResults,
-          error: error.message
-        };
-      }
-    } catch (parseError) {
-      // Could not parse output
+    if (parsedResults) {
+      return createResult(parsedResults, error.message);
     }
 
-    const needsBrowsers = /Executable doesn't exist|browserType\.launch|playwright install/i.test(fullMessage);
+    const fullMessage = [
+      error.message,
+      errorOutput.trim(),
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const needsBrowsers =
+      /Executable doesn't exist|browserType\.launch|playwright install/i.test(
+        fullMessage
+      );
+
     return {
       score: 0,
       passed: false,
+      totalTests: 0,
+      passedTests: 0,
+      failedTests: 0,
       error: fullMessage,
       details: [],
       note: needsBrowsers
-        ? 'Playwright browsers not installed. Run from repo root: npm run setup (or in project: npx playwright install).'
-        : 'E2E failed. The app is started automatically by Playwright (webServer in playwright.config).'
+        ? "Playwright browsers not installed. Run: npx playwright install"
+        : "E2E test command failed.",
     };
   }
+}
+
+function parsePlaywrightJson(output) {
+  const parsed = tryParsePlaywrightJson(output);
+
+  if (!parsed) {
+    throw new Error(
+      "Could not parse Playwright JSON output."
+    );
+  }
+
+  return parsed;
+}
+
+function tryParsePlaywrightJson(output) {
+  if (!output) {
+    return null;
+  }
+
+  const text = String(output).trim();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    // Playwright JSON may have extra output before the JSON.
+  }
+
+  const start = text.indexOf("{");
+
+  if (start === -1) {
+    return null;
+  }
+
+  const jsonText = text.slice(start);
+
+  try {
+    return JSON.parse(jsonText);
+  } catch {
+    return null;
+  }
+}
+
+function createResult(testResults, errorMessage = null) {
+  const stats = testResults.stats || {};
+
+  let totalTests = 0;
+  let passedTests = 0;
+  let failedTests = 0;
+
+  if (
+    typeof stats.expected === "number" ||
+    typeof stats.unexpected === "number" ||
+    typeof stats.skipped === "number" ||
+    typeof stats.flaky === "number"
+  ) {
+    passedTests = stats.expected || 0;
+    failedTests = stats.unexpected || 0;
+
+    totalTests =
+      passedTests +
+      failedTests +
+      (stats.skipped || 0) +
+      (stats.flaky || 0);
+  }
+
+  if (totalTests === 0 && testResults.suites) {
+    const counts = countSpecs(testResults.suites);
+
+    totalTests = counts.total;
+    passedTests = counts.passed;
+    failedTests = counts.failed;
+  }
+
+  const score =
+    totalTests > 0
+      ? (passedTests / totalTests) * 100
+      : 0;
+
+  return {
+    score: Math.round(score * 10) / 10,
+    passed:
+      totalTests > 0 &&
+      failedTests === 0 &&
+      passedTests === totalTests,
+    totalTests,
+    passedTests,
+    failedTests,
+    details: testResults.suites || [],
+    screenshots: testResults.screenshots || [],
+    ...(errorMessage ? { error: errorMessage } : {}),
+  };
+}
+
+function countSpecs(suites) {
+  let total = 0;
+  let passed = 0;
+  let failed = 0;
+
+  for (const suite of suites || []) {
+    for (const spec of suite.specs || []) {
+      total++;
+
+      const hasPassedResult = (spec.tests || []).some((test) =>
+        (test.results || []).some(
+          (result) => result.status === "passed"
+        )
+      );
+
+      if (hasPassedResult) {
+        passed++;
+      } else {
+        failed++;
+      }
+    }
+
+    const nested = countSpecs(suite.suites || []);
+
+    total += nested.total;
+    passed += nested.passed;
+    failed += nested.failed;
+  }
+
+  return {
+    total,
+    passed,
+    failed,
+  };
 }

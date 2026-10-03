@@ -1003,25 +1003,25 @@
   {
     "challengeId": "04-api-route-handlers",
     "challengeName": "API Route Handlers",
-    "timestamp": "2026-10-03T18:56:28.025Z",
+    "timestamp": "2026-10-03T19:53:39.431Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
-      "architecture": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
       "bestPractices": 100,
-      "e2eTests": 0,
-      "aiReview": 0
+      "e2eTests": 100,
+      "aiReview": 88
     },
-    "totalScore": 10,
-    "passed": false,
+    "totalScore": 90.7,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 2,
-      "passedTests": 0,
-      "failedTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -1031,16 +1031,10 @@
                 "Challenge 04: API Route Handlers"
               ],
               "fullName": " Challenge 04: API Route Handlers should have API route file",
-              "status": "failed",
+              "status": "passed",
               "title": "should have API route file",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 11,
-                "column": 60
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -1048,40 +1042,320 @@
                 "Challenge 04: API Route Handlers"
               ],
               "fullName": " Challenge 04: API Route Handlers should export GET that returns JSON",
-              "status": "failed",
+              "status": "passed",
               "title": "should export GET that returns JSON",
-              "duration": 1,
-              "failureMessages": [
-                "expected true to be false // Object.is equality"
-              ],
-              "location": {
-                "line": 17,
-                "column": 20
-              }
+              "duration": 0,
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053789671,
-          "endTime": 1791053789677,
-          "status": "failed",
+          "startTime": 1791057221017,
+          "endTime": 1791057221018,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-04.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-04.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "serverComponent",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -1091,11 +1365,11 @@
       "note": "No best practices requirements specified in challenge"
     },
     "e2eResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 1,
-      "passedTests": 0,
-      "failedTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
       "details": [
         {
           "title": "challenge-04.spec.ts",
@@ -1112,7 +1386,7 @@
               "specs": [
                 {
                   "title": "should have API route that returns JSON",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -1125,139 +1399,18 @@
                         {
                           "workerIndex": 0,
                           "parallelIndex": 0,
-                          "status": "failed",
-                          "duration": 222,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27",
-                            "location": {
-                              "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                              "column": 27,
-                              "line": 10
-                            },
-                            "snippet": "\u001b[0m \u001b[90m  8 |\u001b[39m   test(\u001b[32m'should have API route that returns JSON'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ request }) \u001b[33m=>\u001b[39m {\n \u001b[90m  9 |\u001b[39m     \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m'/api/posts'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m     expect(response\u001b[33m.\u001b[39mok())\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m     \u001b[36mconst\u001b[39m contentType \u001b[33m=\u001b[39m response\u001b[33m.\u001b[39mheaders()[\u001b[32m'content-type'\u001b[39m] \u001b[33m||\u001b[39m \u001b[32m''\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m     expect(contentType)\u001b[33m.\u001b[39mtoContain(\u001b[32m'json'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 13 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                                "column": 27,
-                                "line": 10
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n   8 |   test('should have API route that returns JSON', async ({ request }) => {\n   9 |     const response = await request.get('/api/posts');\n> 10 |     expect(response.ok()).toBe(true);\n     |                           ^\n  11 |     const contentType = response.headers()['content-type'] || '';\n  12 |     expect(contentType).toContain('json');\n  13 |   });\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 30,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:34.580Z",
+                          "startTime": "2026-10-03T19:53:43.884Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-04-Challenge-04--d02ce-API-route-that-returns-JSON-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                            "column": 27,
-                            "line": 10
-                          }
-                        },
-                        {
-                          "workerIndex": 1,
-                          "parallelIndex": 0,
-                          "status": "failed",
-                          "duration": 82,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27",
-                            "location": {
-                              "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                              "column": 27,
-                              "line": 10
-                            },
-                            "snippet": "\u001b[0m \u001b[90m  8 |\u001b[39m   test(\u001b[32m'should have API route that returns JSON'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ request }) \u001b[33m=>\u001b[39m {\n \u001b[90m  9 |\u001b[39m     \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m'/api/posts'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m     expect(response\u001b[33m.\u001b[39mok())\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m     \u001b[36mconst\u001b[39m contentType \u001b[33m=\u001b[39m response\u001b[33m.\u001b[39mheaders()[\u001b[32m'content-type'\u001b[39m] \u001b[33m||\u001b[39m \u001b[32m''\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m     expect(contentType)\u001b[33m.\u001b[39mtoContain(\u001b[32m'json'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 13 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                                "column": 27,
-                                "line": 10
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n   8 |   test('should have API route that returns JSON', async ({ request }) => {\n   9 |     const response = await request.get('/api/posts');\n> 10 |     expect(response.ok()).toBe(true);\n     |                           ^\n  11 |     const contentType = response.headers()['content-type'] || '';\n  12 |     expect(contentType).toContain('json');\n  13 |   });\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27"
-                            }
-                          ],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 1,
-                          "startTime": "2026-10-03T18:56:35.304Z",
-                          "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-04-Challenge-04--d02ce-API-route-that-returns-JSON-chromium-retry1\\error-context.md"
-                            },
-                            {
-                              "name": "trace",
-                              "contentType": "application/zip",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-04-Challenge-04--d02ce-API-route-that-returns-JSON-chromium-retry1\\trace.zip"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                            "column": 27,
-                            "line": 10
-                          }
-                        },
-                        {
-                          "workerIndex": 2,
-                          "parallelIndex": 0,
-                          "status": "failed",
-                          "duration": 76,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27",
-                            "location": {
-                              "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                              "column": 27,
-                              "line": 10
-                            },
-                            "snippet": "\u001b[0m \u001b[90m  8 |\u001b[39m   test(\u001b[32m'should have API route that returns JSON'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ request }) \u001b[33m=>\u001b[39m {\n \u001b[90m  9 |\u001b[39m     \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m'/api/posts'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 10 |\u001b[39m     expect(response\u001b[33m.\u001b[39mok())\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 11 |\u001b[39m     \u001b[36mconst\u001b[39m contentType \u001b[33m=\u001b[39m response\u001b[33m.\u001b[39mheaders()[\u001b[32m'content-type'\u001b[39m] \u001b[33m||\u001b[39m \u001b[32m''\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m     expect(contentType)\u001b[33m.\u001b[39mtoContain(\u001b[32m'json'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 13 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                                "column": 27,
-                                "line": 10
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n   8 |   test('should have API route that returns JSON', async ({ request }) => {\n   9 |     const response = await request.get('/api/posts');\n> 10 |     expect(response.ok()).toBe(true);\n     |                           ^\n  11 |     const contentType = response.headers()['content-type'] || '';\n  12 |     expect(contentType).toContain('json');\n  13 |   });\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts:10:27"
-                            }
-                          ],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 2,
-                          "startTime": "2026-10-03T18:56:35.902Z",
-                          "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-04-Challenge-04--d02ce-API-route-that-returns-JSON-chromium-retry2\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-04.spec.ts",
-                            "column": 27,
-                            "line": 10
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "0401c8ab289c6ab836d0-7ddfff09b261747e7f47",
@@ -1270,31 +1423,45 @@
           ]
         }
       ],
-      "error": "Command failed: npx playwright test \"tests/e2e/challenge-04.spec.ts\" --reporter=json"
+      "screenshots": []
     },
     "aiReviewResults": {
       "challengeId": "04-api-route-handlers",
-      "timestamp": "2026-10-03T18:56:36.108Z",
-      "score": 0,
+      "timestamp": "2026-10-03T19:53:43.984Z",
+      "score": 88,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear and concise implementation using NextResponse.json",
+        "TypeScript usage ensures type safety for the response structure",
+        "No console statements or side‑effects, keeping the handler clean"
+      ],
+      "improvements": [
+        "Define and export a `Post` interface (or type) to document the shape of each post and use it in the response type annotation.",
+        "Remove the unnecessary `async` keyword from `GET` since no asynchronous operations are performed, or add a comment explaining why it is kept for future async logic.",
+        "Add a brief JSDoc comment describing the purpose of the handler and the expected response format, which aids maintainability and onboarding."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The handler is well‑written and meets the challenge requirements. Adding explicit types and documentation will improve maintainability and make future extensions (e.g., adding a POST handler) smoother."
     },
     "aiResults": {
       "challengeId": "04-api-route-handlers",
-      "timestamp": "2026-10-03T18:56:36.108Z",
-      "score": 0,
+      "timestamp": "2026-10-03T19:53:43.984Z",
+      "score": 88,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear and concise implementation using NextResponse.json",
+        "TypeScript usage ensures type safety for the response structure",
+        "No console statements or side‑effects, keeping the handler clean"
+      ],
+      "improvements": [
+        "Define and export a `Post` interface (or type) to document the shape of each post and use it in the response type annotation.",
+        "Remove the unnecessary `async` keyword from `GET` since no asynchronous operations are performed, or add a comment explaining why it is kept for future async logic.",
+        "Add a brief JSDoc comment describing the purpose of the handler and the expected response format, which aids maintainability and onboarding."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The handler is well‑written and meets the challenge requirements. Adding explicit types and documentation will improve maintainability and make future extensions (e.g., adding a POST handler) smoother."
     }
   },
   {
