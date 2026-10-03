@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-10-03T20:10:37.787Z",
+  "lastUpdated": "2026-10-03T20:42:36.797Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 77.9,
-    "completionPercentage": 83,
+    "overallScore": 79.2,
+    "completionPercentage": 84.9,
     "badgeLevel": "silver",
     "totalChallenges": 53,
-    "completedChallenges": 44
+    "completedChallenges": 45
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 54.7,
-      "completionPercentage": 47.1,
+      "averageScore": 58.5,
+      "completionPercentage": 52.9,
       "badgeLevel": "none",
       "totalChallenges": 17,
-      "completedChallenges": 8,
+      "completedChallenges": 9,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -689,16 +689,16 @@
         "08-ssr-dynamic-rendering": {
           "challengeId": "08-ssr-dynamic-rendering",
           "challengeName": "SSR (Server-Side Rendering)",
-          "passed": false,
-          "score": 25,
-          "lastRun": "2026-10-03T18:57:00.589Z",
+          "passed": true,
+          "score": 89.95,
+          "lastRun": "2026-10-03T20:42:29.263Z",
           "scores": {
-            "functionalTests": 0,
-            "codeQuality": 0,
-            "architecture": 0,
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 100,
-            "aiReview": 0
+            "aiReview": 83
           }
         },
         "09-server-actions-and-revalidation": {

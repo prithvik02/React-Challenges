@@ -6,7 +6,10 @@ type Post = {
 
 async function getPosts(): Promise<Post[]> {
   const response = await fetch(
-    "https://jsonplaceholder.typicode.com/posts"
+    "https://jsonplaceholder.typicode.com/posts",
+    {
+      cache: "no-store",
+    }
   );
 
   if (!response.ok) {

@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Counter from "./components/Counter";
+import Link from 'next/link';
+import Counter from './components/Counter';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (

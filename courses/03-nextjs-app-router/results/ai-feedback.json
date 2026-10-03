@@ -1,21 +1,5 @@
 [
   {
-    "challengeId": "08-ssr-dynamic-rendering",
-    "challengeName": "SSR (Server-Side Rendering)",
-    "aiReview": {
-      "challengeId": "08-ssr-dynamic-rendering",
-      "timestamp": "2026-10-03T18:57:07.835Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "09-server-actions-and-revalidation",
     "challengeName": "Server Actions and Revalidation",
     "aiReview": {
@@ -335,6 +319,29 @@
       "readability": 50,
       "maintainability": 50,
       "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear separation of concerns with dedicated components and async data fetching.\",\n    \"TypeScript usage provides type safety for the fetched data.\",\n    \"Explicit dynamic export on the home page demonstrates understanding of rendering modes.\"\n  ],\n  \"improvements\": [\n    \"Add a `dynamic = 'force-dynamic'` export (or use a dynamic API such as `headers()`/`searchParams`) to the `app/posts/page.tsx` so that the posts list is trul"
+    }
+  },
+  {
+    "challengeId": "08-ssr-dynamic-rendering",
+    "challengeName": "SSR (Server-Side Rendering)",
+    "aiReview": {
+      "challengeId": "08-ssr-dynamic-rendering",
+      "timestamp": "2026-10-03T20:42:34.585Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear async data fetching with `cache: 'no-store'` to enforce SSR dynamic rendering.",
+        "Strong TypeScript typing for the `Post` interface and function return types.",
+        "Concise, self‑contained component structure that is easy to understand."
+      ],
+      "improvements": [
+        "Add `export const dynamic = 'force-dynamic'` at the top of the file for explicit intent and to satisfy test expectations.",
+        "Implement graceful error handling (e.g., a fallback UI) instead of throwing an error that triggers the default error page.",
+        "Consider adding a loading state or skeleton UI to improve user experience during the fetch."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The page correctly implements SSR dynamic rendering by disabling caching on the fetch call and uses TypeScript effectively. Adding an explicit dynamic export, user‑friendly error handling, and a loading state would make the component more robust and user‑centric."
     }
   }
 ]
