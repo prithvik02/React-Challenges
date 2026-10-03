@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-10-03T21:17:26.279Z",
+  "lastUpdated": "2026-10-03T21:22:09.754Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 84.1,
-    "completionPercentage": 92.5,
+    "overallScore": 85.3,
+    "completionPercentage": 94.3,
     "badgeLevel": "silver",
     "totalChallenges": 53,
-    "completedChallenges": 49
+    "completedChallenges": 50
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 72.9,
-      "completionPercentage": 76.5,
-      "badgeLevel": "bronze",
+      "averageScore": 76.7,
+      "completionPercentage": 82.4,
+      "badgeLevel": "silver",
       "totalChallenges": 17,
-      "completedChallenges": 13,
+      "completedChallenges": 14,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -779,16 +779,16 @@
         "14-search-and-pagination": {
           "challengeId": "14-search-and-pagination",
           "challengeName": "Search and Pagination",
-          "passed": false,
-          "score": 25,
-          "lastRun": "2026-10-03T18:57:49.978Z",
+          "passed": true,
+          "score": 88.75,
+          "lastRun": "2026-10-03T21:22:01.507Z",
           "scores": {
-            "functionalTests": 0,
-            "codeQuality": 0,
-            "architecture": 0,
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 100,
-            "aiReview": 0
+            "aiReview": 75
           }
         },
         "15-redux-toolkit-with-nextjs": {

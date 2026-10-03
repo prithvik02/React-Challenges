@@ -5614,25 +5614,25 @@
   {
     "challengeId": "14-search-and-pagination",
     "challengeName": "Search and Pagination",
-    "timestamp": "2026-10-03T18:57:49.978Z",
+    "timestamp": "2026-10-03T21:22:01.507Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
-      "architecture": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
       "bestPractices": 100,
       "e2eTests": 100,
-      "aiReview": 0
+      "aiReview": 75
     },
-    "totalScore": 25,
-    "passed": false,
+    "totalScore": 88.75,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 1,
-      "passedTests": 0,
-      "failedTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -5642,40 +5642,382 @@
                 "Challenge 14: Search and Pagination"
               ],
               "fullName": " Challenge 14: Search and Pagination should have page that receives searchParams",
-              "status": "failed",
+              "status": "passed",
               "title": "should have page that receives searchParams",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 10,
-                "column": 35
-              }
+              "duration": 1,
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053871601,
-          "endTime": 1791053871606,
-          "status": "failed",
+          "startTime": 1791062523087,
+          "endTime": 1791062523088,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-14.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-14.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/actions.ts",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "serverComponent",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/cache/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/PostForm.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/dyanamic/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/error.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/loading.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/search/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -5720,12 +6062,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 509,
+                          "duration": 1687,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:57:56.501Z",
+                          "startTime": "2026-10-03T21:22:06.117Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -5747,27 +6089,41 @@
     },
     "aiReviewResults": {
       "challengeId": "14-search-and-pagination",
-      "timestamp": "2026-10-03T18:57:57.214Z",
-      "score": 0,
+      "timestamp": "2026-10-03T21:22:07.927Z",
+      "score": 75,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear separation of concerns: data fetching is isolated in `getPosts` and the component focuses on rendering.",
+        "Proper use of async server component with `fetch` and `cache: \"no-store\"` to avoid stale data.",
+        "Search form uses the native GET method, preserving query parameters in the URL."
+      ],
+      "improvements": [
+        "Implement pagination: add a `page` property to `searchParams`, calculate `currentPage`, slice the `filteredPosts` array, and render navigation links using `next/link`.",
+        "Add type definitions for the `page` query param (e.g., `page?: string`) and convert it to a number with a default value.",
+        "Provide user feedback for empty results and edge cases (e.g., page out of range). Consider adding a loading state or error boundary for the fetch."
+      ],
+      "readability": 80,
+      "maintainability": 70,
+      "overall": "The component demonstrates solid fundamentals for a server‑side rendered page with search functionality. However, it currently lacks the pagination feature required by the challenge, which also impacts maintainability. By adding pagination logic, proper typing, and user‑friendly edge‑case handling, the page will meet the specification and become more robust."
     },
     "aiResults": {
       "challengeId": "14-search-and-pagination",
-      "timestamp": "2026-10-03T18:57:57.214Z",
-      "score": 0,
+      "timestamp": "2026-10-03T21:22:07.927Z",
+      "score": 75,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear separation of concerns: data fetching is isolated in `getPosts` and the component focuses on rendering.",
+        "Proper use of async server component with `fetch` and `cache: \"no-store\"` to avoid stale data.",
+        "Search form uses the native GET method, preserving query parameters in the URL."
+      ],
+      "improvements": [
+        "Implement pagination: add a `page` property to `searchParams`, calculate `currentPage`, slice the `filteredPosts` array, and render navigation links using `next/link`.",
+        "Add type definitions for the `page` query param (e.g., `page?: string`) and convert it to a number with a default value.",
+        "Provide user feedback for empty results and edge cases (e.g., page out of range). Consider adding a loading state or error boundary for the fetch."
+      ],
+      "readability": 80,
+      "maintainability": 70,
+      "overall": "The component demonstrates solid fundamentals for a server‑side rendered page with search functionality. However, it currently lacks the pagination feature required by the challenge, which also impacts maintainability. By adding pagination logic, proper typing, and user‑friendly edge‑case handling, the page will meet the specification and become more robust."
     }
   },
   {

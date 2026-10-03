@@ -6,6 +6,12 @@ type Post = {
   body: string;
 };
 
+type PostsPageProps = {
+  searchParams: {
+    q?: string;
+  };
+};
+
 async function getPosts(): Promise<Post[]> {
   const response = await fetch(
     "https://jsonplaceholder.typicode.com/posts",
@@ -21,8 +27,19 @@ async function getPosts(): Promise<Post[]> {
   return response.json();
 }
 
-export default async function PostsPage() {
+export default async function PostsPage({
+  searchParams,
+}: PostsPageProps) {
   const posts = await getPosts();
+  const query = searchParams.q?.toLowerCase() || "";
+
+  const filteredPosts = query
+    ? posts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.body.toLowerCase().includes(query)
+      )
+    : posts;
 
   return (
     <main>
@@ -30,8 +47,18 @@ export default async function PostsPage() {
 
       <PostForm />
 
+      <form method="get">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search posts"
+          defaultValue={searchParams.q || ""}
+        />
+        <button type="submit">Search</button>
+      </form>
+
       <div>
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <article key={post.id}>
             <h2>{post.title}</h2>
             <p>{post.body}</p>
