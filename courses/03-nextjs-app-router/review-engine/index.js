@@ -1,337 +1,781 @@
 #!/usr/bin/env node
 
-import { readFileSync, existsSync } from "fs";
+import { execSync } from "child_process";
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync
+} from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+
+import { runTests } from "./test-runner.js";
+import { runE2ETests } from "./e2e-runner.js";
+import { runLinting } from "./linter.js";
+import { checkArchitecture } from "./architecture-checker.js";
+import { checkBestPractices } from "./best-practices.js";
+import { reviewCodeWithAI } from "../ai-review/index.js";
+import { generateCourseSummary } from "../../../global-review/course-summary-generator.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const repoRoot = join(__dirname, "..", "..", "..");
-const envPath = join(repoRoot, ".env");
+const COURSE_DIR = join(__dirname, "..");
+const PROJECT_DIR = join(COURSE_DIR, "project");
+const RESULTS_DIR = join(COURSE_DIR, "results");
+const CONFIG_FILE = join(COURSE_DIR, "course-config.json");
 
-function loadGroqApiKey() {
-  if (!existsSync(envPath)) {
-    return "";
+const args = process.argv.slice(2);
+const challengeArg = args.find(arg =>
+  arg.startsWith("--challenge")
+);
+
+const challengeId = challengeArg
+  ? challengeArg.split("=")[1]
+  : null;
+
+async function main() {
+  console.log("🔍 Starting review engine...\n");
+
+  if (!existsSync(RESULTS_DIR)) {
+    mkdirSync(RESULTS_DIR, { recursive: true });
   }
 
-  const envContent = readFileSync(envPath, "utf8").replace(/^\uFEFF/, "");
+  const config = JSON.parse(
+    readFileSync(CONFIG_FILE, "utf-8")
+  );
 
-  const lines = envContent.split(/\r?\n/);
+  const challengesToReview = challengeId
+    ? config.challenges.filter(
+        challenge => challenge.id === challengeId
+      )
+    : config.challenges;
 
-  for (const line of lines) {
-    const trimmed = line.trim();
+  if (challengesToReview.length === 0) {
+    console.error(
+      `❌ Challenge "${challengeId}" not found`
+    );
+    process.exit(1);
+  }
 
-    if (!trimmed || trimmed.startsWith("#")) {
-      continue;
-    }
+  console.log(
+    `📋 Reviewing ${challengesToReview.length} challenge(s)\n`
+  );
 
-    const match = trimmed.match(/^GROQ_API_KEY\s*=\s*(.*)$/);
+  const challengeResultsPath = join(
+    RESULTS_DIR,
+    "challenge-results.json"
+  );
 
-    if (match) {
-      return match[1]
-        .trim()
-        .replace(/^["']|["']$/g, "");
+  let existingResults = [];
+
+  if (existsSync(challengeResultsPath)) {
+    try {
+      existingResults = JSON.parse(
+        readFileSync(
+          challengeResultsPath,
+          "utf-8"
+        )
+      );
+
+      if (!Array.isArray(existingResults)) {
+        existingResults = [];
+      }
+    } catch (_) {
+      existingResults = [];
     }
   }
 
-  return "";
+  const reviewedIds = new Set(
+    challengesToReview.map(
+      challenge => challenge.id
+    )
+  );
+
+  const newResults = [];
+
+  for (const challenge of challengesToReview) {
+    console.log(`\n${"=".repeat(60)}`);
+    console.log(
+      `📝 Challenge: ${challenge.name} (${challenge.id})`
+    );
+    console.log("=".repeat(60));
+
+    const result = await reviewChallenge(
+      challenge,
+      config
+    );
+
+    newResults.push(result);
+
+    console.log(
+      `\n✅ Challenge ${challenge.id} completed`
+    );
+
+    console.log(
+      `   Score: ${result.totalScore.toFixed(1)}%`
+    );
+  }
+
+  const mergedResults = existingResults
+    .filter(
+      result =>
+        !reviewedIds.has(result.challengeId)
+    )
+    .concat(newResults);
+
+  const orderMap = new Map(
+    config.challenges.map(
+      (challenge, index) => [
+        challenge.id,
+        index
+      ]
+    )
+  );
+
+  mergedResults.sort(
+    (a, b) =>
+      (orderMap.get(a.challengeId) ?? 999) -
+      (orderMap.get(b.challengeId) ?? 999)
+  );
+
+  const courseSummary =
+    generateCourseSummary(
+      mergedResults,
+      config
+    );
+
+  writeFileSync(
+    challengeResultsPath,
+    JSON.stringify(
+      mergedResults,
+      null,
+      2
+    )
+  );
+
+  writeFileSync(
+    join(
+      RESULTS_DIR,
+      "course-summary.json"
+    ),
+    JSON.stringify(
+      courseSummary,
+      null,
+      2
+    )
+  );
+
+  const newAiFeedback = newResults
+    .filter(
+      result =>
+        result.aiReviewResults != null ||
+        result.aiResults != null
+    )
+    .map(result => ({
+      challengeId:
+        result.challengeId,
+
+      challengeName:
+        result.challengeName,
+
+      aiReview:
+        result.aiReviewResults ||
+        result.aiResults ||
+        null
+    }));
+
+  let mergedAiFeedback = [];
+
+  const aiFeedbackPath = join(
+    RESULTS_DIR,
+    "ai-feedback.json"
+  );
+
+  if (existsSync(aiFeedbackPath)) {
+    try {
+      const existing = JSON.parse(
+        readFileSync(
+          aiFeedbackPath,
+          "utf-8"
+        )
+      );
+
+      mergedAiFeedback =
+        Array.isArray(existing)
+          ? existing.filter(
+              feedback =>
+                !reviewedIds.has(
+                  feedback.challengeId
+                )
+            )
+          : [];
+    } catch (_) {
+      mergedAiFeedback = [];
+    }
+  }
+
+  mergedAiFeedback =
+    mergedAiFeedback.concat(
+      newAiFeedback
+    );
+
+  if (mergedAiFeedback.length > 0) {
+    writeFileSync(
+      aiFeedbackPath,
+      JSON.stringify(
+        mergedAiFeedback,
+        null,
+        2
+      )
+    );
+  }
+
+  console.log(`\n${"=".repeat(60)}`);
+  console.log("📊 Course Summary");
+  console.log("=".repeat(60));
+
+  console.log(
+    `Overall Score: ${courseSummary.averageScore.toFixed(1)}%`
+  );
+
+  console.log(
+    `Completion: ${courseSummary.completionPercentage}%`
+  );
+
+  console.log(
+    `\n✅ Results saved to: ${RESULTS_DIR}`
+  );
+
+  try {
+    const REPO_ROOT = join(
+      COURSE_DIR,
+      "..",
+      ".."
+    );
+
+    execSync(
+      `node "${join(
+        REPO_ROOT,
+        "scripts",
+        "update-progress.js"
+      )}"`,
+      {
+        cwd: REPO_ROOT,
+        stdio: "pipe"
+      }
+    );
+
+    execSync(
+      `node "${join(
+        REPO_ROOT,
+        "scripts",
+        "update-readme-evidence.js"
+      )}" --course=${config.courseId}`,
+      {
+        cwd: REPO_ROOT,
+        stdio: "pipe"
+      }
+    );
+  } catch (_) {
+    // Ignore if progress scripts are unavailable.
+  }
 }
 
-const GROQ_API_KEY = loadGroqApiKey();
-
-const GROQ_API_URL =
-  "https://api.groq.com/openai/v1/chat/completions";
-
-const MODEL = "llama-3.1-8b-instant";
-
-export async function reviewCodeWithAI(
-  challengeId,
-  filesToReview,
-  projectDir
+async function reviewChallenge(
+  challenge,
+  config
 ) {
-  const results = {
-    challengeId,
-    timestamp: new Date().toISOString(),
-    score: 0,
-    feedback: [],
-    strengths: [],
-    improvements: [],
-    readability: 0,
-    maintainability: 0,
-    overall: ""
+  const challengeMetadata =
+    loadChallengeMetadata(
+      challenge.id
+    );
+
+  const result = {
+    challengeId: challenge.id,
+    challengeName: challenge.name,
+    timestamp:
+      new Date().toISOString(),
+    scores: {},
+    totalScore: 0,
+    passed: false,
+    errors: [],
+    warnings: []
   };
 
   try {
-    const challengeDir = join(
-      projectDir,
-      "challenges",
-      challengeId
+    console.log(
+      "\n🧪 Running functional tests..."
     );
 
-    const readmePath = join(
-      challengeDir,
-      "README.md"
+    const testResults =
+      await runTests(
+        challenge.id,
+        PROJECT_DIR
+      );
+
+    result.scores.functionalTests =
+      testResults.score;
+
+    result.testResults =
+      testResults;
+
+    console.log(
+      `   Score: ${testResults.score.toFixed(1)}%`
     );
 
-    let challengeContext = "";
+    console.log(
+      `   Passed: ${
+        testResults.passedTests || 0
+      }/${
+        testResults.totalTests || 0
+      } tests`
+    );
 
-    if (existsSync(readmePath)) {
-      challengeContext = readFileSync(
-        readmePath,
-        "utf8"
+    if (testResults.failedTests > 0) {
+      console.log(
+        `   ❌ ${testResults.failedTests} test(s) failed`
+      );
+
+      if (
+        testResults.details &&
+        testResults.details.length > 0
+      ) {
+        testResults.details.forEach(
+          test => {
+            if (
+              test.status === "failed"
+            ) {
+              console.log(
+                `      - ${
+                  test.name ||
+                  "Test"
+                }: ${
+                  test.failureMessages?.[0]
+                    ?.split("\n")[0] ||
+                  "Failed"
+                }`
+              );
+            }
+          }
+        );
+      }
+    } else if (
+      testResults.totalTests > 0
+    ) {
+      console.log(
+        "   ✅ All tests passed!"
       );
     }
 
-    const codeSnippets = [];
+    console.log(
+      "\n🔍 Running code quality checks..."
+    );
 
-    for (const file of filesToReview) {
-      const filePath = join(projectDir, file);
+    const lintResults =
+      await runLinting(
+        challengeMetadata.filesToCheck,
+        PROJECT_DIR,
+        challengeMetadata
+      );
 
-      if (existsSync(filePath)) {
-        const content = readFileSync(
-          filePath,
-          "utf8"
-        );
+    result.scores.codeQuality =
+      lintResults.score;
 
-        codeSnippets.push({
-          file,
-          content: content.substring(0, 5000)
-        });
-      }
+    result.lintResults =
+      lintResults;
+
+    if (lintResults.note) {
+      console.log(
+        `   ${lintResults.note}`
+      );
     }
 
-    if (codeSnippets.length === 0) {
-      return {
-        ...results,
-        error: "No files found to review"
+    console.log(
+      `   Score: ${lintResults.score.toFixed(1)}%`
+    );
+
+    console.log(
+      "\n🏗️  Checking architecture..."
+    );
+
+    const architectureResults =
+      await checkArchitecture(
+        challengeMetadata,
+        PROJECT_DIR
+      );
+
+    result.scores.architecture =
+      architectureResults.score;
+
+    result.architectureResults =
+      architectureResults;
+
+    console.log(
+      `   Score: ${architectureResults.score.toFixed(1)}%`
+    );
+
+    if (
+      architectureResults.patternsFound &&
+      architectureResults.patternsFound.length >
+        0
+    ) {
+      console.log(
+        `   ✅ Found: ${architectureResults.patternsFound.join(
+          ", "
+        )}`
+      );
+    }
+
+    if (
+      architectureResults.patternsMissing &&
+      architectureResults.patternsMissing.length >
+        0
+    ) {
+      console.log(
+        `   ❌ Missing: ${architectureResults.patternsMissing.join(
+          ", "
+        )}`
+      );
+    }
+
+    console.log(
+      "\n✨ Checking best practices..."
+    );
+
+    const bpResults =
+      await checkBestPractices(
+        challengeMetadata,
+        PROJECT_DIR
+      );
+
+    result.scores.bestPractices =
+      bpResults.score;
+
+    result.bestPracticesResults =
+      bpResults;
+
+    console.log(
+      `   Score: ${bpResults.score.toFixed(1)}%`
+    );
+
+    if (bpResults.note) {
+      console.log(
+        `   ℹ️  ${bpResults.note}`
+      );
+    }
+
+    console.log(
+      "\n🎭 Running E2E tests (Playwright - visual verification)..."
+    );
+
+    try {
+      const e2eResults =
+        await runE2ETests(
+          challenge.id,
+          PROJECT_DIR
+        );
+
+      result.scores.e2eTests =
+        e2eResults.score || 0;
+
+      result.e2eResults =
+        e2eResults;
+
+      console.log(
+        `   Score: ${(e2eResults.score || 0).toFixed(1)}%`
+      );
+
+      if (
+        e2eResults.passedTests != null &&
+        e2eResults.totalTests != null
+      ) {
+        console.log(
+          `   Passed: ${e2eResults.passedTests}/${e2eResults.totalTests} tests`
+        );
+      }
+
+      if (e2eResults.error) {
+        console.log(
+          `   ⚠️  Error: ${e2eResults.error.split("\n")[0]}`
+        );
+      } else if (e2eResults.note) {
+        console.log(
+          `   ℹ️  ${e2eResults.note}`
+        );
+      } else if (
+        e2eResults.score === 100
+      ) {
+        console.log(
+          "   ✅ All E2E tests passed!"
+        );
+      }
+    } catch (error) {
+      console.log(
+        `   ⚠️  E2E tests failed: ${error.message.split("\n")[0]}`
+      );
+
+      result.scores.e2eTests = 0;
+
+      result.e2eResults = {
+        error: error.message,
+        note:
+          "E2E tests require Playwright browsers. Run: npm run setup"
       };
     }
 
-    if (!GROQ_API_KEY) {
-      return {
-        ...results,
-        error:
-          "GROQ_API_KEY was not found in the repository .env file.",
+    console.log(
+      "\n🤖 Running AI code review..."
+    );
+
+    try {
+      const aiResults =
+        await reviewCodeWithAI(
+          challenge.id,
+          challengeMetadata.filesToCheck,
+          PROJECT_DIR
+        );
+
+      result.scores.aiReview =
+        aiResults.score || 0;
+
+      result.aiReviewResults =
+        aiResults;
+
+      result.aiResults =
+        aiResults;
+
+      if (aiResults.error) {
+        console.log(
+          `   ⚠️  AI review: ${aiResults.error}`
+        );
+      } else {
+        console.log(
+          `   Score: ${(aiResults.score || 0).toFixed(1)}%`
+        );
+
+        if (
+          aiResults.strengths &&
+          aiResults.strengths.length > 0
+        ) {
+          console.log(
+            `   ✅ Strengths: ${aiResults.strengths
+              .slice(0, 2)
+              .join(", ")}`
+          );
+        }
+
+        if (
+          aiResults.improvements &&
+          aiResults.improvements.length > 0
+        ) {
+          console.log(
+            `   💡 Improvements: ${aiResults.improvements
+              .slice(0, 2)
+              .join(", ")}`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(
+        `   ⚠️  AI review skipped: ${error.message}`
+      );
+
+      result.scores.aiReview = 0;
+
+      result.aiReviewResults = {
+        error: error.message,
         score: 0
       };
     }
 
-    const prompt = buildReviewPrompt(
-      challengeId,
-      codeSnippets,
-      challengeContext
-    );
+    const e2eWeight =
+      config.scoring.e2eTests || 0.15;
 
-    const aiResponse = await callGroqAPI(prompt);
+    const aiWeight =
+      config.scoring.aiReview || 0.05;
 
-    const parsedResponse =
-      parseAIResponse(aiResponse);
-
-    return {
-      ...results,
-      ...parsedResponse,
-      score: calculateAIScore(parsedResponse)
-    };
-  } catch (error) {
-    return {
-      ...results,
-      error: error.message
-    };
-  }
-}
-
-function buildReviewPrompt(
-  challengeId,
-  codeSnippets,
-  challengeContext = ""
-) {
-  const codeContext = codeSnippets
-    .map(
-      snippet =>
-        `File: ${snippet.file}\n\`\`\`typescript\n${snippet.content}\n\`\`\``
-    )
-    .join("\n\n");
-
-  const contextSection = challengeContext
-    ? `\n\n## Challenge Instructions and Requirements:\n${challengeContext.substring(
-        0,
-        3000
-      )}\n`
-    : "";
-
-  return `You are an expert Next.js App Router and React code reviewer. Review the following code for challenge "${challengeId}".
-${contextSection}
-${codeContext}
-
-Provide a structured review focusing on:
-1. Code readability (0-100 score)
-2. Maintainability (0-100 score)
-3. Strengths (list 2-3 key strengths)
-4. Areas for improvement (list 2-3 specific improvements)
-5. Overall assessment (brief paragraph)
-
-Format your response as JSON:
-{
-  "readability": <number>,
-  "maintainability": <number>,
-  "strengths": ["strength1", "strength2"],
-  "improvements": ["improvement1", "improvement2"],
-  "overall": "<brief assessment>"
-}`;
-}
-
-async function callGroqAPI(prompt) {
-  const response = await fetch(
-    GROQ_API_URL,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are an expert Next.js App Router, React, and TypeScript code reviewer. Provide constructive, specific feedback."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.3,
-        max_tokens: 1000
-      })
-    }
-  );
-
-  const data = await response
-    .json()
-    .catch(() => ({}));
-
-  if (!response.ok) {
-    const msg =
-      data?.error?.message ||
-      data?.error ||
-      response.statusText;
-
-    throw new Error(
-      `Groq API error (${response.status}): ${msg}`
-    );
-  }
-
-  const content =
-    data?.choices?.[0]?.message?.content;
-
-  if (
-    content == null ||
-    typeof content !== "string"
-  ) {
-    throw new Error(
-      "Groq API returned no content."
-    );
-  }
-
-  return content;
-}
-
-function parseAIResponse(response) {
-  try {
-    const jsonMatch =
-      response.match(/\{[\s\S]*\}/);
-
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-  } catch (_) {}
-
-  const readabilityMatch =
-    response.match(
-      /readability[:\s]+(\d+)/i
-    );
-
-  const maintainabilityMatch =
-    response.match(
-      /maintainability[:\s]+(\d+)/i
-    );
-
-  return {
-    readability: readabilityMatch
-      ? parseInt(readabilityMatch[1])
-      : 50,
-
-    maintainability: maintainabilityMatch
-      ? parseInt(maintainabilityMatch[1])
-      : 50,
-
-    strengths: extractList(
-      response,
-      /strengths?/i
-    ),
-
-    improvements: extractList(
-      response,
-      /improvements?/i
-    ),
-
-    overall: response.substring(0, 500)
-  };
-}
-
-function extractList(text, keyword) {
-  const lines = text.split("\n");
-  const list = [];
-  let inList = false;
-
-  for (const line of lines) {
-    if (keyword.test(line)) {
-      inList = true;
-      continue;
-    }
-
-    if (
-      inList &&
+    result.totalScore =
       (
-        line.trim().startsWith("-") ||
-        /^\d+\./.test(line.trim())
-      )
-    ) {
-      list.push(
-        line
-          .trim()
-          .replace(/^[-•\d.]+\s*/, "")
+        result.scores.functionalTests *
+          config.scoring.functionalTests +
+        result.scores.codeQuality *
+          config.scoring.codeQuality +
+        result.scores.architecture *
+          config.scoring.architecture +
+        result.scores.bestPractices *
+          config.scoring.bestPractices +
+        (result.scores.e2eTests || 0) *
+          e2eWeight +
+        (result.scores.aiReview || 0) *
+          aiWeight
+      ) /
+      (
+        config.scoring.functionalTests +
+        config.scoring.codeQuality +
+        config.scoring.architecture +
+        config.scoring.bestPractices +
+        e2eWeight +
+        aiWeight
       );
 
-      if (list.length >= 3) {
-        break;
-      }
-    }
+    result.passed =
+      result.totalScore >=
+      config.requirements.minScore;
+  } catch (error) {
+    result.errors.push(
+      error.message
+    );
 
+    console.error(
+      `❌ Error reviewing challenge: ${error.message}`
+    );
+  }
+
+  return result;
+}
+
+function loadChallengeMetadata(
+  challengeId
+) {
+  const metadataPath = join(
+    PROJECT_DIR,
+    "challenges",
+    challengeId,
+    "metadata.json"
+  );
+
+  if (!existsSync(metadataPath)) {
+    throw new Error(
+      `Metadata file not found: ${metadataPath}`
+    );
+  }
+
+  const metadata = JSON.parse(
+    readFileSync(
+      metadataPath,
+      "utf-8"
+    )
+  );
+
+  const readmePath = join(
+    PROJECT_DIR,
+    "challenges",
+    challengeId,
+    "README.md"
+  );
+
+  if (existsSync(readmePath)) {
+    const readmeContent =
+      readFileSync(
+        readmePath,
+        "utf-8"
+      );
+
+    metadata.requirements =
+      parseRequirements(
+        readmeContent
+      );
+  }
+
+  return metadata;
+}
+
+function parseRequirements(
+  content
+) {
+  const requirements = {
+    functional: [],
+    codeQuality: [],
+    architecture: [],
+    bestPractices: []
+  };
+
+  if (!content) {
+    return requirements;
+  }
+
+  let currentSection = null;
+
+  const lines =
+    content.split("\n");
+
+  for (const line of lines) {
     if (
-      inList &&
-      line.trim() === ""
+      line.includes(
+        "## Technical Requirements"
+      )
     ) {
-      break;
+      currentSection = null;
+    } else if (
+      line.includes(
+        "### Functional Requirements"
+      )
+    ) {
+      currentSection = "functional";
+    } else if (
+      line.includes(
+        "### Code Quality Requirements"
+      )
+    ) {
+      currentSection = "codeQuality";
+    } else if (
+      line.includes(
+        "### Architecture Requirements"
+      )
+    ) {
+      currentSection = "architecture";
+    } else if (
+      line.includes(
+        "### Best Practices Requirements"
+      )
+    ) {
+      currentSection =
+        "bestPractices";
+    } else if (
+      currentSection &&
+      (
+        line.trim().startsWith("-") ||
+        line.trim().startsWith("✅") ||
+        line.trim().match(/^\d+\./)
+      )
+    ) {
+      const requirement =
+        line
+          .replace(
+            /^[-*✅]\s*/,
+            ""
+          )
+          .replace(
+            /^\d+\.\s*/,
+            ""
+          )
+          .replace(
+            /✅\s*/,
+            ""
+          )
+          .trim();
+
+      if (
+        requirement &&
+        requirements[currentSection]
+      ) {
+        requirements[
+          currentSection
+        ].push(requirement);
+      }
     }
   }
 
-  return list.length > 0
-    ? list
-    : ["Code structure is reasonable"];
+  return requirements;
 }
 
-function calculateAIScore(parsedResponse) {
-  const readability =
-    parsedResponse.readability || 50;
-
-  const maintainability =
-    parsedResponse.maintainability || 50;
-
-  return Math.round(
-    (readability + maintainability) / 2
+main().catch(error => {
+  console.error(
+    "❌ Fatal error:",
+    error
   );
-}
+
+  process.exit(1);
+});

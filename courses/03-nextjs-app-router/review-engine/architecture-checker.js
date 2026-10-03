@@ -11,6 +11,8 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
     return {
       score: 100,
       passed: true,
+      patternsFound: [],
+      patternsMissing: [],
       details: []
     };
   }
@@ -22,12 +24,6 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
     patternsMissing: [],
     details: []
   };
-
-  const patternFiles = {};
-
-  for (const pattern of patternsRequired) {
-    patternFiles[pattern] = [];
-  }
 
   for (const file of filesToCheck) {
     const filePath = join(projectDir, file);
@@ -42,293 +38,243 @@ export async function checkArchitecture(challengeMetadata, projectDir) {
       continue;
     }
 
-    try {
-      const content = readFileSync(filePath, "utf-8");
+    const content = readFileSync(filePath, "utf8");
+    const foundPatterns = checkFileForPatterns(
+      content,
+      patternsRequired,
+      file
+    );
 
-      const foundPatterns = checkFileForPatterns(
-        content,
-        patternsRequired,
-        file
-      );
+    results.details.push({
+      file,
+      patternsFound: foundPatterns,
+      patternsMissing: patternsRequired.filter(
+        pattern => !foundPatterns.includes(pattern)
+      )
+    });
 
-      for (const pattern of foundPatterns) {
-        if (patternFiles[pattern]) {
-          patternFiles[pattern].push(file);
-        }
+    for (const pattern of foundPatterns) {
+      if (!results.patternsFound.includes(pattern)) {
+        results.patternsFound.push(pattern);
       }
-
-      results.details.push({
-        file,
-        patternsFound: foundPatterns,
-        patternsMissing: patternsRequired.filter(
-          pattern => !foundPatterns.includes(pattern)
-        )
-      });
-    } catch (error) {
-      results.details.push({
-        file,
-        error: error.message,
-        patternsFound: [],
-        patternsMissing: patternsRequired
-      });
     }
   }
 
-  for (const pattern of patternsRequired) {
-    if (patternFiles[pattern] && patternFiles[pattern].length > 0) {
-      results.patternsFound.push(pattern);
-    } else {
-      results.patternsMissing.push(pattern);
-    }
-  }
+  results.patternsMissing = patternsRequired.filter(
+    pattern => !results.patternsFound.includes(pattern)
+  );
 
   results.score =
-    patternsRequired.length > 0
-      ? Math.round(
-          (results.patternsFound.length / patternsRequired.length) *
-            100 *
-            10
-        ) / 10
-      : 100;
+    patternsRequired.length === 0
+      ? 100
+      : Math.round(
+          (results.patternsFound.length /
+            patternsRequired.length) *
+            100
+        );
 
   results.passed = results.score >= 80;
 
   return results;
 }
 
-function checkFileForPatterns(content, patternsRequired, fileName) {
+function checkFileForPatterns(
+  content,
+  patternsRequired,
+  fileName
+) {
   const foundPatterns = new Set();
-  const normalizedFileName = fileName.replace(/\\/g, "/");
 
-  try {
-    const ast = parse(content, {
-      sourceType: "module",
-      plugins: [
-        "typescript",
-        "jsx",
-        "decorators-legacy",
-        "classProperties"
-      ]
-    });
+  const normalizedFileName = fileName
+    .replace(/\\/g, "/")
+    .toLowerCase();
 
-    traverse.default(ast, {
-      Program(path) {
-        const hasUseClient = path.node.directives?.some(
-          directive => directive.value.value === "use client"
-        );
-
-        if (
-          !hasUseClient &&
-          normalizedFileName.includes("page.tsx")
-        ) {
-          foundPatterns.add("serverComponent");
-        }
-
-        if (normalizedFileName.includes("app/")) {
-          foundPatterns.add("appDirectory");
-        }
-
-        if (normalizedFileName.includes("page.tsx")) {
-          foundPatterns.add("fileBasedRouting");
-        }
-      },
-
-      Directive(path) {
-        if (path.node.value.value === "use client") {
-          foundPatterns.add("useClient");
-          foundPatterns.add("clientComponent");
-        }
-      },
-
-      ImportDeclaration(path) {
-        const source = path.node.source.value;
-
-        if (source === "next/link") {
-          foundPatterns.add("Link");
-        }
-
-        if (source === "next/navigation") {
-          foundPatterns.add("navigation");
-        }
-
-        if (source === "next/image") {
-          foundPatterns.add("nextImage");
-        }
-
-        if (
-          source === "next/font/google" ||
-          source === "next/font/local"
-        ) {
-          foundPatterns.add("nextFont");
-        }
-
-        if (source === "@reduxjs/toolkit") {
-          foundPatterns.add("configureStore");
-        }
-
-        if (source === "react-redux") {
-          for (const specifier of path.node.specifiers) {
-            const name =
-              specifier.imported?.name ||
-              specifier.local?.name;
-
-            if (name === "Provider") {
-              foundPatterns.add("Provider");
-            }
-
-            if (name === "useSelector") {
-              foundPatterns.add("useSelector");
-            }
-
-            if (name === "useDispatch") {
-              foundPatterns.add("useDispatch");
-            }
-          }
-        }
-      },
-
-      FunctionDeclaration(path) {
-        if (path.node.async) {
-          foundPatterns.add("asyncComponent");
-
-          if (
-            path.node.id?.name?.toLowerCase().includes("action") ||
-            content.includes("use server")
-          ) {
-            foundPatterns.add("serverAction");
-          }
-        }
-      },
-
-      ArrowFunctionExpression(path) {
-        if (path.node.async) {
-          foundPatterns.add("asyncComponent");
-        }
-      },
-
-      ExportNamedDeclaration(path) {
-        if (!path.node.declaration) {
-          return;
-        }
-
-        const declaration = path.node.declaration;
-
-        if (
-          declaration.id &&
-          declaration.id.name === "metadata"
-        ) {
-          foundPatterns.add("metadata");
-        }
-
-        if (
-          declaration.id &&
-          declaration.id.name === "generateMetadata"
-        ) {
-          foundPatterns.add("generateMetadata");
-        }
-      },
-
-      ExportDefaultDeclaration(path) {
-        const declaration = path.node.declaration;
-
-        if (
-          declaration &&
-          declaration.type === "FunctionDeclaration" &&
-          declaration.async
-        ) {
-          foundPatterns.add("asyncComponent");
-        }
-      },
-
-      CallExpression(path) {
-        if (
-          path.node.callee?.name === "NextResponse"
-        ) {
-          foundPatterns.add("apiRoute");
-        }
-
-        if (
-          path.node.callee?.object?.name === "Response" &&
-          path.node.callee?.property?.name === "json"
-        ) {
-          foundPatterns.add("apiRoute");
-        }
-
-        if (
-          path.node.callee?.name === "configureStore"
-        ) {
-          foundPatterns.add("configureStore");
-        }
-
-        if (
-          path.node.callee?.name === "useSelector"
-        ) {
-          foundPatterns.add("useSelector");
-        }
-
-        if (
-          path.node.callee?.name === "useDispatch"
-        ) {
-          foundPatterns.add("useDispatch");
-        }
-      },
-
-      JSXElement(path) {
-        const name =
-          path.node.openingElement?.name?.name;
-
-        if (name === "form") {
-          foundPatterns.add("formHandling");
-        }
-
-        if (name === "Provider") {
-          foundPatterns.add("Provider");
-        }
-      },
-
-      VariableDeclaration(path) {
-        for (const declaration of path.node.declarations) {
-          if (
-            declaration.id?.name === "dynamic"
-          ) {
-            foundPatterns.add("dynamicExport");
-          }
-
-          if (
-            declaration.id?.name === "revalidate"
-          ) {
-            foundPatterns.add("revalidate");
-          }
-        }
-      }
-    });
-  } catch (error) {
-    if (content.includes("use client")) {
-      foundPatterns.add("useClient");
-      foundPatterns.add("clientComponent");
-    }
-
-    if (
-      normalizedFileName.includes("page.tsx") &&
-      !content.includes("use client")
-    ) {
-      foundPatterns.add("serverComponent");
-    }
-
-    if (normalizedFileName.includes("app/")) {
-      foundPatterns.add("appDirectory");
-    }
-
-    if (normalizedFileName.includes("page.tsx")) {
-      foundPatterns.add("fileBasedRouting");
-    }
-
-    if (content.includes('from "next/link"')) {
-      foundPatterns.add("Link");
+  function add(pattern) {
+    if (patternsRequired.includes(pattern)) {
+      foundPatterns.add(pattern);
     }
   }
 
-  return patternsRequired.filter(pattern =>
-    foundPatterns.has(pattern)
-  );
+  if (
+    normalizedFileName.includes("page.tsx") ||
+    normalizedFileName.includes("page.jsx") ||
+    normalizedFileName.includes("page.js")
+  ) {
+    if (!content.includes('"use client"') &&
+        !content.includes("'use client'")) {
+      add("serverComponent");
+    }
+
+    add("fileBasedRouting");
+  }
+
+  if (normalizedFileName.includes("app/")) {
+    add("appDirectory");
+  }
+
+  if (
+    content.includes('"use client"') ||
+    content.includes("'use client'")
+  ) {
+    add("useClient");
+    add("clientComponent");
+  }
+
+  if (
+    content.includes('from "next/link"') ||
+    content.includes("from 'next/link'")
+  ) {
+    add("Link");
+  }
+
+  if (
+    content.includes('from "next/navigation"') ||
+    content.includes("from 'next/navigation'")
+  ) {
+    add("navigation");
+  }
+
+  if (
+    content.includes('from "next/image"') ||
+    content.includes("from 'next/image'")
+  ) {
+    add("nextImage");
+  }
+
+  if (
+    content.includes('from "next/font/google"') ||
+    content.includes("from 'next/font/google'") ||
+    content.includes('from "next/font/local"') ||
+    content.includes("from 'next/font/local'")
+  ) {
+    add("nextFont");
+  }
+
+  if (
+    content.includes("useState") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'") ||
+      content.includes("React.useState")
+    )
+  ) {
+    add("useState");
+  }
+
+  if (
+    content.includes("useEffect") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'")
+    )
+  ) {
+    add("useEffect");
+  }
+
+  if (
+    content.includes("useReducer") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'")
+    )
+  ) {
+    add("useReducer");
+  }
+
+  if (
+    content.includes("useContext") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'")
+    )
+  ) {
+    add("useContext");
+  }
+
+  if (
+    content.includes("useMemo") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'")
+    )
+  ) {
+    add("useMemo");
+  }
+
+  if (
+    content.includes("useCallback") &&
+    (
+      content.includes('from "react"') ||
+      content.includes("from 'react'")
+    )
+  ) {
+    add("useCallback");
+  }
+
+  if (
+    content.includes("configureStore") &&
+    content.includes("@reduxjs/toolkit")
+  ) {
+    add("configureStore");
+  }
+
+  if (
+    content.includes("Provider") &&
+    content.includes("react-redux")
+  ) {
+    add("Provider");
+  }
+
+  if (
+    content.includes("useSelector") &&
+    content.includes("react-redux")
+  ) {
+    add("useSelector");
+  }
+
+  if (
+    content.includes("useDispatch") &&
+    content.includes("react-redux")
+  ) {
+    add("useDispatch");
+  }
+
+  if (
+    content.includes("async function") ||
+    content.includes("async (")
+  ) {
+    add("asyncComponent");
+  }
+
+  if (content.includes("use server")) {
+    add("serverAction");
+  }
+
+  if (
+    content.includes("export const metadata") ||
+    content.includes("export let metadata")
+  ) {
+    add("metadata");
+  }
+
+  if (content.includes("generateMetadata")) {
+    add("generateMetadata");
+  }
+
+  if (content.includes("export const dynamic")) {
+    add("dynamicExport");
+  }
+
+  if (content.includes("export const revalidate")) {
+    add("revalidate");
+  }
+
+  if (
+    content.includes("<form") ||
+    content.includes("<Form")
+  ) {
+    add("formHandling");
+  }
+
+  return Array.from(foundPatterns);
 }
