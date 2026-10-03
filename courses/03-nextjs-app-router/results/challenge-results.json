@@ -6129,25 +6129,25 @@
   {
     "challengeId": "15-redux-toolkit-with-nextjs",
     "challengeName": "Redux Toolkit with Next.js",
-    "timestamp": "2026-10-03T18:57:57.215Z",
+    "timestamp": "2026-10-03T21:34:11.076Z",
     "scores": {
-      "functionalTests": 0,
+      "functionalTests": 100,
       "codeQuality": 50,
-      "architecture": 0,
+      "architecture": 100,
       "bestPractices": 100,
       "e2eTests": 100,
-      "aiReview": 88
+      "aiReview": 50
     },
-    "totalScore": 45.7,
-    "passed": false,
+    "totalScore": 85,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 3,
-      "passedTests": 0,
-      "failedTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -6157,16 +6157,10 @@
                 "Challenge 15: Redux Toolkit with Next.js"
               ],
               "fullName": " Challenge 15: Redux Toolkit with Next.js should have store with configureStore",
-              "status": "failed",
+              "status": "passed",
               "title": "should have store with configureStore",
-              "duration": 6,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 12,
-                "column": 35
-              }
+              "duration": 0,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -6174,16 +6168,10 @@
                 "Challenge 15: Redux Toolkit with Next.js"
               ],
               "fullName": " Challenge 15: Redux Toolkit with Next.js should have Client Provider wrapping with Provider and store",
-              "status": "failed",
+              "status": "passed",
               "title": "should have Client Provider wrapping with Provider and store",
               "duration": 0,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 18,
-                "column": 39
-              }
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -6191,26 +6179,19 @@
                 "Challenge 15: Redux Toolkit with Next.js"
               ],
               "fullName": " Challenge 15: Redux Toolkit with Next.js should use useSelector or useDispatch in a Client Component",
-              "status": "failed",
+              "status": "passed",
               "title": "should use useSelector or useDispatch in a Client Component",
-              "duration": 1,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 40,
-                "column": 22
-              }
+              "duration": 0,
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053878838,
-          "endTime": 1791053878845,
-          "status": "failed",
+          "startTime": 1791063252699,
+          "endTime": 1791063252700,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-15.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-15.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
       "score": 50,
@@ -6219,12 +6200,396 @@
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/actions.ts",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "serverComponent",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/cache/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/PostForm.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ReduxCounter.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ReduxProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/dyanamic/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/error.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/loading.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/providers/StoreProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/search/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/store/store.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/store/StoreProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -6269,12 +6634,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 418,
+                          "duration": 951,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:58:04.775Z",
+                          "startTime": "2026-10-03T21:34:15.657Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -6296,41 +6661,33 @@
     },
     "aiReviewResults": {
       "challengeId": "15-redux-toolkit-with-nextjs",
-      "timestamp": "2026-10-03T18:58:05.396Z",
-      "score": 88,
+      "timestamp": "2026-10-03T21:34:16.727Z",
+      "score": 50,
       "feedback": [],
       "strengths": [
-        "Clear separation of metadata and layout logic.",
-        "Uses TypeScript types for props, improving type safety.",
-        "Minimal and straightforward structure, making it easy to understand."
+        "Code structure is reasonable"
       ],
       "improvements": [
-        "Add a type for the `children` prop (e.g., `React.ReactNode`) to make the component signature explicit.",
-        "Wrap the `<body>` content with a `StoreProvider` (or other context provider) as required by the challenge.",
-        "Consider adding a `use client` directive if any client‑side logic is introduced in this file."
+        "Code structure is reasonable"
       ],
-      "readability": 90,
-      "maintainability": 85,
-      "overall": "The layout file is clean and well‑typed, but it currently lacks the Redux provider integration required by the challenge. Adding the provider and ensuring the component is properly typed will bring it in line with the specifications."
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n   "
     },
     "aiResults": {
       "challengeId": "15-redux-toolkit-with-nextjs",
-      "timestamp": "2026-10-03T18:58:05.396Z",
-      "score": 88,
+      "timestamp": "2026-10-03T21:34:16.727Z",
+      "score": 50,
       "feedback": [],
       "strengths": [
-        "Clear separation of metadata and layout logic.",
-        "Uses TypeScript types for props, improving type safety.",
-        "Minimal and straightforward structure, making it easy to understand."
+        "Code structure is reasonable"
       ],
       "improvements": [
-        "Add a type for the `children` prop (e.g., `React.ReactNode`) to make the component signature explicit.",
-        "Wrap the `<body>` content with a `StoreProvider` (or other context provider) as required by the challenge.",
-        "Consider adding a `use client` directive if any client‑side logic is introduced in this file."
+        "Code structure is reasonable"
       ],
-      "readability": 90,
-      "maintainability": 85,
-      "overall": "The layout file is clean and well‑typed, but it currently lacks the Redux provider integration required by the challenge. Adding the provider and ensuring the component is properly typed will bring it in line with the specifications."
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n   "
     }
   },
   {
