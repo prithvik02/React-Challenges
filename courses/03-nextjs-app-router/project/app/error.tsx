@@ -6,7 +6,7 @@ type Post = {
   body: string;
 };
 
-type Props = {
+type PostPageProps = {
   params: {
     id: string;
   };
@@ -24,7 +24,9 @@ async function getPost(id: string): Promise<Post | null> {
   return response.json();
 }
 
-export default async function PostDetailPage({ params }: Props) {
+export default async function PostPage({
+  params,
+}: PostPageProps) {
   const post = await getPost(params.id);
 
   if (!post) {

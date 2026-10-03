@@ -1,21 +1,5 @@
 [
   {
-    "challengeId": "11-error-handling",
-    "challengeName": "Error Handling",
-    "aiReview": {
-      "challengeId": "11-error-handling",
-      "timestamp": "2026-10-03T18:57:32.106Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "12-metadata-and-seo",
     "challengeName": "Metadata and SEO",
     "aiReview": {
@@ -356,6 +340,25 @@
       "readability": 70,
       "maintainability": 75,
       "overall": "The implementation demonstrates a solid grasp of Next.js server components and actions, but it falls short of the caching requirement for this challenge. Addressing the fetch cache options and tightening type safety will bring the code in line with the expected standards."
+    }
+  },
+  {
+    "challengeId": "11-error-handling",
+    "challengeName": "Error Handling",
+    "aiReview": {
+      "challengeId": "11-error-handling",
+      "timestamp": "2026-10-03T21:07:21.376Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": ""
     }
   }
 ]
