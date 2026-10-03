@@ -1,21 +1,5 @@
 [
   {
-    "challengeId": "10-caching-and-revalidating",
-    "challengeName": "Caching and Revalidating",
-    "aiReview": {
-      "challengeId": "10-caching-and-revalidating",
-      "timestamp": "2026-10-03T18:57:24.460Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "11-error-handling",
     "challengeName": "Error Handling",
     "aiReview": {
@@ -349,6 +333,29 @@
       "readability": 85,
       "maintainability": 80,
       "overall": "The implementation correctly demonstrates server actions and cache revalidation in Next.js. With a few enhancements around error handling, type safety, and potentially using tags, the code will be more robust and easier to maintain."
+    }
+  },
+  {
+    "challengeId": "10-caching-and-revalidating",
+    "challengeName": "Caching and Revalidating",
+    "aiReview": {
+      "challengeId": "10-caching-and-revalidating",
+      "timestamp": "2026-10-03T20:52:40.615Z",
+      "score": 73,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: data fetching is isolated in `getPosts`, and form handling is in a dedicated server action.",
+        "Use of async/await throughout the codebase keeps the flow straightforward and easy to follow.",
+        "On‑demand revalidation via `revalidatePath('/posts')` demonstrates an understanding of Next.js cache invalidation."
+      ],
+      "improvements": [
+        "Replace the `cache: 'no-store'` option with a caching strategy that satisfies the challenge, e.g. `next: { revalidate: 60 }` or `cache: 'force-cache'` in the `fetch` call inside `getPosts`.",
+        "Add type safety for the values extracted from `FormData` (e.g. `const title = formData.get('title') as string | null;`) and handle the case where the values are not strings.",
+        "Implement basic error handling for the POST request in `createPost` (e.g. check `response.ok` and throw or return a user‑friendly message)."
+      ],
+      "readability": 70,
+      "maintainability": 75,
+      "overall": "The implementation demonstrates a solid grasp of Next.js server components and actions, but it falls short of the caching requirement for this challenge. Addressing the fetch cache options and tightening type safety will bring the code in line with the expected standards."
     }
   }
 ]
