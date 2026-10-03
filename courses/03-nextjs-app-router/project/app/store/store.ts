@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { api } from "./apiSlice";
 
 type CounterState = {
   value: number;
@@ -26,7 +27,10 @@ export const { increment, decrement } = counterSlice.actions;
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

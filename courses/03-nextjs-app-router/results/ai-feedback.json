@@ -23,22 +23,6 @@
     }
   },
   {
-    "challengeId": "16-rtk-query-with-nextjs",
-    "challengeName": "RTK Query with Next.js",
-    "aiReview": {
-      "challengeId": "16-rtk-query-with-nextjs",
-      "timestamp": "2026-10-03T18:58:14.159Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "17-fullstack-capstone",
     "challengeName": "Fullstack Capstone",
     "aiReview": {
@@ -358,6 +342,25 @@
       "readability": 50,
       "maintainability": 50,
       "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n   "
+    }
+  },
+  {
+    "challengeId": "16-rtk-query-with-nextjs",
+    "challengeName": "RTK Query with Next.js",
+    "aiReview": {
+      "challengeId": "16-rtk-query-with-nextjs",
+      "timestamp": "2026-10-03T21:39:05.955Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": ""
     }
   }
 ]
