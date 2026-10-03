@@ -1,21 +1,5 @@
 [
   {
-    "challengeId": "05-loading-and-streaming",
-    "challengeName": "Loading and Streaming",
-    "aiReview": {
-      "challengeId": "05-loading-and-streaming",
-      "timestamp": "2026-10-03T18:56:43.307Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "06-dynamic-routes",
     "challengeName": "Dynamic Routes",
     "aiReview": {
@@ -325,6 +309,29 @@
       "readability": 90,
       "maintainability": 85,
       "overall": "The handler is well‑written and meets the challenge requirements. Adding explicit types and documentation will improve maintainability and make future extensions (e.g., adding a POST handler) smoother."
+    }
+  },
+  {
+    "challengeId": "05-loading-and-streaming",
+    "challengeName": "Loading and Streaming",
+    "aiReview": {
+      "challengeId": "05-loading-and-streaming",
+      "timestamp": "2026-10-03T20:01:23.490Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: fetching logic is isolated in `getPosts` and UI is in the component.",
+        "TypeScript types are defined for the post data, improving type safety and editor support.",
+        "Basic error handling is implemented for the fetch request."
+      ],
+      "improvements": [
+        "Wrap the async part of `PostsPage` in `<Suspense fallback={<Loading />}>` to leverage the custom loading UI defined in `app/posts/loading.tsx`.",
+        "Add a `cache: 'no-store'` option to the fetch call if you want to avoid caching during development or use `revalidate` for incremental static regeneration.",
+        "Consider adding a more visually appealing loading skeleton or spinner instead of a plain `<h1>` to enhance user experience."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation meets the core requirements and is cleanly written. Adding Suspense and a richer loading UI would align it more closely with the challenge's intent and improve the user experience."
     }
   }
 ]

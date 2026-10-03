@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-10-03T19:53:45.481Z",
+  "lastUpdated": "2026-10-03T20:01:25.583Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 74.4,
-    "completionPercentage": 77.4,
-    "badgeLevel": "bronze",
+    "overallScore": 75.7,
+    "completionPercentage": 79.2,
+    "badgeLevel": "silver",
     "totalChallenges": 53,
-    "completedChallenges": 41
+    "completedChallenges": 42
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 44.5,
-      "completionPercentage": 29.4,
+      "averageScore": 48.4,
+      "completionPercentage": 35.3,
       "badgeLevel": "none",
       "totalChallenges": 17,
-      "completedChallenges": 5,
+      "completedChallenges": 6,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -644,16 +644,16 @@
         "05-loading-and-streaming": {
           "challengeId": "05-loading-and-streaming",
           "challengeName": "Loading and Streaming",
-          "passed": false,
-          "score": 25,
-          "lastRun": "2026-10-03T18:56:36.109Z",
+          "passed": true,
+          "score": 90.7,
+          "lastRun": "2026-10-03T20:01:17.994Z",
           "scores": {
-            "functionalTests": 0,
-            "codeQuality": 0,
-            "architecture": 0,
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 100,
-            "aiReview": 0
+            "aiReview": 88
           }
         },
         "06-dynamic-routes": {
