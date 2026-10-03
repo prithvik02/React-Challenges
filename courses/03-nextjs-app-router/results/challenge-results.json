@@ -1938,25 +1938,25 @@
   {
     "challengeId": "06-dynamic-routes",
     "challengeName": "Dynamic Routes",
-    "timestamp": "2026-10-03T18:56:43.321Z",
+    "timestamp": "2026-10-03T20:04:20.818Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
-      "architecture": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
       "bestPractices": 100,
       "e2eTests": 100,
-      "aiReview": 0
+      "aiReview": 83
     },
-    "totalScore": 25,
-    "passed": false,
+    "totalScore": 89.95,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 2,
-      "passedTests": 0,
-      "failedTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -1966,16 +1966,10 @@
                 "Challenge 06: Dynamic Routes"
               ],
               "fullName": " Challenge 06: Dynamic Routes should have dynamic route segment [id] or [slug]",
-              "status": "failed",
+              "status": "passed",
               "title": "should have dynamic route segment [id] or [slug]",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 14,
-                "column": 7
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -1983,40 +1977,334 @@
                 "Challenge 06: Dynamic Routes"
               ],
               "fullName": " Challenge 06: Dynamic Routes should use params in page component",
-              "status": "failed",
+              "status": "passed",
               "title": "should use params in page component",
               "duration": 0,
-              "failureMessages": [
-                "expected true to be false // Object.is equality"
-              ],
-              "location": {
-                "line": 24,
-                "column": 20
-              }
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053804967,
-          "endTime": 1791053804972,
-          "status": "failed",
+          "startTime": 1791057862423,
+          "endTime": 1791057862424,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-06.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-06.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "serverComponent",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/loading.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -2061,12 +2349,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 506,
+                          "duration": 1030,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:49.903Z",
+                          "startTime": "2026-10-03T20:04:25.288Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -2088,27 +2376,41 @@
     },
     "aiReviewResults": {
       "challengeId": "06-dynamic-routes",
-      "timestamp": "2026-10-03T18:56:50.626Z",
-      "score": 0,
+      "timestamp": "2026-10-03T20:04:26.452Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear and concise component structure that follows Next.js App Router conventions.",
+        "Proper TypeScript typing for the `params` prop, ensuring type safety.",
+        "No console statements or linting issues, keeping the code clean."
+      ],
+      "improvements": [
+        "Add `generateStaticParams` to pre-render known post IDs and improve SEO/performance.",
+        "Implement data fetching (e.g., from an API or local data source) and handle loading/error states for a more realistic page.",
+        "Consider adding a fallback UI or skeleton while the post data is being fetched, and include basic accessibility markup (e.g., `<article>`)."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The component is well‑structured and type‑safe, making it easy to understand and maintain. Enhancing it with static params, data fetching, and user experience improvements will bring it closer to a production‑ready dynamic route."
     },
     "aiResults": {
       "challengeId": "06-dynamic-routes",
-      "timestamp": "2026-10-03T18:56:50.626Z",
-      "score": 0,
+      "timestamp": "2026-10-03T20:04:26.452Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear and concise component structure that follows Next.js App Router conventions.",
+        "Proper TypeScript typing for the `params` prop, ensuring type safety.",
+        "No console statements or linting issues, keeping the code clean."
+      ],
+      "improvements": [
+        "Add `generateStaticParams` to pre-render known post IDs and improve SEO/performance.",
+        "Implement data fetching (e.g., from an API or local data source) and handle loading/error states for a more realistic page.",
+        "Consider adding a fallback UI or skeleton while the post data is being fetched, and include basic accessibility markup (e.g., `<article>`)."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The component is well‑structured and type‑safe, making it easy to understand and maintain. Enhancing it with static params, data fetching, and user experience improvements will bring it closer to a production‑ready dynamic route."
     }
   },
   {

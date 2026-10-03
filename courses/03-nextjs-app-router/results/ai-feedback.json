@@ -1,21 +1,5 @@
 [
   {
-    "challengeId": "06-dynamic-routes",
-    "challengeName": "Dynamic Routes",
-    "aiReview": {
-      "challengeId": "06-dynamic-routes",
-      "timestamp": "2026-10-03T18:56:50.626Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "07-static-and-dynamic-rendering",
     "challengeName": "Static and Dynamic Rendering",
     "aiReview": {
@@ -332,6 +316,29 @@
       "readability": 90,
       "maintainability": 85,
       "overall": "The implementation meets the core requirements and is cleanly written. Adding Suspense and a richer loading UI would align it more closely with the challenge's intent and improve the user experience."
+    }
+  },
+  {
+    "challengeId": "06-dynamic-routes",
+    "challengeName": "Dynamic Routes",
+    "aiReview": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-10-03T20:04:26.452Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear and concise component structure that follows Next.js App Router conventions.",
+        "Proper TypeScript typing for the `params` prop, ensuring type safety.",
+        "No console statements or linting issues, keeping the code clean."
+      ],
+      "improvements": [
+        "Add `generateStaticParams` to pre-render known post IDs and improve SEO/performance.",
+        "Implement data fetching (e.g., from an API or local data source) and handle loading/error states for a more realistic page.",
+        "Consider adding a fallback UI or skeleton while the post data is being fetched, and include basic accessibility markup (e.g., `<article>`)."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The component is well‑structured and type‑safe, making it easy to understand and maintain. Enhancing it with static params, data fetching, and user experience improvements will bring it closer to a production‑ready dynamic route."
     }
   }
 ]
