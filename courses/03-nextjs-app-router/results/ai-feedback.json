@@ -23,22 +23,6 @@
     }
   },
   {
-    "challengeId": "17-fullstack-capstone",
-    "challengeName": "Fullstack Capstone",
-    "aiReview": {
-      "challengeId": "17-fullstack-capstone",
-      "timestamp": "2026-10-03T18:58:23.805Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "02-server-and-client-components",
     "challengeName": "Server and Client Components",
     "aiReview": {
@@ -361,6 +345,29 @@
       "readability": 50,
       "maintainability": 50,
       "overall": ""
+    }
+  },
+  {
+    "challengeId": "17-fullstack-capstone",
+    "challengeName": "Fullstack Capstone",
+    "aiReview": {
+      "challengeId": "17-fullstack-capstone",
+      "timestamp": "2026-10-03T21:42:10.726Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: data fetching, metadata generation, and page rendering are each encapsulated in dedicated functions.",
+        "Proper use of Next.js server-side utilities (`notFound`, `generateMetadata`) to handle routing and SEO.",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a Client Component (e.g., a like button or edit form) to satisfy the challenge requirement for interactive UI on the page.",
+        "Introduce an explicit type guard or non-null assertion after `notFound()` to satisfy TypeScript’s strict null checks and avoid potential `post` being `null` in the JSX.",
+        "Consider extracting the API URL into a configuration constant or environment variable for easier maintenance and potential reuse across the app."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The page is well‑structured and leverages Next.js features effectively, but it currently lacks the required client‑side interactivity and could benefit from a few type safety and configuration improvements."
     }
   }
 ]

@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-10-03T21:39:08.137Z",
+  "lastUpdated": "2026-10-03T21:42:12.525Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 87.3,
-    "completionPercentage": 98.1,
+    "overallScore": 88.6,
+    "completionPercentage": 100,
     "badgeLevel": "silver",
     "totalChallenges": 53,
-    "completedChallenges": 52
+    "completedChallenges": 53
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 82.5,
-      "completionPercentage": 94.1,
+      "averageScore": 86.3,
+      "completionPercentage": 100,
       "badgeLevel": "silver",
       "totalChallenges": 17,
-      "completedChallenges": 16,
+      "completedChallenges": 17,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -824,16 +824,16 @@
         "17-fullstack-capstone": {
           "challengeId": "17-fullstack-capstone",
           "challengeName": "Fullstack Capstone",
-          "passed": false,
-          "score": 17.5,
-          "lastRun": "2026-10-03T18:58:14.162Z",
+          "passed": true,
+          "score": 82.45,
+          "lastRun": "2026-10-03T21:42:04.838Z",
           "scores": {
-            "functionalTests": 0,
-            "codeQuality": 0,
-            "architecture": 0,
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 50,
-            "aiReview": 0
+            "aiReview": 83
           }
         }
       }

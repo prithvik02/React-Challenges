@@ -7287,25 +7287,25 @@
   {
     "challengeId": "17-fullstack-capstone",
     "challengeName": "Fullstack Capstone",
-    "timestamp": "2026-10-03T18:58:14.162Z",
+    "timestamp": "2026-10-03T21:42:04.838Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
-      "architecture": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
       "bestPractices": 100,
       "e2eTests": 50,
-      "aiReview": 0
+      "aiReview": 83
     },
-    "totalScore": 17.5,
-    "passed": false,
+    "totalScore": 82.45,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 3,
-      "passedTests": 0,
-      "failedTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -7315,16 +7315,10 @@
                 "Challenge 17: Fullstack Capstone"
               ],
               "fullName": " Challenge 17: Fullstack Capstone should have dynamic route page",
-              "status": "failed",
+              "status": "passed",
               "title": "should have dynamic route page",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 13,
-                "column": 37
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -7332,16 +7326,10 @@
                 "Challenge 17: Fullstack Capstone"
               ],
               "fullName": " Challenge 17: Fullstack Capstone should have error.tsx or not-found.tsx",
-              "status": "failed",
+              "status": "passed",
               "title": "should have error.tsx or not-found.tsx",
-              "duration": 1,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 19,
-                "column": 7
-              }
+              "duration": 0,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -7349,40 +7337,424 @@
                 "Challenge 17: Fullstack Capstone"
               ],
               "fullName": " Challenge 17: Fullstack Capstone should have metadata or generateMetadata on dynamic page",
-              "status": "failed",
+              "status": "passed",
               "title": "should have metadata or generateMetadata on dynamic page",
               "duration": 1,
-              "failureMessages": [
-                "expected true to be false // Object.is equality"
-              ],
-              "location": {
-                "line": 24,
-                "column": 20
-              }
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053895739,
-          "endTime": 1791053895746,
-          "status": "failed",
+          "startTime": 1791063726417,
+          "endTime": 1791063726419,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-17.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-17.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/actions.ts",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "serverComponent",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/cache/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/PostForm.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ReduxCounter.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ReduxProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/dyanamic/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/error.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/loading.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/providers/StoreProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/search/page.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/store/apiSlice.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/store/store.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/store/StoreProvider.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -7427,12 +7799,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 516,
+                          "duration": 1187,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:58:20.660Z",
+                          "startTime": "2026-10-03T21:42:09.382Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -7458,10 +7830,10 @@
                       "projectName": "chromium",
                       "results": [
                         {
-                          "workerIndex": 0,
-                          "parallelIndex": 0,
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
                           "status": "failed",
-                          "duration": 378,
+                          "duration": 1335,
                           "error": {
                             "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
                             "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts:20:46",
@@ -7485,7 +7857,7 @@
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:58:21.247Z",
+                          "startTime": "2026-10-03T21:42:09.244Z",
                           "annotations": [],
                           "attachments": [
                             {
@@ -7497,107 +7869,6 @@
                               "name": "error-context",
                               "contentType": "text/markdown",
                               "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                            "column": 46,
-                            "line": 20
-                          }
-                        },
-                        {
-                          "workerIndex": 1,
-                          "parallelIndex": 0,
-                          "status": "failed",
-                          "duration": 509,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts:20:46",
-                            "location": {
-                              "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                              "column": 46,
-                              "line": 20
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 18 |\u001b[39m     \u001b[36mconst\u001b[39m hasLink \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'link'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mconst\u001b[39m hasInput \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'input'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 |\u001b[39m     expect(hasButton \u001b[33m||\u001b[39m hasLink \u001b[33m||\u001b[39m hasInput)\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                                "column": 46,
-                                "line": 20
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  18 |     const hasLink = await page.getByRole('link').first().isVisible().catch(() => false);\n  19 |     const hasInput = await page.locator('input').first().isVisible().catch(() => false);\n> 20 |     expect(hasButton || hasLink || hasInput).toBe(true);\n     |                                              ^\n  21 |   });\n  22 | });\n  23 |\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts:20:46"
-                            }
-                          ],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 1,
-                          "startTime": "2026-10-03T18:58:22.138Z",
-                          "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "screenshot",
-                              "contentType": "image/png",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium-retry1\\test-failed-1.png"
-                            },
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium-retry1\\error-context.md"
-                            },
-                            {
-                              "name": "trace",
-                              "contentType": "application/zip",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium-retry1\\trace.zip"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                            "column": 46,
-                            "line": 20
-                          }
-                        },
-                        {
-                          "workerIndex": 2,
-                          "parallelIndex": 0,
-                          "status": "failed",
-                          "duration": 389,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts:20:46",
-                            "location": {
-                              "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                              "column": 46,
-                              "line": 20
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 18 |\u001b[39m     \u001b[36mconst\u001b[39m hasLink \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'link'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mconst\u001b[39m hasInput \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'input'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 |\u001b[39m     expect(hasButton \u001b[33m||\u001b[39m hasLink \u001b[33m||\u001b[39m hasInput)\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts",
-                                "column": 46,
-                                "line": 20
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  18 |     const hasLink = await page.getByRole('link').first().isVisible().catch(() => false);\n  19 |     const hasInput = await page.locator('input').first().isVisible().catch(() => false);\n> 20 |     expect(hasButton || hasLink || hasInput).toBe(true);\n     |                                              ^\n  21 |   });\n  22 | });\n  23 |\n    at D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\e2e\\challenge-17.spec.ts:20:46"
-                            }
-                          ],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 2,
-                          "startTime": "2026-10-03T18:58:23.215Z",
-                          "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "screenshot",
-                              "contentType": "image/png",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium-retry2\\test-failed-1.png"
-                            },
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\test-results\\challenge-17-Challenge-17--b9503-interactive-content-or-form-chromium-retry2\\error-context.md"
                             }
                           ],
                           "errorLocation": {
@@ -7620,31 +7891,46 @@
           ]
         }
       ],
+      "screenshots": [],
       "error": "Command failed: npx playwright test \"tests/e2e/challenge-17.spec.ts\" --reporter=json"
     },
     "aiReviewResults": {
       "challengeId": "17-fullstack-capstone",
-      "timestamp": "2026-10-03T18:58:23.805Z",
-      "score": 0,
+      "timestamp": "2026-10-03T21:42:10.726Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear separation of concerns: data fetching, metadata generation, and page rendering are each encapsulated in dedicated functions.",
+        "Proper use of Next.js server-side utilities (`notFound`, `generateMetadata`) to handle routing and SEO.",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a Client Component (e.g., a like button or edit form) to satisfy the challenge requirement for interactive UI on the page.",
+        "Introduce an explicit type guard or non-null assertion after `notFound()` to satisfy TypeScript’s strict null checks and avoid potential `post` being `null` in the JSX.",
+        "Consider extracting the API URL into a configuration constant or environment variable for easier maintenance and potential reuse across the app."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The page is well‑structured and leverages Next.js features effectively, but it currently lacks the required client‑side interactivity and could benefit from a few type safety and configuration improvements."
     },
     "aiResults": {
       "challengeId": "17-fullstack-capstone",
-      "timestamp": "2026-10-03T18:58:23.805Z",
-      "score": 0,
+      "timestamp": "2026-10-03T21:42:10.726Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Clear separation of concerns: data fetching, metadata generation, and page rendering are each encapsulated in dedicated functions.",
+        "Proper use of Next.js server-side utilities (`notFound`, `generateMetadata`) to handle routing and SEO.",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a Client Component (e.g., a like button or edit form) to satisfy the challenge requirement for interactive UI on the page.",
+        "Introduce an explicit type guard or non-null assertion after `notFound()` to satisfy TypeScript’s strict null checks and avoid potential `post` being `null` in the JSX.",
+        "Consider extracting the API URL into a configuration constant or environment variable for easier maintenance and potential reuse across the app."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The page is well‑structured and leverages Next.js features effectively, but it currently lacks the required client‑side interactivity and could benefit from a few type safety and configuration improvements."
     }
   }
 ]

@@ -64,12 +64,12 @@ npm run review -- --challenge=01-app-router-pages-layout
 
 ## 📊 Progress Evidence
 
-*Auto-updated when you run review. Last run: 4/10/2026, 3:09:07 am*
+*Auto-updated when you run review. Last run: 4/10/2026, 3:12:11 am*
 
 | Metric | Value |
 |--------|-------|
-| Challenges completed | 16 / 17 (94.1%) |
-| Average score | 82.5% |
+| Challenges completed | 17 / 17 (100%) |
+| Average score | 86.3% |
 
 | Challenge | Skills covered | Status |
 |-----------|----------------|--------|
@@ -89,7 +89,7 @@ npm run review -- --challenge=01-app-router-pages-layout
 | Search and Pagination | searchParams, URL search params, Pagination, Filtering | Passed |
 | Redux Toolkit with Next.js | Redux Toolkit, configureStore, Provider, useSelector, useDispatch | Passed |
 | RTK Query with Next.js | RTK Query, createApi, fetchBaseQuery, useGetPostsQuery, useMutation | Passed |
-| Fullstack Capstone | Dynamic routes, Server Components, Client Components, Error handling, Metadata, Server Actions | Not passed |
+| Fullstack Capstone | Dynamic routes, Server Components, Client Components, Error handling, Metadata, Server Actions | Passed |
 
 ## 📋 Challenge Workflow
 
