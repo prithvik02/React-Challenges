@@ -1,40 +1,5 @@
 [
   {
-    "challengeId": "01-app-router-pages-layout",
-    "challengeName": "App Router, Pages, and Layout",
-    "aiReview": {
-      "challengeId": "01-app-router-pages-layout",
-      "timestamp": "2026-10-03T18:56:09.130Z",
-      "score": 50,
-      "feedback": [],
-      "strengths": [
-        "Code structure is reasonable"
-      ],
-      "improvements": [
-        "Code structure is reasonable"
-      ],
-      "readability": 50,
-      "maintainability": 50,
-      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Correct use of Next.js App Router structure with root layout, home, and about pages.\",\n    \"Proper navigation via `next/link` and server‑component defaults (no unnecessary `'use client'`).\",\n    \"TypeScript is used consistently and metadata is defined for SEO.\"\n  ],\n  \"improvements\": [\n    \"Extract the navigation links into a reusable component (e.g., `<Nav />`) to avoid duplication and make future route additions easier.\",\n  "
-    }
-  },
-  {
-    "challengeId": "03-data-fetching-server",
-    "challengeName": "Data Fetching in Server Components",
-    "aiReview": {
-      "challengeId": "03-data-fetching-server",
-      "timestamp": "2026-10-03T18:56:28.024Z",
-      "score": 0,
-      "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
-    }
-  },
-  {
     "challengeId": "04-api-route-handlers",
     "challengeName": "API Route Handlers",
     "aiReview": {
@@ -307,6 +272,52 @@
       "readability": 92,
       "maintainability": 88,
       "overall": "The implementation cleanly satisfies the challenge requirements, demonstrating a solid grasp of server vs. client component boundaries. Minor enhancements around accessibility and type annotations would elevate the code quality further."
+    }
+  },
+  {
+    "challengeId": "01-app-router-pages-layout",
+    "challengeName": "App Router, Pages, and Layout",
+    "aiReview": {
+      "challengeId": "01-app-router-pages-layout",
+      "timestamp": "2026-10-03T19:00:54.724Z",
+      "score": 85,
+      "feedback": [],
+      "strengths": [
+        "Correct use of Next.js App Router with server components and proper routing.",
+        "Clear and concise component structure with minimal boilerplate.",
+        "Navigation links are correctly implemented using `next/link`."
+      ],
+      "improvements": [
+        "Consider using `React.PropsWithChildren` for the RootLayout props to make the type explicit and reusable.",
+        "Move the navigation links into a shared component (e.g., a `<Header>` or `<Nav>` component) so they can be reused across pages and reduce duplication.",
+        "Add a small comment block at the top of each file explaining its purpose; this aids future maintainers and improves code documentation."
+      ],
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation meets all functional requirements and follows Next.js best practices. The code is clean and easy to understand, but a few small refactors—such as centralizing navigation and tightening type definitions—would further enhance maintainability."
+    }
+  },
+  {
+    "challengeId": "03-data-fetching-server",
+    "challengeName": "Data Fetching in Server Components",
+    "aiReview": {
+      "challengeId": "03-data-fetching-server",
+      "timestamp": "2026-10-03T19:13:06.138Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Uses an async Server Component that fetches data directly on the server, following best practices for Next.js App Router.",
+        "Strong TypeScript typing with a dedicated `Post` type and a typed `getPosts` helper, improving type safety and IDE support.",
+        "Clear separation of concerns: data fetching logic is isolated in `getPosts`, keeping the component focused on rendering."
+      ],
+      "improvements": [
+        "Add a try/catch block in the component to gracefully handle fetch errors and provide user‑friendly feedback instead of throwing.",
+        "Consider using `next` fetch options (e.g., `cache: 'no-store'` or `next: { revalidate: 60 }`) to control caching and revalidation, which can improve performance and data freshness.",
+        "Include minimal inline comments or JSDoc for the `getPosts` function to clarify its purpose and expected return shape for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation is clean, well‑typed, and follows Next.js best practices for server‑side data fetching. Minor enhancements around error handling and fetch configuration would make it even more robust and maintainable."
     }
   }
 ]

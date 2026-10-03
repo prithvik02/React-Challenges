@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-10-03T19:00:03.361Z",
+  "lastUpdated": "2026-10-03T19:13:07.918Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 71.4,
-    "completionPercentage": 71.7,
+    "overallScore": 72.8,
+    "completionPercentage": 75.5,
     "badgeLevel": "bronze",
     "totalChallenges": 53,
-    "completedChallenges": 38
+    "completedChallenges": 40
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,25 +575,25 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 35.7,
-      "completionPercentage": 11.8,
+      "averageScore": 39.8,
+      "completionPercentage": 23.5,
       "badgeLevel": "none",
       "totalChallenges": 17,
-      "completedChallenges": 2,
+      "completedChallenges": 4,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
           "challengeName": "App Router, Pages, and Layout",
-          "passed": false,
-          "score": 75,
-          "lastRun": "2026-10-03T18:55:59.737Z",
+          "passed": true,
+          "score": 80.25,
+          "lastRun": "2026-10-03T19:00:45.870Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,
             "architecture": 0,
             "bestPractices": 100,
             "e2eTests": 100,
-            "aiReview": 50
+            "aiReview": 85
           }
         },
         "02-server-and-client-components": {
@@ -614,16 +614,16 @@
         "03-data-fetching-server": {
           "challengeId": "03-data-fetching-server",
           "challengeName": "Data Fetching in Server Components",
-          "passed": false,
-          "score": 25,
-          "lastRun": "2026-10-03T18:56:20.261Z",
+          "passed": true,
+          "score": 89.95,
+          "lastRun": "2026-10-03T19:12:57.533Z",
           "scores": {
-            "functionalTests": 0,
-            "codeQuality": 0,
-            "architecture": 0,
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
             "bestPractices": 100,
             "e2eTests": 100,
-            "aiReview": 0
+            "aiReview": 83
           }
         },
         "04-api-route-handlers": {

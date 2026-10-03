@@ -2,17 +2,17 @@
   {
     "challengeId": "01-app-router-pages-layout",
     "challengeName": "App Router, Pages, and Layout",
-    "timestamp": "2026-10-03T18:55:59.737Z",
+    "timestamp": "2026-10-03T19:00:45.870Z",
     "scores": {
       "functionalTests": 100,
       "codeQuality": 50,
       "architecture": 0,
       "bestPractices": 100,
       "e2eTests": 100,
-      "aiReview": 50
+      "aiReview": 85
     },
-    "totalScore": 75,
-    "passed": false,
+    "totalScore": 80.25,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
@@ -43,7 +43,7 @@
               "fullName": " Challenge 01: App Router, Pages, and Layout should have app/about/page.tsx",
               "status": "passed",
               "title": "should have app/about/page.tsx",
-              "duration": 1,
+              "duration": 0,
               "failureMessages": []
             },
             {
@@ -54,7 +54,7 @@
               "fullName": " Challenge 01: App Router, Pages, and Layout should use Server Components (no use client)",
               "status": "passed",
               "title": "should use Server Components (no use client)",
-              "duration": 0,
+              "duration": 1,
               "failureMessages": []
             },
             {
@@ -80,8 +80,8 @@
               "failureMessages": []
             }
           ],
-          "startTime": 1791053761386,
-          "endTime": 1791053761389,
+          "startTime": 1791054047452,
+          "endTime": 1791054047454,
           "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-01.test.tsx"
@@ -145,12 +145,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 379,
+                          "duration": 353,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:07.515Z",
+                          "startTime": "2026-10-03T19:00:53.219Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -179,12 +179,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 640,
+                          "duration": 589,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:07.974Z",
+                          "startTime": "2026-10-03T19:00:53.639Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -213,12 +213,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 361,
+                          "duration": 359,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:08.629Z",
+                          "startTime": "2026-10-03T19:00:54.236Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -240,33 +240,41 @@
     },
     "aiReviewResults": {
       "challengeId": "01-app-router-pages-layout",
-      "timestamp": "2026-10-03T18:56:09.130Z",
-      "score": 50,
+      "timestamp": "2026-10-03T19:00:54.724Z",
+      "score": 85,
       "feedback": [],
       "strengths": [
-        "Code structure is reasonable"
+        "Correct use of Next.js App Router with server components and proper routing.",
+        "Clear and concise component structure with minimal boilerplate.",
+        "Navigation links are correctly implemented using `next/link`."
       ],
       "improvements": [
-        "Code structure is reasonable"
+        "Consider using `React.PropsWithChildren` for the RootLayout props to make the type explicit and reusable.",
+        "Move the navigation links into a shared component (e.g., a `<Header>` or `<Nav>` component) so they can be reused across pages and reduce duplication.",
+        "Add a small comment block at the top of each file explaining its purpose; this aids future maintainers and improves code documentation."
       ],
-      "readability": 50,
-      "maintainability": 50,
-      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Correct use of Next.js App Router structure with root layout, home, and about pages.\",\n    \"Proper navigation via `next/link` and server‑component defaults (no unnecessary `'use client'`).\",\n    \"TypeScript is used consistently and metadata is defined for SEO.\"\n  ],\n  \"improvements\": [\n    \"Extract the navigation links into a reusable component (e.g., `<Nav />`) to avoid duplication and make future route additions easier.\",\n  "
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation meets all functional requirements and follows Next.js best practices. The code is clean and easy to understand, but a few small refactors—such as centralizing navigation and tightening type definitions—would further enhance maintainability."
     },
     "aiResults": {
       "challengeId": "01-app-router-pages-layout",
-      "timestamp": "2026-10-03T18:56:09.130Z",
-      "score": 50,
+      "timestamp": "2026-10-03T19:00:54.724Z",
+      "score": 85,
       "feedback": [],
       "strengths": [
-        "Code structure is reasonable"
+        "Correct use of Next.js App Router with server components and proper routing.",
+        "Clear and concise component structure with minimal boilerplate.",
+        "Navigation links are correctly implemented using `next/link`."
       ],
       "improvements": [
-        "Code structure is reasonable"
+        "Consider using `React.PropsWithChildren` for the RootLayout props to make the type explicit and reusable.",
+        "Move the navigation links into a shared component (e.g., a `<Header>` or `<Nav>` component) so they can be reused across pages and reduce duplication.",
+        "Add a small comment block at the top of each file explaining its purpose; this aids future maintainers and improves code documentation."
       ],
-      "readability": 50,
-      "maintainability": 50,
-      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Correct use of Next.js App Router structure with root layout, home, and about pages.\",\n    \"Proper navigation via `next/link` and server‑component defaults (no unnecessary `'use client'`).\",\n    \"TypeScript is used consistently and metadata is defined for SEO.\"\n  ],\n  \"improvements\": [\n    \"Extract the navigation links into a reusable component (e.g., `<Nav />`) to avoid duplication and make future route additions easier.\",\n  "
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation meets all functional requirements and follows Next.js best practices. The code is clean and easy to understand, but a few small refactors—such as centralizing navigation and tightening type definitions—would further enhance maintainability."
     }
   },
   {
@@ -494,25 +502,25 @@
   {
     "challengeId": "03-data-fetching-server",
     "challengeName": "Data Fetching in Server Components",
-    "timestamp": "2026-10-03T18:56:20.261Z",
+    "timestamp": "2026-10-03T19:12:57.533Z",
     "scores": {
-      "functionalTests": 0,
-      "codeQuality": 0,
-      "architecture": 0,
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
       "bestPractices": 100,
       "e2eTests": 100,
-      "aiReview": 0
+      "aiReview": 83
     },
-    "totalScore": 25,
-    "passed": false,
+    "totalScore": 89.95,
+    "passed": true,
     "errors": [],
     "warnings": [],
     "testResults": {
-      "score": 0,
-      "passed": false,
+      "score": 100,
+      "passed": true,
       "totalTests": 3,
-      "passedTests": 0,
-      "failedTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
       "details": [
         {
           "assertionResults": [
@@ -522,16 +530,10 @@
                 "Challenge 03: Data Fetching in Server Components"
               ],
               "fullName": " Challenge 03: Data Fetching in Server Components should have posts page (or equivalent data page)",
-              "status": "failed",
+              "status": "passed",
               "title": "should have posts page (or equivalent data page)",
-              "duration": 5,
-              "failureMessages": [
-                "expected false to be true // Object.is equality"
-              ],
-              "location": {
-                "line": 10,
-                "column": 35
-              }
+              "duration": 1,
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -539,16 +541,10 @@
                 "Challenge 03: Data Fetching in Server Components"
               ],
               "fullName": " Challenge 03: Data Fetching in Server Components should have async Server Component",
-              "status": "failed",
+              "status": "passed",
               "title": "should have async Server Component",
               "duration": 1,
-              "failureMessages": [
-                "expected true to be false // Object.is equality"
-              ],
-              "location": {
-                "line": 15,
-                "column": 20
-              }
+              "failureMessages": []
             },
             {
               "ancestorTitles": [
@@ -556,40 +552,312 @@
                 "Challenge 03: Data Fetching in Server Components"
               ],
               "fullName": " Challenge 03: Data Fetching in Server Components should fetch data in Server Component",
-              "status": "failed",
+              "status": "passed",
               "title": "should fetch data in Server Component",
               "duration": 0,
-              "failureMessages": [
-                "expected true to be false // Object.is equality"
-              ],
-              "location": {
-                "line": 24,
-                "column": 20
-              }
+              "failureMessages": []
             }
           ],
-          "startTime": 1791053781856,
-          "endTime": 1791053781862,
-          "status": "failed",
+          "startTime": 1791054779113,
+          "endTime": 1791054779115,
+          "status": "passed",
           "message": "",
           "name": "D:/VS CODE/React-Challenges/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-03.test.tsx"
         }
-      ],
-      "error": "Command failed: npx vitest run \"D:\\VS CODE\\React-Challenges\\challenge-engine-react\\courses\\03-nextjs-app-router\\project\\tests\\challenge-03.test.tsx\" --reporter=json\n\u001b[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.\u001b[39m\n"
+      ]
     },
     "lintResults": {
-      "score": 0,
+      "score": 50,
       "passed": false,
-      "error": "None of the specified files exist",
+      "error": "Could not parse linting results",
       "details": []
     },
     "architectureResults": {
-      "score": 0,
-      "found": [],
-      "missing": [
-        "No source files found"
+      "score": 100,
+      "patternsFound": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
       ],
-      "details": []
+      "patternsMissing": [],
+      "found": [
+        "appDirectory",
+        "fileBasedRouting",
+        "serverComponent",
+        "useClient",
+        "useState",
+        "Link",
+        "postsPage",
+        "asyncServerComponent",
+        "serverDataFetching"
+      ],
+      "missing": [],
+      "details": [
+        {
+          "file": "app/about/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/ChallengeList.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/Counter.tsx",
+          "patternsFound": [
+            "useClient",
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/components/index.ts",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "serverComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "Link"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "serverComponent",
+            "fetch",
+            "asyncComponent"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "next-env.d.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "next.config.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "playwright.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "scripts/patch-esm-shims.js",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/test/setup.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-01.test.tsx",
+          "patternsFound": [
+            "useClient"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-02.test.tsx",
+          "patternsFound": [
+            "useState"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-03.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-04.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-05.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-06.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-07.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-08.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-09.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-10.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-11.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-12.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-13.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-14.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-15.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-16.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/challenge-17.test.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-01.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-02.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-03.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-04.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-05.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-06.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-07.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-08.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-09.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-10.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-11.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-12.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-13.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-14.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-15.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-16.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "tests/e2e/challenge-17.spec.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        },
+        {
+          "file": "vitest.config.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
     },
     "bestPracticesResults": {
       "score": 100,
@@ -634,12 +902,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 931,
+                          "duration": 876,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:26.797Z",
+                          "startTime": "2026-10-03T19:13:04.912Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -668,12 +936,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 71,
+                          "duration": 147,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-10-03T18:56:27.802Z",
+                          "startTime": "2026-10-03T19:13:05.870Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -695,27 +963,41 @@
     },
     "aiReviewResults": {
       "challengeId": "03-data-fetching-server",
-      "timestamp": "2026-10-03T18:56:28.024Z",
-      "score": 0,
+      "timestamp": "2026-10-03T19:13:06.138Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Uses an async Server Component that fetches data directly on the server, following best practices for Next.js App Router.",
+        "Strong TypeScript typing with a dedicated `Post` type and a typed `getPosts` helper, improving type safety and IDE support.",
+        "Clear separation of concerns: data fetching logic is isolated in `getPosts`, keeping the component focused on rendering."
+      ],
+      "improvements": [
+        "Add a try/catch block in the component to gracefully handle fetch errors and provide user‑friendly feedback instead of throwing.",
+        "Consider using `next` fetch options (e.g., `cache: 'no-store'` or `next: { revalidate: 60 }`) to control caching and revalidation, which can improve performance and data freshness.",
+        "Include minimal inline comments or JSDoc for the `getPosts` function to clarify its purpose and expected return shape for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation is clean, well‑typed, and follows Next.js best practices for server‑side data fetching. Minor enhancements around error handling and fetch configuration would make it even more robust and maintainable."
     },
     "aiResults": {
       "challengeId": "03-data-fetching-server",
-      "timestamp": "2026-10-03T18:56:28.024Z",
-      "score": 0,
+      "timestamp": "2026-10-03T19:13:06.138Z",
+      "score": 83,
       "feedback": [],
-      "strengths": [],
-      "improvements": [],
-      "readability": 0,
-      "maintainability": 0,
-      "overall": "",
-      "error": "No files found to review"
+      "strengths": [
+        "Uses an async Server Component that fetches data directly on the server, following best practices for Next.js App Router.",
+        "Strong TypeScript typing with a dedicated `Post` type and a typed `getPosts` helper, improving type safety and IDE support.",
+        "Clear separation of concerns: data fetching logic is isolated in `getPosts`, keeping the component focused on rendering."
+      ],
+      "improvements": [
+        "Add a try/catch block in the component to gracefully handle fetch errors and provide user‑friendly feedback instead of throwing.",
+        "Consider using `next` fetch options (e.g., `cache: 'no-store'` or `next: { revalidate: 60 }`) to control caching and revalidation, which can improve performance and data freshness.",
+        "Include minimal inline comments or JSDoc for the `getPosts` function to clarify its purpose and expected return shape for future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation is clean, well‑typed, and follows Next.js best practices for server‑side data fetching. Minor enhancements around error handling and fetch configuration would make it even more robust and maintainable."
     }
   },
   {

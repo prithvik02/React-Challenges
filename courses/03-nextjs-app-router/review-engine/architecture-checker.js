@@ -1,10 +1,10 @@
-import { readFileSync, existsSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { join } from "path";
 
-function getProjectFiles(projectDir) {
+function getSourceFiles(projectDir) {
   const files = [];
 
-  function scanDirectory(directory) {
+  function scan(directory) {
     if (!existsSync(directory)) {
       return;
     }
@@ -14,8 +14,6 @@ function getProjectFiles(projectDir) {
     });
 
     for (const entry of entries) {
-      const fullPath = join(directory, entry.name);
-
       if (
         entry.name === "node_modules" ||
         entry.name === ".next" ||
@@ -24,264 +22,385 @@ function getProjectFiles(projectDir) {
         continue;
       }
 
+      const fullPath = join(directory, entry.name);
+
       if (entry.isDirectory()) {
-        scanDirectory(fullPath);
+        scan(fullPath);
       } else if (
-        /\.(tsx|ts|jsx|js)$/.test(entry.name)
+        /\.(js|jsx|ts|tsx)$/.test(entry.name)
       ) {
         files.push(fullPath);
       }
     }
   }
 
-  scanDirectory(projectDir);
+  scan(projectDir);
 
   return files;
 }
 
-function checkFile(filePath, projectDir) {
-  const content = readFileSync(filePath, "utf-8");
+function analyzeFile(filePath, projectDir) {
+  const content = readFileSync(filePath, "utf8");
 
   const relativePath = filePath
     .replace(projectDir, "")
     .replace(/\\/g, "/")
     .replace(/^\/+/, "");
 
+  const isClient =
+    content.includes("'use client'") ||
+    content.includes('"use client"');
+
+  const isPage =
+    /(^|\/)page\.(js|jsx|ts|tsx)$/.test(
+      relativePath
+    );
+
+  const isLayout =
+    /(^|\/)layout\.(js|jsx|ts|tsx)$/.test(
+      relativePath
+    );
+
   return {
     file: relativePath,
     content,
 
-    serverComponent:
-      !content.includes('"use client"') &&
-      !content.includes("'use client'"),
+    isClient,
 
-    clientComponent:
-      content.includes('"use client"') ||
-      content.includes("'use client'"),
-
-    useState:
-      content.includes("useState"),
-
-    useClient:
-      content.includes('"use client"') ||
-      content.includes("'use client'"),
-
-    link:
-      content.includes("next/link") ||
-      content.includes("<Link"),
-
-    appDirectory:
+    isServer:
+      !isClient &&
       relativePath.startsWith("app/"),
 
-    fileBasedRouting:
-      relativePath.includes("/page.") ||
-      relativePath.includes("/layout."),
+    isPage,
 
-    functionalComponent:
-      /export default function\s+\w+/.test(content) ||
-      /function\s+\w+\s*\(/.test(content),
+    isLayout,
 
-    reactHooks:
-      /use[A-Z]\w*\s*\(/.test(content)
+    useState:
+      /\buseState\b/.test(content),
+
+    hasLink:
+      content.includes("next/link") ||
+      /<Link\b/.test(content),
+
+    hasFetch:
+      /\bfetch\s*\(/.test(content),
+
+    isAsync:
+      /export\s+default\s+async\s+function/.test(
+        content
+      ) ||
+      /async\s+function/.test(content)
   };
 }
 
 export function checkArchitecture(
-  projectDir,
-  requirements = {}
+  challengeMetadata,
+  projectDir
 ) {
-  const files = getProjectFiles(projectDir);
+  /*
+   * IMPORTANT:
+   * The review engine calls this function as:
+   *
+   * checkArchitecture(challengeMetadata, PROJECT_DIR)
+   *
+   * Therefore the arguments must stay in this order.
+   */
 
-  const results = {
-    score: 0,
-    found: [],
-    missing: [],
-    details: []
-  };
+  const challengeId =
+    challengeMetadata?.id || "";
 
-  if (files.length === 0) {
-    return {
-      score: 0,
-      found: [],
-      missing: ["No source files found"],
-      details: []
-    };
-  }
+  const files = getSourceFiles(projectDir);
 
-  const checkedFiles = files.map((file) =>
-    checkFile(file, projectDir)
+  const analyzedFiles = files.map((file) =>
+    analyzeFile(file, projectDir)
   );
 
+  const found = [];
+  const missing = [];
+
   /*
-   * Check architecture across the entire project.
-   *
-   * A pattern such as useState only needs to exist
-   * in the appropriate Client Component. It should
-   * not be required in every file.
+   * Common Next.js App Router patterns.
    */
-  const projectPatterns = {
-    useClient: checkedFiles.some(
-      (file) => file.useClient
-    ),
+  const hasAppDirectory =
+    analyzedFiles.some(
+      (file) =>
+        file.file === "app" ||
+        file.file.startsWith("app/")
+    );
 
-    clientComponent: checkedFiles.some(
-      (file) => file.clientComponent
-    ),
+  const hasFileBasedRouting =
+    analyzedFiles.some(
+      (file) =>
+        file.isPage ||
+        file.isLayout
+    );
 
-    useState: checkedFiles.some(
+  const hasServerComponent =
+    analyzedFiles.some(
+      (file) => file.isServer
+    );
+
+  const hasClientComponent =
+    analyzedFiles.some(
+      (file) => file.isClient
+    );
+
+  const hasUseState =
+    analyzedFiles.some(
       (file) => file.useState
-    ),
-
-    serverComponent: checkedFiles.some(
-      (file) => file.serverComponent
-    ),
-
-    functionalComponent: checkedFiles.some(
-      (file) => file.functionalComponent
-    ),
-
-    appDirectory: checkedFiles.some(
-      (file) => file.appDirectory
-    ),
-
-    fileBasedRouting: checkedFiles.some(
-      (file) => file.fileBasedRouting
-    ),
-
-    Link: checkedFiles.some(
-      (file) => file.link
-    ),
-
-    reactHooks: checkedFiles.some(
-      (file) => file.reactHooks
-    )
-  };
-
-  const expectedPatterns = [];
-
-  if (
-    requirements.useClient ||
-    requirements.clientComponent
-  ) {
-    expectedPatterns.push("useClient");
-  }
-
-  if (requirements.useState) {
-    expectedPatterns.push("useState");
-  }
-
-  if (requirements.serverComponent) {
-    expectedPatterns.push("serverComponent");
-  }
-
-  if (requirements.functionalComponent) {
-    expectedPatterns.push("functionalComponent");
-  }
-
-  if (requirements.appDirectory) {
-    expectedPatterns.push("appDirectory");
-  }
-
-  if (requirements.fileBasedRouting) {
-    expectedPatterns.push("fileBasedRouting");
-  }
-
-  if (
-    requirements.Link ||
-    requirements.link
-  ) {
-    expectedPatterns.push("Link");
-  }
-
-  if (requirements.reactHooks) {
-    expectedPatterns.push("reactHooks");
-  }
-
-  /*
-   * If the challenge doesn't explicitly define
-   * architecture requirements, detect the important
-   * Next.js patterns automatically.
-   */
-  if (expectedPatterns.length === 0) {
-    expectedPatterns.push(
-      "appDirectory",
-      "fileBasedRouting"
     );
 
-    if (projectPatterns.useClient) {
-      expectedPatterns.push("useClient");
-    }
+  const hasLink =
+    analyzedFiles.some(
+      (file) => file.hasLink
+    );
 
-    if (projectPatterns.useState) {
-      expectedPatterns.push("useState");
-    }
+  /*
+   * Challenge 03 specific checks.
+   */
+  const postsPage = analyzedFiles.find(
+    (file) =>
+      file.file === "app/posts/page.tsx"
+  );
 
-    if (projectPatterns.Link) {
-      expectedPatterns.push("Link");
-    }
-  }
+  const hasPostsPage =
+    Boolean(postsPage);
 
-  for (const pattern of expectedPatterns) {
-    if (projectPatterns[pattern]) {
-      results.found.push(pattern);
+  const hasAsyncServerComponent =
+    Boolean(
+      postsPage &&
+      postsPage.isAsync &&
+      !postsPage.isClient
+    );
+
+  const hasServerDataFetching =
+    Boolean(
+      postsPage &&
+      postsPage.hasFetch &&
+      !postsPage.isClient
+    );
+
+  /*
+   * Challenge 01
+   */
+  if (
+    challengeId ===
+    "01-app-router-pages-layout"
+  ) {
+    if (hasAppDirectory) {
+      found.push("appDirectory");
     } else {
-      results.missing.push(pattern);
+      missing.push("appDirectory");
     }
-  }
 
-  if (expectedPatterns.length > 0) {
-    results.score = Math.round(
-      (results.found.length /
-        expectedPatterns.length) *
-        100
-    );
-  } else {
-    results.score = 100;
+    if (hasFileBasedRouting) {
+      found.push("fileBasedRouting");
+    } else {
+      missing.push("fileBasedRouting");
+    }
+
+    if (hasServerComponent) {
+      found.push("serverComponent");
+    } else {
+      missing.push("serverComponent");
+    }
+
+    if (hasLink) {
+      found.push("Link");
+    } else {
+      missing.push("Link");
+    }
   }
 
   /*
-   * File-level details
+   * Challenge 02
    */
-  for (const file of checkedFiles) {
-    const found = [];
-
-    if (file.useClient) {
-      found.push("useClient");
+  else if (
+    challengeId ===
+    "02-server-and-client-components"
+  ) {
+    if (hasAppDirectory) {
+      found.push("appDirectory");
+    } else {
+      missing.push("appDirectory");
     }
 
-    if (file.useState) {
-      found.push("useState");
+    if (hasFileBasedRouting) {
+      found.push("fileBasedRouting");
+    } else {
+      missing.push("fileBasedRouting");
     }
 
-    if (file.serverComponent) {
+    if (hasServerComponent) {
       found.push("serverComponent");
+    } else {
+      missing.push("serverComponent");
     }
 
-    if (file.link) {
-      found.push("Link");
+    if (hasClientComponent) {
+      found.push("useClient");
+    } else {
+      missing.push("useClient");
     }
 
-    if (file.appDirectory) {
+    if (hasUseState) {
+      found.push("useState");
+    } else {
+      missing.push("useState");
+    }
+  }
+
+  /*
+   * Challenge 03
+   */
+  else if (
+    challengeId ===
+    "03-data-fetching-server"
+  ) {
+    if (hasAppDirectory) {
+      found.push("appDirectory");
+    } else {
+      missing.push("appDirectory");
+    }
+
+    if (hasFileBasedRouting) {
+      found.push("fileBasedRouting");
+    } else {
+      missing.push("fileBasedRouting");
+    }
+
+    if (hasServerComponent) {
+      found.push("serverComponent");
+    } else {
+      missing.push("serverComponent");
+    }
+
+    if (hasPostsPage) {
+      found.push("postsPage");
+    } else {
+      missing.push("postsPage");
+    }
+
+    if (hasAsyncServerComponent) {
+      found.push("asyncServerComponent");
+    } else {
+      missing.push("asyncServerComponent");
+    }
+
+    if (hasServerDataFetching) {
+      found.push("serverDataFetching");
+    } else {
+      missing.push("serverDataFetching");
+    }
+  }
+
+  /*
+   * Fallback for future challenges.
+   */
+  else {
+    if (hasAppDirectory) {
       found.push("appDirectory");
     }
 
-    if (file.fileBasedRouting) {
+    if (hasFileBasedRouting) {
       found.push("fileBasedRouting");
     }
 
-    if (file.functionalComponent) {
-      found.push("functionalComponent");
+    if (hasServerComponent) {
+      found.push("serverComponent");
     }
 
-    if (file.reactHooks) {
-      found.push("reactHooks");
+    if (hasClientComponent) {
+      found.push("useClient");
     }
 
-    results.details.push({
-      file: file.file,
-      found
-    });
+    if (hasUseState) {
+      found.push("useState");
+    }
+
+    if (hasLink) {
+      found.push("Link");
+    }
+
+    if (hasPostsPage) {
+      found.push("postsPage");
+    }
+
+    if (hasAsyncServerComponent) {
+      found.push(
+        "asyncServerComponent"
+      );
+    }
+
+    if (hasServerDataFetching) {
+      found.push(
+        "serverDataFetching"
+      );
+    }
   }
 
-  return results;
+  const requiredCount =
+    found.length + missing.length;
+
+  const score =
+    requiredCount === 0
+      ? 100
+      : Math.round(
+          (found.length /
+            requiredCount) *
+            100
+        );
+
+  const details =
+    analyzedFiles.map((file) => {
+      const fileFound = [];
+
+      if (file.isClient) {
+        fileFound.push("useClient");
+      }
+
+      if (
+        file.isServer
+      ) {
+        fileFound.push(
+          "serverComponent"
+        );
+      }
+
+      if (file.useState) {
+        fileFound.push("useState");
+      }
+
+      if (file.hasLink) {
+        fileFound.push("Link");
+      }
+
+      if (file.hasFetch) {
+        fileFound.push("fetch");
+      }
+
+      if (file.isAsync) {
+        fileFound.push("asyncComponent");
+      }
+
+      return {
+        file: file.file,
+        patternsFound: fileFound,
+        patternsMissing: []
+      };
+    });
+
+  return {
+    score,
+
+    patternsFound: found,
+
+    patternsMissing: missing,
+
+    found,
+
+    missing,
+
+    details
+  };
 }
